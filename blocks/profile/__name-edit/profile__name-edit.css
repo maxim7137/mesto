@@ -3,3 +3,9 @@
   column-gap: 18px;
   align-items: flex-end;
 }
+
+@media (max-width: 719.98px) {
+  .profile__name-edit {
+    position: relative;
+  }
+}
