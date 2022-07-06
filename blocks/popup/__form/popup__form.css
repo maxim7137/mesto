@@ -11,3 +11,10 @@
   border-radius: 10px;
   overflow: hidden;
 }
+
+@media (max-width: 719.98px) {
+  .popup__form {
+    width: 282px;
+    padding: 25px 22px;
+  }
+}

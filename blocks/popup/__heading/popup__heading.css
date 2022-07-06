@@ -6,3 +6,10 @@
   font-size: 24px;
   line-height: 1.2083;
 }
+
+@media (max-width: 719.98px) {
+  .popup__heading {
+    font-size: 18px;
+    margin-block-end: 70px;
+  }
+}

@@ -5,3 +5,10 @@
   align-items: center;
   gap: 8px;
 }
+
+@media (max-width: 719.98px) {
+  .popup__container {
+    width: 282px;
+    gap: 16px;
+  }
+}
