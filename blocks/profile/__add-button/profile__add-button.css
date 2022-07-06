@@ -5,6 +5,7 @@
   background: none;
   border: 2px solid #ffffff;
   border-radius: 2px;
+  transition: opacity 0.2s;
 }
 
 .profile__add-button:hover {
