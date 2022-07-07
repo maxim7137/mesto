@@ -44,3 +44,9 @@ function formSubmitHandler(evt) {
 // Прикрепляем обработчик к форме:
 // он будет следить за событием “submit” - «отправка»
 formElement.addEventListener('submit', formSubmitHandler);
+// formElement.addEventListener('keydown', formSubmitHandler);
+formElement.addEventListener('keydown', function (event) {
+  if (event.code === 'Enter') {
+    formSubmitHandler(event)
+  }
+});
