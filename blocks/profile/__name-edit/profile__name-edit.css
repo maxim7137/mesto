@@ -1,12 +1,16 @@
 .profile__name-edit {
   display: flex;
   column-gap: 18px;
+  justify-content: start;
   align-items: flex-end;
 }
 
-@media (max-width: 719.98px) {
+@media (max-width: 720px) {
   .profile__name-edit {
-    position: relative;
-    max-width: 250px;
+    /* position: relative; */
+    justify-content: center;
+    max-width: 282px;
+    min-width: 214px;
+    column-gap: 10px;
   }
 }

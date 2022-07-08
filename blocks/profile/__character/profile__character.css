@@ -10,7 +10,7 @@
   max-width: 490px;
 }
 
-@media (max-width: 719.98px) {
+@media (max-width: 720px) {
   .profile__character {
     text-align: center;
     font-size: 14px;

@@ -12,7 +12,7 @@
   overflow: hidden;
 }
 
-@media (max-width: 719.98px) {
+@media (max-width: 720px) {
   .popup__form {
     width: 282px;
     padding: 25px 22px;

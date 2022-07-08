@@ -5,11 +5,11 @@
   align-items: center;
 }
 
-@media (max-width: 719.98px) {
+@media (max-width: 720px) {
   .profile {
     flex-direction: column;
     max-width: 581px;
     margin: 0 auto;
-    
+
   }
 }

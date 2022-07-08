@@ -6,7 +6,7 @@
   gap: 8px;
 }
 
-@media (max-width: 719.98px) {
+@media (max-width: 720px) {
   .popup__container {
     width: 282px;
     gap: 16px;
