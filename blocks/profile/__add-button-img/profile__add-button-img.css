@@ -4,5 +4,8 @@
 }
 
 @media (max-width: 719.98px) {
-  
+  .profile__add-button-img {
+    width: 16px;
+    height: 16px;
+  }
 }

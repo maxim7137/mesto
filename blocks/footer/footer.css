@@ -5,3 +5,11 @@
   color: #545454;
   padding-top: 66px;
 }
+
+@media (max-width: 719.98px) {
+  .footer {
+    padding-top: 48px;
+    max-width: calc(100% - 19px * 2);
+    font-size: 14px;
+  }
+}

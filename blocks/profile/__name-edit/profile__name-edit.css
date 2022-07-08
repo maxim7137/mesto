@@ -7,5 +7,6 @@
 @media (max-width: 719.98px) {
   .profile__name-edit {
     position: relative;
+    max-width: 250px;
   }
 }

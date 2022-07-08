@@ -13,3 +13,9 @@
   margin-inline-end: 0;
   padding-inline-start: 0;
 }
+
+@media (max-width: 719.98px) {
+  .elements {
+    padding-top: 36px;
+  }
+}
