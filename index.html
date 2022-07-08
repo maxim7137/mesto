@@ -9,25 +9,13 @@
 </head>
 <body class="page">
   <div class="container">
-    <div class="popup">
-      <form class="popup__container">
-        <button class="popup__close-button" type="button">
-          <img src="./images/close.svg" alt="Крест" class="popup__close-button-img">
-        </button>
-        <div class="popup__form">
-          <h2 class="popup__heading">Редактировать профиль</h2>
-          <input type="text" name="user-name" id="user-name" class="popup__text" value="Жак-Ив Кусто">
-          <input type="text" name="user-character" id="user-character" class="popup__text" value="Исследователь океана">
-          <button type="submit" class="popup__submit-button">Сохранить</button>
-        </div>
-      </form>
-    </div>
+
     <header class="header">
       <img src="./images/logo.svg" alt="Логотип Mesto Russia" class="header__logo">
     </header>
     <main class="main">
       <section class="profile">
-        <img src="./images/avatar.jpg" alt="аватар" class="profile__avatar">
+        <img src="https://www.placecage.com/c/120/120" alt="аватар" class="profile__avatar">
         <div class="profile__info">
           <div class="profile__name-edit">
             <h1 class="profile__name">Жак-Ив Кусто</h1>
@@ -43,54 +31,54 @@
       </section>
       <ul class="elements">
         <li class="elements__element">
-          <img src="./images/karachaevsk.jpg" alt="фото загруженное пользователем" class="elements__image">
+          <img src="https://picsum.photos/282/282" alt="фото загруженное пользователем" class="elements__image">
           <div class="elements__captions">
-            <p class="elements__name">Карачаевск</p>
+            <h3 class="elements__name">Карачаевск</h3>
             <button class="elements__like-button" type="button">
               <img src="./images/like.svg" alt="сердце" class="elements__like-button-img">
             </button>
           </div>
         </li>
         <li class="elements__element">
-          <img src="./images/elbrus.jpg" alt="фото загруженное пользователем" class="elements__image">
+          <img src="https://picsum.photos/282" alt="фото загруженное пользователем" class="elements__image">
           <div class="elements__captions">
-            <p class="elements__name">Гора Эльбрус</p>
+            <h3 class="elements__name">Гора Эльбрус</h3>
             <button class="elements__like-button" type="button">
               <img src="./images/like.svg" alt="сердце" class="elements__like-button-img">
             </button>
           </div>
         </li>
         <li class="elements__element">
-          <img src="./images/dombai.jpg" alt="фото загруженное пользователем" class="elements__image">
+          <img src="https://picsum.photos/282?random=1" alt="фото загруженное пользователем" class="elements__image">
           <div class="elements__captions">
-            <p class="elements__name">Домбай</p>
+            <h3 class="elements__name">Домбай</h3>
             <button class="elements__like-button" type="button">
               <img src="./images/like.svg" alt="сердце" class="elements__like-button-img">
             </button>
           </div>
         </li>
         <li class="elements__element">
-          <img src="./images/elbrus.jpg" alt="фото загруженное пользователем" class="elements__image">
+          <img src="https://picsum.photos/282?random=2" alt="фото загруженное пользователем" class="elements__image">
           <div class="elements__captions">
-            <p class="elements__name">Гора Эльбрус</p>
+            <h3 class="elements__name">Гора Эльбрус</h3>
             <button class="elements__like-button" type="button">
               <img src="./images/like.svg" alt="сердце" class="elements__like-button-img">
             </button>
           </div>
         </li>
         <li class="elements__element">
-          <img src="./images/dombai.jpg" alt="фото загруженное пользователем" class="elements__image">
+          <img src="https://picsum.photos/282?random=3" alt="фото загруженное пользователем" class="elements__image">
           <div class="elements__captions">
-            <p class="elements__name">Домбай</p>
+            <h3 class="elements__name">Домбай</h3>
             <button class="elements__like-button" type="button">
               <img src="./images/like.svg" alt="сердце" class="elements__like-button-img">
             </button>
           </div>
         </li>
         <li class="elements__element">
-          <img src="./images/karachaevsk.jpg" alt="фото загруженное пользователем" class="elements__image">
+          <img src="https://picsum.photos/282?random=4" alt="фото загруженное пользователем" class="elements__image">
           <div class="elements__captions">
-            <p class="elements__name">Карачаево-Черкессия</p>
+            <h3 class="elements__name">Карачаево-Черкессия</h3>
             <button class="elements__like-button" type="button">
               <img src="./images/like.svg" alt="сердце" class="elements__like-button-img">
             </button>
@@ -98,7 +86,21 @@
         </li>
       </ul>
     </main>
-    <footer class="footer">&copy; 2020 Mesto Russia</footer>
+    <footer class="footer"><p class="footer__text">&copy; 2020 Mesto Russia</p></footer>
+<!-- Попап -->
+    <div class="popup">
+      <div class="popup__container">
+        <button class="popup__close-button" type="reset">
+          <img src="./images/close.svg" alt="Крест" class="popup__close-button-img">
+        </button>
+        <form name="user-edit" class="popup__form">
+          <h2 class="popup__heading">Редактировать профиль</h2>
+          <input type="text" name="user-name" id="user-name" class="popup__text" value="Жак-Ив Кусто">
+          <input type="text" name="user-character" id="user-character" class="popup__text" value="Исследователь океана">
+          <button type="submit" class="popup__submit-button">Сохранить</button>
+        </form>
+      </div>
+    </div>
   </div>
 
   <script src="./scripts/index.js"></script>
