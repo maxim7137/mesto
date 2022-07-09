@@ -1,5 +1,5 @@
 .profile__name {
-  max-width: 490px;
+  max-width: 508px;
   margin-block-start: 0;
   margin-block-end: 0;
   font-weight: 500;
@@ -10,7 +10,14 @@
   overflow: hidden;
 }
 
-@media (max-width: 720px) {
+@media (max-width: 917px) {
+  .profile__name {
+    max-width: 539px;
+  }
+}
+
+
+@media (max-width: 618px) {
   .profile__name {
     font-size: 27px;
     line-height: 1.122;

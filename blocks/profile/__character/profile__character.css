@@ -7,10 +7,16 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  max-width: 490px;
+  max-width: 508px;
 }
 
-@media (max-width: 720px) {
+@media (max-width: 917px) {
+  .profile__character {
+    max-width: 539px;
+  }
+}
+
+@media (max-width: 618px) {
   .profile__character {
     text-align: center;
     font-size: 14px;

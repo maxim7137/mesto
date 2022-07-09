@@ -5,9 +5,8 @@
   align-items: flex-end;
 }
 
-@media (max-width: 720px) {
+@media (max-width: 618px) {
   .profile__name-edit {
-    /* position: relative; */
     justify-content: center;
     max-width: 282px;
     min-width: 214px;

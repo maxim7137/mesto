@@ -6,7 +6,13 @@
   padding-top: 66px;
 }
 
-@media (max-width: 720px) {
+@media (max-width: 917px) {
+  .footer {
+    max-width: 581px;
+  }
+}
+
+@media (max-width: 425px) {
   .footer {
     padding-top: 48px;
     max-width: calc(100% - 19px * 2);
