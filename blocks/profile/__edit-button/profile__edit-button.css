@@ -14,9 +14,10 @@
 
 @media (max-width: 618px) {
   .profile__edit-button {
+    display: block;
+    padding: 0 4.5px 0 4px;
     width: 18px;
     height: 18px;
-    padding: 0;
     margin-bottom: 5px;
     font-size: 0;
     line-height: 1;

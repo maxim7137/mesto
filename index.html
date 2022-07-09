@@ -18,12 +18,12 @@
         <img src="https://www.placecage.com/c/120/120" alt="аватар" class="profile__avatar">
         <div class="profile__info">
           <div class="profile__name-edit">
-            <h1 class="profile__name">Жак-Ив Кусто Жак-Ив Кусто Жак-Ив Кусто Жак-Ив Кусто</h1>
+            <h1 class="profile__name">Жак-Ив Кусто</h1>
             <button class="profile__edit-button" type="button">
               <img src="./images/edit.svg" alt="карандаш" class="profile__edit-button-img">
             </button>
           </div>
-          <p class="profile__character">Исследователь океана Исследователь океана Исследователь океана Исследователь океана</p>
+          <p class="profile__character">Исследователь океана</p>
         </div>
         <button class="profile__add-button" type="button">
           <img src="./images/plus.svg" alt="плюс" class="profile__add-button-img">
@@ -33,7 +33,7 @@
         <li class="elements__element">
           <img src="https://picsum.photos/282/282" alt="фото загруженное пользователем" class="elements__image">
           <div class="elements__captions">
-            <h3 class="elements__name">Карачаевск</h3>
+            <h2 class="elements__name">Карачаевск</h2>
             <button class="elements__like-button" type="button">
               <img src="./images/like.svg" alt="сердце" class="elements__like-button-img">
             </button>
@@ -42,7 +42,7 @@
         <li class="elements__element">
           <img src="https://picsum.photos/282" alt="фото загруженное пользователем" class="elements__image">
           <div class="elements__captions">
-            <h3 class="elements__name">Гора Эльбрус</h3>
+            <h2 class="elements__name">Гора Эльбрус</h2>
             <button class="elements__like-button" type="button">
               <img src="./images/like.svg" alt="сердце" class="elements__like-button-img">
             </button>
@@ -51,7 +51,7 @@
         <li class="elements__element">
           <img src="https://picsum.photos/282?random=1" alt="фото загруженное пользователем" class="elements__image">
           <div class="elements__captions">
-            <h3 class="elements__name">Домбай</h3>
+            <h2 class="elements__name">Домбай</h2>
             <button class="elements__like-button" type="button">
               <img src="./images/like.svg" alt="сердце" class="elements__like-button-img">
             </button>
@@ -60,7 +60,7 @@
         <li class="elements__element">
           <img src="https://picsum.photos/282?random=2" alt="фото загруженное пользователем" class="elements__image">
           <div class="elements__captions">
-            <h3 class="elements__name">Гора Эльбрус</h3>
+            <h2 class="elements__name">Гора Эльбрус</h2>
             <button class="elements__like-button" type="button">
               <img src="./images/like.svg" alt="сердце" class="elements__like-button-img">
             </button>
@@ -69,7 +69,7 @@
         <li class="elements__element">
           <img src="https://picsum.photos/282?random=3" alt="фото загруженное пользователем" class="elements__image">
           <div class="elements__captions">
-            <h3 class="elements__name">Домбай</h3>
+            <h2 class="elements__name">Домбай</h2>
             <button class="elements__like-button" type="button">
               <img src="./images/like.svg" alt="сердце" class="elements__like-button-img">
             </button>
@@ -78,7 +78,7 @@
         <li class="elements__element">
           <img src="https://picsum.photos/282?random=4" alt="фото загруженное пользователем" class="elements__image">
           <div class="elements__captions">
-            <h3 class="elements__name">Карачаево-Черкессия</h3>
+            <h2 class="elements__name">Карачаево-Черкессия</h2>
             <button class="elements__like-button" type="button">
               <img src="./images/like.svg" alt="сердце" class="elements__like-button-img">
             </button>
@@ -90,15 +90,17 @@
 <!-- Попап -->
     <div class="popup">
       <div class="popup__container">
-        <button class="popup__close-button" type="reset">
+        <button class="popup__close-button" type="button">
           <img src="./images/close.svg" alt="Крест" class="popup__close-button-img">
         </button>
-        <form name="user-edit" class="popup__form">
+        <div class="popup__form-container">
           <h2 class="popup__heading">Редактировать профиль</h2>
-          <input type="text" name="user-name" id="user-name" class="popup__text" value="Жак-Ив Кусто">
-          <input type="text" name="user-character" id="user-character" class="popup__text" value="Исследователь океана">
-          <button type="submit" class="popup__submit-button">Сохранить</button>
-        </form>
+          <form name="user-edit" class="popup__form">
+            <input type="text" name="user-name" id="user-name" class="popup__text" value="Жак-Ив Кусто">
+            <input type="text" name="user-character" id="user-character" class="popup__text" value="Исследователь океана">
+            <button type="submit" class="popup__submit-button">Сохранить</button>
+          </form>
+        </div>
       </div>
     </div>
   </div>

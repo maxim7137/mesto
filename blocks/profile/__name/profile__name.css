@@ -16,13 +16,17 @@
   }
 }
 
-
 @media (max-width: 618px) {
   .profile__name {
     font-size: 27px;
     line-height: 1.122;
     max-width: 254px;
     margin: 0 auto;
+  }
+}
+
+@media (max-width: 425px) {
+  .profile__name {
     padding-left: 28px;
   }
 }
