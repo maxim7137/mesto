@@ -12,8 +12,8 @@ const popup = document.querySelector('.popup');
 let formElement = document.querySelector('.popup__container');
 
 // Находим поля формы
-let nameInput = formElement.querySelector('#user-name');
-let jobInput = formElement.querySelector('#user-character');
+let nameInput = formElement.querySelector('.popup__text_user_name');
+let jobInput = formElement.querySelector('.popup__text_user_character');
 
 // Находим элементы, откуда должны быть вставлены значения полей
 let profileName = document.querySelector('.profile__name');
