@@ -1,12 +1,10 @@
 // КОНСТАНТЫ //
-
+const root = document.querySelector('.page');
 // Находим кнопки
 const editButton = document.querySelector('.profile__edit-button');
-const closeButton = document.querySelectorAll('.popup__close-button')[0];
 const saveButton = document.querySelectorAll('.popup__submit-button')[0];
 
 const addButton = document.querySelector('.profile__add-button');
-const closeButtonCard = document.querySelectorAll('.popup__close-button')[1];
 const saveButtonCard = document.querySelectorAll('.popup__submit-button')[1];
 
 // Находим попапы
@@ -39,6 +37,15 @@ function popupClose(p) {
   p.classList.remove('popup_opened');
 }
 
+// Функция закрытия попапа для всех кнопок закрытия
+function closePopup(evt) {
+  const closeBtn = evt.target;
+  const modal = closeBtn.closest('.popup');
+  if (closeBtn.classList.contains('popup_close')) {
+    popupClose(modal);
+  }
+}
+
 // Обработчик «отправки» формы, профиля
 function formSubmitHandler(evt) {
   evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
@@ -55,7 +62,7 @@ function formSubmitHandlerCard(evt) {
 }
 
 // СЛУШАТЕЛИ СОБЫТИЙ //
-
+root.addEventListener('click', closePopup);
 // Прикрепляем обработчик к форме:
 // он будет следить за событием “submit” - «отправка»
 formElement.addEventListener('submit', formSubmitHandler);
@@ -69,17 +76,7 @@ editButton.addEventListener('click', () => {
   popupOpen(popupProfile);
 });
 
-// Закрываем попап редактирования профиля по клику на кнопку
-closeButton.addEventListener('click', () => {
-  popupClose(popupProfile);
-});
-
 // Открываем попап добавления карточки
 addButton.addEventListener('click', () => {
   popupOpen(popupCard);
-});
-
-// Закрываем попап редактирования профиля по клику на кнопку
-closeButtonCard.addEventListener('click', () => {
-  popupClose(popupCard);
 });
