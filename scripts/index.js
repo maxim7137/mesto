@@ -1,9 +1,46 @@
 // КОНСТАНТЫ //
 const root = document.querySelector('.page');
+// Данные карточек из коробки
+const initialCards = [{
+    name: 'Архыз',
+    link: 'https://picsum.photos/282?random=1'
+  },
+  {
+    name: 'Челябинская область',
+    link: 'https://picsum.photos/282?random=2'
+  },
+  {
+    name: 'Иваново',
+    link: 'https://picsum.photos/282?random=3'
+  },
+  {
+    name: 'Камчатка',
+    link: 'https://picsum.photos/282?random=4'
+  },
+  {
+    name: 'Холмогорский район',
+    link: 'https://picsum.photos/282?random=5'
+  },
+  {
+    name: 'Байкал',
+    link: 'https://picsum.photos/282?random=6'
+  }
+];
+
+// Шаблон карточки
+const cardTemplate = root.querySelector('#card-template').content;
+const cardElements = root.querySelector('.elements');
+
+for (let i = 0; i < initialCards.length; i++) {
+  const cardElement = cardTemplate.querySelector('.elements__element').cloneNode(true);
+  cardElement.querySelector('.elements__image').src = initialCards[i].link;
+  cardElement.querySelector('.elements__name').textContent = initialCards[i].name;
+  cardElements.append(cardElement);
+}
+
 // Находим кнопки
 const editButton = root.querySelector('.profile__edit-button');
 const saveButton = root.querySelectorAll('.popup__submit-button')[0];
-
 const addButton = root.querySelector('.profile__add-button');
 const saveButtonCard = root.querySelectorAll('.popup__submit-button')[1];
 
