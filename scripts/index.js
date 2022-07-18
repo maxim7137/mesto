@@ -54,11 +54,3 @@ formElement.addEventListener('submit', formSubmitHandler);
 editButton.addEventListener('click', popupOpen);
 // Закрываем попап редактирования профиля по клику на кнопку
 closeButton.addEventListener('click', popupClose);
-
-/*
-// Сохраняем введенные данные по нажатию клавиши Enter (formElement.addEventListener('keydown', formSubmitHandler);)
-formElement.addEventListener('keydown', function (event) {
-  if (event.code === 'Enter') {
-    formSubmitHandler(event)
-  }
-}); */
