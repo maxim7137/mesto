@@ -39,10 +39,11 @@ for (let i = 0; i < initialCards.length; i++) {
 }
 
 // Находим кнопки
-const editButton = root.querySelector('.profile__edit-button');
-const saveButton = root.querySelectorAll('.popup__submit-button')[0];
-const addButton = root.querySelector('.profile__add-button');
-const saveButtonCard = root.querySelectorAll('.popup__submit-button')[1];
+const editButton = root.querySelector('.profile__edit-button'); // кнопка редактирования профиля
+const saveButton = root.querySelectorAll('.popup__submit-button')[0]; // кнопка сохранения профиля
+const addButton = root.querySelector('.profile__add-button'); // кнопка добавления карточки
+const saveButtonCard = root.querySelectorAll('.popup__submit-button')[1]; // кнопка сохранения карточки
+// const deleteButton = root.querySelector('.elements__trash'); // кнопку удаления карточки
 
 // Находим попапы
 const popupProfile = root.querySelector('.popup-profile'); // попап редактирования профиля
@@ -129,6 +130,9 @@ root.addEventListener('click', closePopup);
 // обработчик кликов для лайков
 root.addEventListener('click', toLikeAll);
 
+// обработчик удаления карточек
+root.addEventListener('click', toDelCard);
+
 // Прикрепляем обработчик к форме: он будет следить за событием “submit” - «отправка»
 formElement.addEventListener('submit', formSubmitHandler); // форма профиля
 formElementCard.addEventListener('submit', formSubmitHandlerCard); // форма карточки
@@ -143,3 +147,17 @@ editButton.addEventListener('click', () => {
 addButton.addEventListener('click', () => {
   popupOpen(popupCard);
 });
+
+// Функция удаления карточки
+function toDel(t) {
+  const cardItem = t.closest('.elements__element');
+  cardItem.remove();
+}
+
+// Функция удаления любой карточки
+function toDelCard(evt) {
+  const target = evt.target;
+  if (target.classList.contains('elements__trash')) {
+    toDel(target);
+  }
+}
