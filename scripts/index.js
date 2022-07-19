@@ -3,27 +3,27 @@ const root = document.querySelector('.page');
 // Данные карточек из коробки
 const initialCards = [{
     name: 'Архыз',
-    link: 'https://picsum.photos/282?random=1'
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
   },
   {
     name: 'Челябинская область',
-    link: 'https://picsum.photos/282?random=2'
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
   },
   {
     name: 'Иваново',
-    link: 'https://picsum.photos/282?random=3'
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
   },
   {
     name: 'Камчатка',
-    link: 'https://picsum.photos/282?random=4'
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
   },
   {
     name: 'Холмогорский район',
-    link: 'https://picsum.photos/282?random=5'
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
   },
   {
     name: 'Байкал',
-    link: 'https://picsum.photos/282?random=6'
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
   }
 ];
 
@@ -63,6 +63,19 @@ let profileName = root.querySelector('.profile__name');
 let profileCharacter = root.querySelector('.profile__character');
 
 // ФУНКЦИИ //
+
+// Лайк
+function toLike(h) {
+  h.classList.toggle('elements__like-button_liked');
+}
+
+// Функция лайка любого лайка
+function toLikeAll(evt) {
+  const target = evt.target;
+  if (target.classList.contains('elements__like-button')) {
+    toLike(target);
+  }
+}
 
 // Открываем попап
 function popupOpen(p) {
@@ -112,6 +125,9 @@ function formSubmitHandlerCard(evt) {
 // СЛУШАТЕЛИ СОБЫТИЙ //
 // обработчик кликов для закрытия любых попапов
 root.addEventListener('click', closePopup);
+
+// обработчик кликов для лайков
+root.addEventListener('click', toLikeAll);
 
 // Прикрепляем обработчик к форме: он будет следить за событием “submit” - «отправка»
 formElement.addEventListener('submit', formSubmitHandler); // форма профиля

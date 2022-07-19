@@ -20,10 +20,11 @@
 
 @import url(../blocks/elements/elements.css);
 @import url(../blocks/elements/__element/elements__element.css);
+@import url(../blocks/elements/__image/elements__image.css);
 @import url(../blocks/elements/__captions/elements__captions.css);
 @import url(../blocks/elements/__name/elements__name.css);
 @import url(../blocks/elements/__like-button/elements__like-button.css);
-@import url(../blocks/elements/__like-button-img/elements__like-button-img.css);
+@import url(../blocks/elements/__like-button/_liked/elements__like-button_liked.css);
 @import url(../blocks/elements/__trash/elements__trash.css);
 
 @import url(../blocks/popup/popup.css);
