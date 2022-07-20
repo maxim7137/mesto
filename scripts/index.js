@@ -46,8 +46,8 @@ const saveButtonCard = root.querySelectorAll('.popup__submit-button')[1]; // к�
 // const deleteButton = root.querySelector('.elements__trash'); // кнопку удаления карточки
 
 // Находим попапы
-const popupProfile = root.querySelector('.popup-profile'); // попап редактирования профиля
-const popupCard = root.querySelector('.popup-card'); // попап добавления карточки
+const popupProfile = root.querySelector('.popup_profile'); // попап редактирования профиля
+const popupCard = root.querySelector('.popup_card'); // попап добавления карточки
 
 // ПЕРЕМЕННЫЕ //
 
