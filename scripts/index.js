@@ -107,7 +107,7 @@ function popupClose(p) {
 function closePopup(evt) {
   const target = evt.target;
   const modal = target.closest('.popup');
-  if (target.classList.contains('popup_close') || target === modal) {
+  if (target.classList.contains('cross') || target.classList.contains('cross__img') || target === modal) {
     popupClose(modal);
   }
 }

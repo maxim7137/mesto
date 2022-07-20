@@ -43,7 +43,7 @@
           </li>
       </template>
     </ul>
-    
+
     </main>
 
     <footer class="footer"><p class="footer__text">&copy; 2020 Mesto Russia</p></footer>
@@ -51,8 +51,8 @@
 <!-- Попап профиля-->
     <div class="popup popup_profile">
       <div class="popup__container">
-        <button class="popup__close-button popup_close" type="button">
-          <img src="./images/close.svg" alt="Крест" class="popup__close-button-img popup_close">
+        <button class="popup__close-button cross" type="button">
+          <img src="./images/close.svg" alt="Крест" class="popup__close-button-img cross__img">
         </button>
         <div class="popup__form-container">
           <h2 class="popup__heading">Редактировать профиль</h2>
@@ -64,13 +64,12 @@
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- Попап карточки-->
+    <!-- Попап карточки-->
   <div class="popup popup_card">
     <div class="popup__container">
-      <button class="popup__close-button popup_close" type="button">
-        <img src="./images/close.svg" alt="Крест" class="popup__close-button-img popup_close">
+      <button class="popup__close-button cross" type="button">
+        <img src="./images/close.svg" alt="Крест" class="popup__close-button-img cross__img">
       </button>
       <div class="popup__form-container">
         <h2 class="popup__heading">Новое место</h2>
@@ -82,21 +81,20 @@
       </div>
     </div>
   </div>
-</div>
 
   <!-- Попап картинки-->
   <template id="img-template">
     <div class="popup popup_image">
       <figure class="popup__container">
-        <button class="popup__close-button popup_close" type="button">
-          <img src="./images/close.svg" alt="Крест" class="popup__close-button-img popup_close">
+        <button class="popup__close-button cross" type="button">
+          <img src="./images/close.svg" alt="Крест" class="popup__close-button-img cross">
         </button>
         <img class="popup__img" src="https://picsum.photos/720/1080" alt="Большое фото загруженное пользователем">
         <figcaption class="popup__caption">Подпись</figcaption>
       </figure>
     </div>
   </template>
-
+  </div>
   <script src="./scripts/index.js"></script>
 </body>
 </html>
