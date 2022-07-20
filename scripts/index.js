@@ -51,9 +51,8 @@ const popupCard = root.querySelector('.popup-card'); // попап добавл�
 
 // ПЕРЕМЕННЫЕ //
 
-// Находим форму
+// Находим форму редактирования профиля
 let formElement = root.querySelectorAll('.popup__container')[0];
-let formElementCard = root.querySelectorAll('.popup__container')[1];
 
 // Находим поля формы
 let nameInput = formElement.querySelector('.popup__text_user_name');
@@ -62,6 +61,14 @@ let jobInput = formElement.querySelector('.popup__text_user_character');
 // Находим элементы, откуда должны быть вставлены значения полей
 let profileName = root.querySelector('.profile__name');
 let profileCharacter = root.querySelector('.profile__character');
+// Форма редактирования профиля
+
+// Находим форму добавления карточки
+let formElementCard = root.querySelectorAll('.popup__container')[1];
+// Находим поля формы добавления карточки
+let nameCard = formElementCard.querySelector('.popup__text_card_name');
+let linkCard = formElementCard.querySelector('.popup__text_card_address');
+// Форма добавления карточки
 
 // ФУНКЦИИ //
 
@@ -120,6 +127,11 @@ function formSubmitHandler(evt) {
 // Обработчик «отправки» формы, карточки
 function formSubmitHandlerCard(evt) {
   evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
+
+  const cardElement = cardTemplate.querySelector('.elements__element').cloneNode(true);
+  cardElement.querySelector('.elements__image').src = linkCard.value;
+  cardElement.querySelector('.elements__name').textContent = nameCard.value;
+  cardElements.prepend(cardElement);
   popupClose(popupCard);
 }
 
