@@ -31,6 +31,9 @@ const initialCards = [{
 const cardTemplate = root.querySelector('#card-template').content;
 const cardElements = root.querySelector('.elements');
 
+// Шаблон попапа картинки
+const imgTemplate = root.querySelector('#img-template').content;
+
 for (let i = 0; i < initialCards.length; i++) {
   const cardElement = cardTemplate.querySelector('.elements__element').cloneNode(true);
   cardElement.querySelector('.elements__image').src = initialCards[i].link;
@@ -93,6 +96,11 @@ function popupOpen(p) {
 // Закрываем попап
 function popupClose(p) {
   p.classList.remove('popup_opened');
+  if (p.classList.contains('popup_image')) {
+    setTimeout(() => {
+      p.remove();
+    }, 1000);
+  }
 }
 
 // Функция закрытия попапа для всех кнопок закрытия
@@ -117,14 +125,14 @@ function insertValuesToField() {
 }
 
 
-// Обработчик «отправки» формы, профиля
+// Функция «отправки» формы, профиля
 function formSubmitHandler(evt) {
   evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
   insertValuesFromField(); // Вставляем новые значения из полей в документ с помощью textContent
   popupClose(popupProfile);
 }
 
-// Обработчик «отправки» формы, карточки
+// Функция «отправки» формы, карточки
 function formSubmitHandlerCard(evt) {
   evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
 
@@ -135,6 +143,28 @@ function formSubmitHandlerCard(evt) {
   popupClose(popupCard);
 }
 
+
+
+// Функция открытия попапа с картинкой
+function toOpenImage(evt) {
+  const target = evt.target;
+  if (target.classList.contains('elements__image')) {
+    const imgElement = imgTemplate.querySelector('.popup_image').cloneNode(true);
+    imgElement.querySelector('.popup__img').src = target.src;
+    imgElement.querySelector('.popup__caption').textContent = 'Подпись из скрипта';
+    root.append(imgElement);
+    setTimeout(() => {
+      popupOpen(imgElement);
+    }, 1);
+  }
+}
+
+/*
+
+*/
+
+
+
 // СЛУШАТЕЛИ СОБЫТИЙ //
 // обработчик кликов для закрытия любых попапов
 root.addEventListener('click', closePopup);
@@ -144,6 +174,9 @@ root.addEventListener('click', toLikeAll);
 
 // обработчик удаления карточек
 root.addEventListener('click', toDelCard);
+
+// обработчик попапа картинки
+cardElements.addEventListener('click', toOpenImage);
 
 // Прикрепляем обработчик к форме: он будет следить за событием “submit” - «отправка»
 formElement.addEventListener('submit', formSubmitHandler); // форма профиля

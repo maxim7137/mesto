@@ -82,15 +82,18 @@
 </div>
 
   <!-- Попап картинки-->
-  <div class="popup popup_image popup_opened">
-    <figure class="popup__container">
-      <button class="popup__close-button popup_close" type="button">
-        <img src="./images/close.svg" alt="Крест" class="popup__close-button-img popup_close">
-      </button>
-      <img class="popup__img" src="https://picsum.photos/720/1080" alt="Большое фото загруженное пользователем">
-      <figcaption class="popup__caption">Подпись</figcaption>
-    </figure>
-  </div>
+  <template id="img-template">
+    <div class="popup popup_image">
+      <figure class="popup__container">
+        <button class="popup__close-button popup_close" type="button">
+          <img src="./images/close.svg" alt="Крест" class="popup__close-button-img popup_close">
+        </button>
+        <img class="popup__img" src="https://picsum.photos/720/1080" alt="Большое фото загруженное пользователем">
+        <figcaption class="popup__caption">Подпись</figcaption>
+      </figure>
+    </div>
+  </template>
+
 
 
 
