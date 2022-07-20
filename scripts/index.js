@@ -55,7 +55,7 @@ const popupCard = root.querySelector('.popup_card'); // попап добавл�
 // ПЕРЕМЕННЫЕ //
 
 // Находим форму редактирования профиля
-let formElement = root.querySelectorAll('.popup__container')[0];
+const formElement = root.querySelectorAll('.popup__container')[0];
 
 // Находим поля формы
 let nameInput = formElement.querySelector('.popup__text_user_name');
@@ -67,7 +67,7 @@ let profileCharacter = root.querySelector('.profile__character');
 // Форма редактирования профиля
 
 // Находим форму добавления карточки
-let formElementCard = root.querySelectorAll('.popup__container')[1];
+const formElementCard = root.querySelectorAll('.popup__container')[1];
 // Находим поля формы добавления карточки
 let nameCard = formElementCard.querySelector('.popup__text_card_name');
 let linkCard = formElementCard.querySelector('.popup__text_card_address');
