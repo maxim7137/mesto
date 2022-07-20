@@ -1,4 +1,5 @@
 // КОНСТАНТЫ //
+
 const root = document.querySelector('.page');
 // Данные карточек из коробки
 const initialCards = [{
@@ -33,10 +34,10 @@ const cardElements = root.querySelector('.elements');
 
 // Шаблон попапа картинки
 const imgTemplate = root.querySelector('#img-template').content;
-
 for (let i = 0; i < initialCards.length; i++) {
   const cardElement = cardTemplate.querySelector('.elements__element').cloneNode(true);
   cardElement.querySelector('.elements__image').src = initialCards[i].link;
+  cardElement.querySelector('.elements__image').dataset.caption = initialCards[i].name;
   cardElement.querySelector('.elements__name').textContent = initialCards[i].name;
   cardElements.append(cardElement);
 }
@@ -46,7 +47,6 @@ const editButton = root.querySelector('.profile__edit-button'); // кнопка 
 const saveButton = root.querySelectorAll('.popup__submit-button')[0]; // кнопка сохранения профиля
 const addButton = root.querySelector('.profile__add-button'); // кнопка добавления карточки
 const saveButtonCard = root.querySelectorAll('.popup__submit-button')[1]; // кнопка сохранения карточки
-// const deleteButton = root.querySelector('.elements__trash'); // кнопку удаления карточки
 
 // Находим попапы
 const popupProfile = root.querySelector('.popup_profile'); // попап редактирования профиля
@@ -93,13 +93,13 @@ function popupOpen(p) {
   p.classList.add('popup_opened');
 }
 
-// Закрываем попап
+// Закрываем попап и если это попап картинки то удаляем его
 function popupClose(p) {
   p.classList.remove('popup_opened');
   if (p.classList.contains('popup_image')) {
     setTimeout(() => {
       p.remove();
-    }, 1000);
+    }, 500);
   }
 }
 
@@ -135,15 +135,13 @@ function formSubmitHandler(evt) {
 // Функция «отправки» формы, карточки
 function formSubmitHandlerCard(evt) {
   evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
-
   const cardElement = cardTemplate.querySelector('.elements__element').cloneNode(true);
   cardElement.querySelector('.elements__image').src = linkCard.value;
+  cardElement.querySelector('.elements__image').dataset.caption = nameCard.value;
   cardElement.querySelector('.elements__name').textContent = nameCard.value;
   cardElements.prepend(cardElement);
   popupClose(popupCard);
 }
-
-
 
 // Функция открытия попапа с картинкой
 function toOpenImage(evt) {
@@ -151,7 +149,7 @@ function toOpenImage(evt) {
   if (target.classList.contains('elements__image')) {
     const imgElement = imgTemplate.querySelector('.popup_image').cloneNode(true);
     imgElement.querySelector('.popup__img').src = target.src;
-    imgElement.querySelector('.popup__caption').textContent = 'Подпись из скрипта';
+    imgElement.querySelector('.popup__caption').textContent = target.dataset.caption;
     root.append(imgElement);
     setTimeout(() => {
       popupOpen(imgElement);
@@ -159,13 +157,22 @@ function toOpenImage(evt) {
   }
 }
 
-/*
+// Функция удаления карточки
+function toDel(t) {
+  const cardItem = t.closest('.elements__element');
+  cardItem.remove();
+}
 
-*/
-
-
+// Функция удаления любой карточки
+function toDelCard(evt) {
+  const target = evt.target;
+  if (target.classList.contains('elements__trash')) {
+    toDel(target);
+  }
+}
 
 // СЛУШАТЕЛИ СОБЫТИЙ //
+
 // обработчик кликов для закрытия любых попапов
 root.addEventListener('click', closePopup);
 
@@ -192,17 +199,3 @@ editButton.addEventListener('click', () => {
 addButton.addEventListener('click', () => {
   popupOpen(popupCard);
 });
-
-// Функция удаления карточки
-function toDel(t) {
-  const cardItem = t.closest('.elements__element');
-  cardItem.remove();
-}
-
-// Функция удаления любой карточки
-function toDelCard(evt) {
-  const target = evt.target;
-  if (target.classList.contains('elements__trash')) {
-    toDel(target);
-  }
-}

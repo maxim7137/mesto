@@ -9,11 +9,12 @@
 </head>
 <body class="page">
   <div class="container">
-
     <header class="header">
       <img src="./images/logo.svg" alt="Логотип Mesto Russia" class="header__logo">
     </header>
+
     <main class="main">
+
       <section class="profile">
         <img src="https://www.placecage.com/c/120/120" alt="аватар" class="profile__avatar">
         <div class="profile__info">
@@ -29,10 +30,11 @@
           <img src="./images/plus.svg" alt="плюс" class="profile__add-button-img">
         </button>
       </section>
+
       <ul class="elements">
         <template id="card-template">
           <li class="elements__element">
-            <img src="https://picsum.photos/282?random=1" alt="фото загруженное пользователем" class="elements__image">
+            <img src="https://picsum.photos/282?random=1" alt="фото загруженное пользователем" class="elements__image" data-caption="">
             <div class="elements__captions">
               <h2 class="elements__name">Карачаевск</h2>
               <button class="elements__like-button" type="button"></button>
@@ -41,8 +43,9 @@
           </li>
       </template>
     </ul>
-
+    
     </main>
+
     <footer class="footer"><p class="footer__text">&copy; 2020 Mesto Russia</p></footer>
 
 <!-- Попап профиля-->
@@ -93,9 +96,6 @@
       </figure>
     </div>
   </template>
-
-
-
 
   <script src="./scripts/index.js"></script>
 </body>
