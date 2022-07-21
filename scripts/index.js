@@ -32,8 +32,7 @@ const initialCards = [{
 const cardTemplate = root.querySelector('#card-template').content;
 const cardElements = root.querySelector('.elements');
 
-// Шаблон попапа картинки
-const imgTemplate = root.querySelector('#img-template').content;
+// Карточки из коробки
 for (let i = 0; i < initialCards.length; i++) {
   const cardElement = cardTemplate.querySelector('.elements__element').cloneNode(true);
   cardElement.querySelector('.elements__image').src = initialCards[i].link;
@@ -51,6 +50,7 @@ const saveButtonCard = root.querySelectorAll('.popup__submit-button')[1]; // к�
 // Находим попапы
 const popupProfile = root.querySelector('.popup_profile'); // попап редактирования профиля
 const popupCard = root.querySelector('.popup_card'); // попап добавления карточки
+const popupImg = root.querySelector('.popup_image');
 
 // ПЕРЕМЕННЫЕ //
 
@@ -93,14 +93,9 @@ function popupOpen(p) {
   p.classList.add('popup_opened');
 }
 
-// Закрываем попап и если это попап картинки то удаляем его
+// Закрываем попап
 function popupClose(p) {
   p.classList.remove('popup_opened');
-  if (p.classList.contains('popup_image')) {
-    setTimeout(() => {
-      p.remove();
-    }, 500);
-  }
 }
 
 // Функция закрытия попапа для всех кнопок закрытия
@@ -124,7 +119,6 @@ function insertValuesToField() {
   jobInput.value = profileCharacter.textContent;
 }
 
-
 // Функция «отправки» формы, профиля
 function formSubmitHandler(evt) {
   evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
@@ -147,13 +141,9 @@ function formSubmitHandlerCard(evt) {
 function toOpenImage(evt) {
   const target = evt.target;
   if (target.classList.contains('elements__image')) {
-    const imgElement = imgTemplate.querySelector('.popup_image').cloneNode(true);
-    imgElement.querySelector('.popup__img').src = target.src;
-    imgElement.querySelector('.popup__caption').textContent = target.dataset.caption;
-    root.append(imgElement);
-    setTimeout(() => {
-      popupOpen(imgElement);
-    }, 1);
+    popupImg.querySelector('.popup__img').src = target.src;
+    popupImg.querySelector('.popup__caption').textContent = target.dataset.caption;
+    popupOpen(popupImg);
   }
 }
 
