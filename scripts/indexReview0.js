@@ -1,3 +1,6 @@
+// КОНСТАНТЫ //
+
+const root = document.querySelector('.page');
 // Данные карточек из коробки
 const initialCards = [{
     name: 'Архыз',
@@ -25,117 +28,81 @@ const initialCards = [{
   }
 ];
 
-const selectors = {
-  cardTemplate: '#card-template',
-  page: '.page',
-  cardElements: '.elements',
-  cardElement: '.elements__element',
-  elementsImage: '.elements__image',
-  elementsName: '.elements__name',
-  editButton: '.profile__edit-button',
-  saveButton: '.popup__submit-button',
-  addButton: '.profile__add-button',
-  saveButtonCard: '.popup__submit-button',
-  popupProfile: '.popup_profile',
-  popupCard: '.popup_card',
-  popupImg: '.popup_image',
-  formElement: '.popup__container',
-  nameInput: '.popup__text_user_name',
-  jobInput: '.popup__text_user_character',
-  profileName: '.profile__name',
-  profileCharacter: '.profile__character',
-  formElementCard: '.popup__container',
-  nameCard: '.popup__text_card_name',
-  linkCard: '.popup__text_card_address',
-  popup: '.popup',
-  popupImage: '.popup__img',
-  popupCaption: '.popup__caption',
-  liked: 'elements__like-button_liked',
-  likeButton: 'elements__like-button',
-  popupOpened: 'popup_opened',
-  cross: 'cross',
-  crossImg: 'cross__img',
-  elementsImageClass: 'elements__image',
-  elementsTrashClass: 'elements__trash',
-
-}
-
-const root = document.querySelector(selectors.page);
-
 // Шаблон карточки
-const cardTemplate = root.querySelector(selectors.cardTemplate).content;
-const cardElements = root.querySelector(selectors.cardElements);
+const cardTemplate = root.querySelector('#card-template').content;
+const cardElements = root.querySelector('.elements');
 
 // Карточки из коробки
 for (let i = 0; i < initialCards.length; i++) {
-  const cardElement = cardTemplate.querySelector(selectors.cardElement).cloneNode(true);
-  cardElement.querySelector(selectors.elementsImage).src = initialCards[i].link;
-  cardElement.querySelector(selectors.elementsImage).alt = initialCards[i].name;
-  cardElement.querySelector(selectors.elementsName).textContent = initialCards[i].name;
+  const cardElement = cardTemplate.querySelector('.elements__element').cloneNode(true);
+  cardElement.querySelector('.elements__image').src = initialCards[i].link;
+  cardElement.querySelector('.elements__image').dataset.caption = initialCards[i].name;
+  cardElement.querySelector('.elements__name').textContent = initialCards[i].name;
   cardElements.append(cardElement);
 }
-// Карточки из коробки
 
 // Находим кнопки
-const editButton = root.querySelector(selectors.editButton); // кнопка редактирования профиля
-const saveButton = root.querySelectorAll(selectors.saveButton)[0]; // кнопка сохранения профиля
-const addButton = root.querySelector(selectors.addButton); // кнопка добавления карточки
-const saveButtonCard = root.querySelectorAll(selectors.saveButtonCard)[1]; // кнопка сохранения карточки
+const editButton = root.querySelector('.profile__edit-button'); // кнопка редактирования профиля
+const saveButton = root.querySelectorAll('.popup__submit-button')[0]; // кнопка сохранения профиля
+const addButton = root.querySelector('.profile__add-button'); // кнопка добавления карточки
+const saveButtonCard = root.querySelectorAll('.popup__submit-button')[1]; // кнопка сохранения карточки
 
 // Находим попапы
-const popupProfile = root.querySelector(selectors.popupProfile); // попап редактирования профиля
-const popupCard = root.querySelector(selectors.popupCard); // попап добавления карточки
-const popupImg = root.querySelector(selectors.popupImg); // попап картинки
+const popupProfile = root.querySelector('.popup_profile'); // попап редактирования профиля
+const popupCard = root.querySelector('.popup_card'); // попап добавления карточки
+const popupImg = root.querySelector('.popup_image');
+
+// ПЕРЕМЕННЫЕ //
 
 // Находим форму редактирования профиля
-const formElement = root.querySelectorAll(selectors.formElement)[0];
+const formElement = root.querySelectorAll('.popup__container')[0];
 
 // Находим поля формы
-const nameInput = formElement.querySelector(selectors.nameInput);
-const jobInput = formElement.querySelector(selectors.jobInput);
+let nameInput = formElement.querySelector('.popup__text_user_name');
+let jobInput = formElement.querySelector('.popup__text_user_character');
 
 // Находим элементы, откуда должны быть вставлены значения полей
-const profileName = root.querySelector(selectors.profileName);
-const profileCharacter = root.querySelector(selectors.profileCharacter);
+let profileName = root.querySelector('.profile__name');
+let profileCharacter = root.querySelector('.profile__character');
 // Форма редактирования профиля
 
 // Находим форму добавления карточки
-const formElementCard = root.querySelectorAll(selectors.formElementCard)[1];
+const formElementCard = root.querySelectorAll('.popup__container')[1];
 // Находим поля формы добавления карточки
-const nameCard = formElementCard.querySelector(selectors.nameCard);
-const linkCard = formElementCard.querySelector(selectors.linkCard);
+let nameCard = formElementCard.querySelector('.popup__text_card_name');
+let linkCard = formElementCard.querySelector('.popup__text_card_address');
 // Форма добавления карточки
 
 // ФУНКЦИИ //
 
 // Лайк
 function toLike(h) {
-  h.classList.toggle(selectors.liked);
+  h.classList.toggle('elements__like-button_liked');
 }
 
 // Функция лайка любого лайка
 function toLikeAll(evt) {
   const target = evt.target;
-  if (target.classList.contains(selectors.likeButton)) {
+  if (target.classList.contains('elements__like-button')) {
     toLike(target);
   }
 }
 
 // Открываем попап
 function popupOpen(p) {
-  p.classList.add(selectors.popupOpened);
+  p.classList.add('popup_opened');
 }
 
 // Закрываем попап
 function popupClose(p) {
-  p.classList.remove(selectors.popupOpened);
+  p.classList.remove('popup_opened');
 }
 
 // Функция закрытия попапа для всех кнопок закрытия
 function closePopup(evt) {
   const target = evt.target;
-  const modal = target.closest(selectors.popup);
-  if (target.classList.contains(selectors.cross) || target.classList.contains(selectors.crossImg) || target === modal) {
+  const modal = target.closest('.popup');
+  if (target.classList.contains('cross') || target.classList.contains('cross__img') || target === modal) {
     popupClose(modal);
   }
 }
@@ -162,10 +129,10 @@ function formSubmitHandler(evt) {
 // Функция «отправки» формы, карточки
 function formSubmitHandlerCard(evt) {
   evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
-  const cardElement = cardTemplate.querySelector(selectors.cardElement).cloneNode(true);
-  cardElement.querySelector(selectors.elementsImage).src = linkCard.value;
-  cardElement.querySelector(selectors.elementsImage).alt = nameCard.value;
-  cardElement.querySelector(selectors.elementsName).textContent = nameCard.value;
+  const cardElement = cardTemplate.querySelector('.elements__element').cloneNode(true);
+  cardElement.querySelector('.elements__image').src = linkCard.value;
+  cardElement.querySelector('.elements__image').dataset.caption = nameCard.value;
+  cardElement.querySelector('.elements__name').textContent = nameCard.value;
   cardElements.prepend(cardElement);
   popupClose(popupCard);
 }
@@ -173,23 +140,23 @@ function formSubmitHandlerCard(evt) {
 // Функция открытия попапа с картинкой
 function toOpenImage(evt) {
   const target = evt.target;
-  if (target.classList.contains(selectors.elementsImageClass)) {
-    popupImg.querySelector(selectors.popupImage).src = target.src;
-    popupImg.querySelector(selectors.popupCaption).textContent = target.alt;
+  if (target.classList.contains('elements__image')) {
+    popupImg.querySelector('.popup__img').src = target.src;
+    popupImg.querySelector('.popup__caption').textContent = target.dataset.caption;
     popupOpen(popupImg);
   }
 }
 
 // Функция удаления карточки
 function toDel(t) {
-  const cardItem = t.closest(selectors.cardElement);
+  const cardItem = t.closest('.elements__element');
   cardItem.remove();
 }
 
 // Функция удаления любой карточки
 function toDelCard(evt) {
   const target = evt.target;
-  if (target.classList.contains(selectors.elementsTrashClass)) {
+  if (target.classList.contains('elements__trash')) {
     toDel(target);
   }
 }
