@@ -66,16 +66,6 @@ const root = document.querySelector(selectors.page);
 const cardTemplate = root.querySelector(selectors.cardTemplate).content;
 const cardElements = root.querySelector(selectors.cardElements);
 
-// Карточки из коробки
-for (let i = 0; i < initialCards.length; i++) {
-  const cardElement = cardTemplate.querySelector(selectors.cardElement).cloneNode(true);
-  cardElement.querySelector(selectors.elementsImage).src = initialCards[i].link;
-  cardElement.querySelector(selectors.elementsImage).alt = initialCards[i].name;
-  cardElement.querySelector(selectors.elementsName).textContent = initialCards[i].name;
-  cardElements.append(cardElement);
-}
-// Карточки из коробки
-
 // Находим кнопки
 const editButton = root.querySelector(selectors.editButton); // кнопка редактирования профиля
 const saveButton = root.querySelectorAll(selectors.saveButton)[0]; // кнопка сохранения профиля
@@ -97,56 +87,66 @@ const jobInput = formElement.querySelector(selectors.jobInput);
 // Находим элементы, откуда должны быть вставлены значения полей
 const profileName = root.querySelector(selectors.profileName);
 const profileCharacter = root.querySelector(selectors.profileCharacter);
-// Форма редактирования профиля
+// Форма редактирования профиля /
 
 // Находим форму добавления карточки
 const formElementCard = root.querySelectorAll(selectors.formElementCard)[1];
 // Находим поля формы добавления карточки
 const nameCard = formElementCard.querySelector(selectors.nameCard);
 const linkCard = formElementCard.querySelector(selectors.linkCard);
-// Форма добавления карточки
+// Форма добавления карточки /
+
+// Функция создания карточки
+function createCard(link, name) {
+  const cardElement = cardTemplate.querySelector(selectors.cardElement).cloneNode(true);
+  cardElement.querySelector(selectors.elementsImage).src = link;
+  cardElement.querySelector(selectors.elementsImage).alt = name;
+  cardElement.querySelector(selectors.elementsName).textContent = name;
+  
+  return cardElement;
+}
+
+// Функция-обработчик события отправки формы карточки
+function addEventListener() {
+  formElementCard.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    cardElements.prepend(createCard(linkCard.value, nameCard.value));
+    closePopup(popupCard);
+  })
+}
+addEventListener();
+
+// Функция создания исходных карточек
+function createInitialCard() {
+  initialCards.forEach((item) => cardElements.append(createCard(item.link, item.name)))
+}
+createInitialCard();
+
 
 // ФУНКЦИИ //
-
-// Лайк
-function toLike(h) {
-  h.classList.toggle(selectors.liked);
-}
-
-// Функция лайка любого лайка
-function toLikeAll(evt) {
-  const target = evt.target;
-  if (target.classList.contains(selectors.likeButton)) {
-    toLike(target);
-  }
-}
-
 // Открываем попап
-function popupOpen(p) {
+function openPopup(p) {
   p.classList.add(selectors.popupOpened);
 }
-
 // Закрываем попап
-function popupClose(p) {
+function closePopup(p) {
   p.classList.remove(selectors.popupOpened);
 }
-
 // Функция закрытия попапа для всех кнопок закрытия
-function closePopup(evt) {
+function closePopupAll(evt) {
   const target = evt.target;
   const modal = target.closest(selectors.popup);
   if (target.classList.contains(selectors.cross) || target.classList.contains(selectors.crossImg) || target === modal) {
-    popupClose(modal);
+    closePopup(modal);
   }
 }
-
-// Функция вставки значений из полей в документ
+// Функция вставки значений из полей в профиль
 function insertValuesFromField() {
   profileName.textContent = nameInput.value;
   profileCharacter.textContent = jobInput.value;
 }
 
-// Функция вставки значений из документа в поле
+// Функция вставки значений из документа в поле редактирования профиля
 function insertValuesToField() {
   nameInput.value = profileName.textContent;
   jobInput.value = profileCharacter.textContent;
@@ -156,69 +156,19 @@ function insertValuesToField() {
 function formSubmitHandler(evt) {
   evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
   insertValuesFromField(); // Вставляем новые значения из полей в документ с помощью textContent
-  popupClose(popupProfile);
-}
-
-// Функция «отправки» формы, карточки
-function formSubmitHandlerCard(evt) {
-  evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
-  const cardElement = cardTemplate.querySelector(selectors.cardElement).cloneNode(true);
-  cardElement.querySelector(selectors.elementsImage).src = linkCard.value;
-  cardElement.querySelector(selectors.elementsImage).alt = nameCard.value;
-  cardElement.querySelector(selectors.elementsName).textContent = nameCard.value;
-  cardElements.prepend(cardElement);
-  popupClose(popupCard);
-}
-
-// Функция открытия попапа с картинкой
-function toOpenImage(evt) {
-  const target = evt.target;
-  if (target.classList.contains(selectors.elementsImageClass)) {
-    popupImg.querySelector(selectors.popupImage).src = target.src;
-    popupImg.querySelector(selectors.popupCaption).textContent = target.alt;
-    popupOpen(popupImg);
-  }
-}
-
-// Функция удаления карточки
-function toDel(t) {
-  const cardItem = t.closest(selectors.cardElement);
-  cardItem.remove();
-}
-
-// Функция удаления любой карточки
-function toDelCard(evt) {
-  const target = evt.target;
-  if (target.classList.contains(selectors.elementsTrashClass)) {
-    toDel(target);
-  }
+  closePopup(popupProfile);
 }
 
 // СЛУШАТЕЛИ СОБЫТИЙ //
 
 // обработчик кликов для закрытия любых попапов
-root.addEventListener('click', closePopup);
-
-// обработчик кликов для лайков
-root.addEventListener('click', toLikeAll);
-
-// обработчик удаления карточек
-root.addEventListener('click', toDelCard);
-
-// обработчик попапа картинки
-cardElements.addEventListener('click', toOpenImage);
-
+root.addEventListener('click', closePopupAll);
 // Прикрепляем обработчик к форме: он будет следить за событием “submit” - «отправка»
 formElement.addEventListener('submit', formSubmitHandler); // форма профиля
-formElementCard.addEventListener('submit', formSubmitHandlerCard); // форма карточки
-
 // Открываем попап редактирования профиля по клику на кнопку
 editButton.addEventListener('click', () => {
   insertValuesToField(); // Вставляем значения из документа в поля формы с помощью textContent
-  popupOpen(popupProfile);
+  openPopup(popupProfile);
 });
-
 // Открываем попап добавления карточки
-addButton.addEventListener('click', () => {
-  popupOpen(popupCard);
-});
+addButton.addEventListener('click', () => openPopup(popupCard));
