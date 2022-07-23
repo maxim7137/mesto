@@ -56,7 +56,6 @@ const selectors = {
   crossImg: 'cross__img',
   elementsImageClass: 'elements__image',
   elementsTrashClass: 'elements__trash',
-
 }
 
 const root = document.querySelector(selectors.page);
@@ -116,6 +115,7 @@ function createCard(link, name) {
 
   cardImg.addEventListener('click', () => {
     imgOfPopupImg.src = link;
+    imgOfPopupImg.alt = name;
     captionOfPopupImg.textContent = name;
     openPopup(popupImg);
   })
