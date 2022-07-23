@@ -33,9 +33,7 @@ const selectors = {
   elementsImage: '.elements__image',
   elementsName: '.elements__name',
   editButton: '.profile__edit-button',
-  saveButton: '.popup__submit-button',
   addButton: '.profile__add-button',
-  saveButtonCard: '.popup__submit-button',
   popupProfile: '.popup_profile',
   popupCard: '.popup_card',
   popupImg: '.popup_image',
@@ -68,10 +66,8 @@ const cardTemplate = root.querySelector(selectors.cardTemplate).content;
 const cardElements = root.querySelector(selectors.cardElements);
 
 // Находим кнопки
-const editButton = root.querySelector(selectors.editButton); // кнопка редактирования профиля
-const saveButton = root.querySelectorAll(selectors.saveButton)[0]; // кнопка сохранения профиля
-const addButton = root.querySelector(selectors.addButton); // кнопка добавления карточки
-const saveButtonCard = root.querySelectorAll(selectors.saveButtonCard)[1]; // кнопка сохранения карточки
+const buttonEdit = root.querySelector(selectors.editButton); // кнопка редактирования профиля
+const buttonAdd = root.querySelector(selectors.addButton); // кнопка добавления карточки
 
 // Находим попапы
 const popupProfile = root.querySelector(selectors.popupProfile); // попап редактирования профиля
@@ -174,7 +170,7 @@ function insertValuesToField() {
 }
 
 // Функция «отправки» формы, профиля
-function formSubmitHandler(evt) {
+function addFormSubmitHandler(evt) {
   evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
   insertValuesFromField(); // Вставляем новые значения из полей в документ с помощью textContent
   closePopup(popupProfile);
@@ -185,11 +181,11 @@ function formSubmitHandler(evt) {
 // обработчик кликов для закрытия любых попапов
 root.addEventListener('click', closePopupAll);
 // Прикрепляем обработчик к форме: он будет следить за событием “submit” - «отправка»
-formElement.addEventListener('submit', formSubmitHandler); // форма профиля
+formElement.addEventListener('submit', addFormSubmitHandler); // форма профиля
 // Открываем попап редактирования профиля по клику на кнопку
-editButton.addEventListener('click', () => {
+buttonEdit.addEventListener('click', () => {
   insertValuesToField(); // Вставляем значения из документа в поля формы с помощью textContent
   openPopup(popupProfile);
 });
 // Открываем попап добавления карточки
-addButton.addEventListener('click', () => openPopup(popupCard));
+buttonAdd.addEventListener('click', () => openPopup(popupCard));
