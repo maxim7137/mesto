@@ -51,7 +51,8 @@ const selectors = {
   popupImage: '.popup__img',
   popupCaption: '.popup__caption',
   liked: 'elements__like-button_liked',
-  likeButton: 'elements__like-button',
+  buttonLike: '.elements__like-button',
+  buttonDel: '.elements__trash',
   popupOpened: 'popup_opened',
   cross: 'cross',
   crossImg: 'cross__img',
@@ -75,7 +76,12 @@ const saveButtonCard = root.querySelectorAll(selectors.saveButtonCard)[1]; // к
 // Находим попапы
 const popupProfile = root.querySelector(selectors.popupProfile); // попап редактирования профиля
 const popupCard = root.querySelector(selectors.popupCard); // попап добавления карточки
+
+// попап картинки
 const popupImg = root.querySelector(selectors.popupImg); // попап картинки
+const imgOfPopupImg = popupImg.querySelector(selectors.popupImage); // сама картинка
+const captionOfPopupImg = popupImg.querySelector(selectors.popupCaption); // подпись картинки
+// попап картинки
 
 // Находим форму редактирования профиля
 const formElement = root.querySelectorAll(selectors.formElement)[0];
@@ -99,10 +105,25 @@ const linkCard = formElementCard.querySelector(selectors.linkCard);
 // Функция создания карточки
 function createCard(link, name) {
   const cardElement = cardTemplate.querySelector(selectors.cardElement).cloneNode(true);
-  cardElement.querySelector(selectors.elementsImage).src = link;
-  cardElement.querySelector(selectors.elementsImage).alt = name;
-  cardElement.querySelector(selectors.elementsName).textContent = name;
-  
+  const cardImg = cardElement.querySelector(selectors.elementsImage);
+  const cardName = cardElement.querySelector(selectors.elementsName);
+  const btnDel = cardElement.querySelector(selectors.buttonDel);
+  const btnLike = cardElement.querySelector(selectors.buttonLike);
+
+  cardImg.src = link;
+  cardImg.alt = name;
+  cardName.textContent = name;
+
+  btnDel.addEventListener('click', () => cardElement.remove());
+
+  btnLike.addEventListener('click', () => btnLike.classList.toggle(selectors.liked));
+
+  cardImg.addEventListener('click', () => {
+    imgOfPopupImg.src = link;
+    captionOfPopupImg.textContent = name;
+    openPopup(popupImg);
+  })
+
   return cardElement;
 }
 
