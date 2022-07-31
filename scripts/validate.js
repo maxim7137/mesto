@@ -7,15 +7,11 @@ const formSelectors = {
   errorClass: 'popup__error_visible'
 };
 
-const form = root.querySelector(formSelectors.formSelector);
-const formInput = form.querySelector(formSelectors.inputSelector);
-const formError = form.querySelector(`.${formInput.id}-error`);
-
 const showError = (formElement, inputElement, errorMessage) => {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
   inputElement.classList.add(formSelectors.inputErrorClass);
-  errorElement.textContent = errorMessage;
   errorElement.classList.add(formSelectors.errorClass);
+  errorElement.textContent = errorMessage;
 };
 
 const hideError = (formElement, inputElement, ) => {
@@ -33,17 +29,8 @@ const checkInputValidity = (formElement, inputElement) => {
   }
 };
 
-form.addEventListener('submit', function (evt) {
-  evt.preventDefault();
-});
-
-// formInput.addEventListener('input', function () {
-//   checkInputValidity(form, formInput);
-// });
-
 const setEventListeners = (formElement) => {
-
-  const inputList = Array.from(document.querySelectorAll(formSelectors.inputSelector));
+  const inputList = Array.from(formElement.querySelectorAll(formSelectors.inputSelector));
   inputList.forEach((inputElement) => {
     inputElement.addEventListener('input', function () {
       checkInputValidity(formElement, inputElement);
@@ -51,10 +38,18 @@ const setEventListeners = (formElement) => {
   });
 };
 
-setEventListeners(form);
 
+const enableValidation = () => {
+  const formList = Array.from(root.querySelectorAll(formSelectors.formSelector));
+  formList.forEach((formElement) => {
+    formElement.addEventListener('submit', function (evt) {
+      evt.preventDefault();
+    });
+    setEventListeners(formElement);
+  });
+};
 
-
+enableValidation();
 
 
 

@@ -149,11 +149,14 @@ function addEscPopupClose(evt) {
     closePopup(popupOpenedNode);
   }
 }
+
+
+
 // Открываем попап
 function openPopup(p) {
   p.classList.add(selectors.popupOpened);
   root.addEventListener('keydown', addEscPopupClose); // слушатель Escape
-  
+
 }
 // Закрываем попап
 function closePopup(p) {
@@ -180,6 +183,8 @@ function insertValuesToField() {
   jobInput.value = profileCharacter.textContent;
 }
 
+
+
 // Функция «отправки» формы, профиля
 function addFormSubmitHandler(evt) {
   evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
@@ -196,6 +201,7 @@ formElement.addEventListener('submit', addFormSubmitHandler); // форма пр
 // Открываем попап редактирования профиля по клику на кнопку
 buttonEdit.addEventListener('click', () => {
   insertValuesToField(); // Вставляем значения из документа в поля формы с помощью textContent
+
   openPopup(popupProfile);
 });
 // Открываем попап добавления карточки
