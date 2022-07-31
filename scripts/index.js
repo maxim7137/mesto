@@ -38,13 +38,13 @@ const selectors = {
   popupCard: '.popup_card',
   popupImg: '.popup_image',
   formElement: '.popup__container',
-  nameInput: '.popup__text_user_name',
-  jobInput: '.popup__text_user_character',
+  nameInput: '.popup__input_user_name',
+  jobInput: '.popup__input_user_character',
   profileName: '.profile__name',
   profileCharacter: '.profile__character',
   formElementCard: '.popup__container',
-  nameCard: '.popup__text_card_name',
-  linkCard: '.popup__text_card_address',
+  nameCard: '.popup__input_card_name',
+  linkCard: '.popup__input_card_address',
   popup: '.popup',
   popupImage: '.popup__img',
   popupCaption: '.popup__caption',
@@ -153,6 +153,7 @@ function addEscPopupClose(evt) {
 function openPopup(p) {
   p.classList.add(selectors.popupOpened);
   root.addEventListener('keydown', addEscPopupClose); // слушатель Escape
+  checkInputValidity(); // проверяем поле
 }
 // Закрываем попап
 function closePopup(p) {
