@@ -57,8 +57,8 @@
         <div class="popup__form-container">
           <h2 class="popup__heading">Редактировать профиль</h2>
           <form name="user-edit" class="popup__form">
-            <input type="text" name="user-name" id="user-name" class="popup__text popup__text_user_name" value="Жак-Ив Кусто">
-            <input type="text" name="user-character" id="user-character" class="popup__text popup__text_user_character" value="Исследователь океана">
+            <input required type="text" name="user-name" id="user-name" class="popup__text popup__text_user_name" value="Жак-Ив Кусто" minlength="2" maxlength="40">
+            <input required type="text" name="user-character" id="user-character" class="popup__text popup__text_user_character" value="Исследователь океана" minlength="2" maxlength="200">
             <button type="submit" class="popup__submit-button">Сохранить</button>
           </form>
         </div>
@@ -74,8 +74,8 @@
       <div class="popup__form-container">
         <h2 class="popup__heading">Новое место</h2>
         <form name="card-edit" class="popup__form">
-          <input required type="text" name="card-name" id="card-name" class="popup__text popup__text_card_name" placeholder="Название">
-          <input required type="text" name="card-address" id="card-address" class="popup__text popup__text_card_address" placeholder="Ссылка на картинку">
+          <input required type="text" name="card-name" id="card-name" class="popup__text popup__text_card_name" placeholder="Название" minlength="2" maxlength="30">
+          <input required type="url" name="card-address" id="card-address" class="popup__text popup__text_card_address" placeholder="Ссылка на картинку">
           <button type="submit" class="popup__submit-button">Создать</button>
         </form>
       </div>
