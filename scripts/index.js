@@ -52,6 +52,7 @@ const selectors = {
   buttonLike: '.elements__like-button',
   buttonDel: '.elements__trash',
   popupOpened: 'popup_opened',
+  popupOpenedClass: '.popup_opened',
   cross: 'cross',
   crossImg: 'cross__img',
   elementsImageClass: 'elements__image',
@@ -141,13 +142,22 @@ createInitialCard();
 
 
 // ФУНКЦИИ //
+// Функция закрытия попапа по кнопке Esc
+function addEscPopupClose(evt) {
+  const popupOpenedNode = root.querySelector(selectors.popupOpenedClass);
+  if (evt.key === 'Escape') {
+    closePopup(popupOpenedNode);
+  }
+}
 // Открываем попап
 function openPopup(p) {
   p.classList.add(selectors.popupOpened);
+  root.addEventListener('keydown', addEscPopupClose); // слушатель Escape
 }
 // Закрываем попап
 function closePopup(p) {
   p.classList.remove(selectors.popupOpened);
+  root.removeEventListener('keydown', addEscPopupClose); // удаляем слушатель Escape
 }
 // Функция закрытия попапа для всех кнопок закрытия
 function closePopupAll(evt) {
