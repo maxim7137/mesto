@@ -11,23 +11,25 @@ const form = root.querySelector(formSelectors.formSelector);
 const formInput = form.querySelector(formSelectors.inputSelector);
 const formError = form.querySelector(`.${formInput.id}-error`);
 
-const showError = (input, errorMessage) => {
-  input.classList.add(formSelectors.inputErrorClass);
-  formError.textContent = errorMessage;
-  formError.classList.add(formSelectors.errorClass);
+const showError = (formElement, inputElement, errorMessage) => {
+  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+  inputElement.classList.add(formSelectors.inputErrorClass);
+  errorElement.textContent = errorMessage;
+  errorElement.classList.add(formSelectors.errorClass);
 };
 
-const hideError = (input) => {
-  input.classList.remove(formSelectors.inputErrorClass);
-  formError.classList.remove(formSelectors.errorClass);
-  formError.textContent = '';
+const hideError = (formElement, inputElement, ) => {
+  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+  inputElement.classList.remove(formSelectors.inputErrorClass);
+  errorElement.classList.remove(formSelectors.errorClass);
+  errorElement.textContent = '';
 };
 
-const checkInputValidity = () => {
-  if (!formInput.validity.valid) {
-    showError(formInput, formInput.validationMessage);
+const checkInputValidity = (formElement, inputElement) => {
+  if (!inputElement.validity.valid) {
+    showError(formElement, inputElement, inputElement.validationMessage);
   } else {
-    hideError(formInput);
+    hideError(formElement, inputElement);
   }
 };
 
@@ -35,11 +37,21 @@ form.addEventListener('submit', function (evt) {
   evt.preventDefault();
 });
 
-formInput.addEventListener('input', function () {
-  checkInputValidity();
-});
+// formInput.addEventListener('input', function () {
+//   checkInputValidity(form, formInput);
+// });
 
+const setEventListeners = (formElement) => {
 
+  const inputList = Array.from(document.querySelectorAll(formSelectors.inputSelector));
+  inputList.forEach((inputElement) => {
+    inputElement.addEventListener('input', function () {
+      checkInputValidity(formElement, inputElement);
+    });
+  });
+};
+
+setEventListeners(form);
 
 
 

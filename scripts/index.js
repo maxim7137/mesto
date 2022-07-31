@@ -153,7 +153,7 @@ function addEscPopupClose(evt) {
 function openPopup(p) {
   p.classList.add(selectors.popupOpened);
   root.addEventListener('keydown', addEscPopupClose); // слушатель Escape
-  checkInputValidity(); // проверяем поле
+  
 }
 // Закрываем попап
 function closePopup(p) {
