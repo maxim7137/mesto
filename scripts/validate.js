@@ -24,21 +24,12 @@ const hideError = (formElement, inputElement, ) => {
   errorElement.textContent = '';
 };
 
-// функция отключения клавиши Enter
-const disableEnter = (evt) => {
-  if (evt.key === 'Enter') {
-    evt.preventDefault();
-  }
-}
-
 // функция переключения функций видимости ошибки и отключения клавиши Enter
 const checkInputValidity = (formElement, inputElement) => {
   if (inputElement.validity.valid) {
     hideError(formElement, inputElement);
-    formElement.removeEventListener('keydown', disableEnter);
   } else {
     showError(formElement, inputElement, inputElement.validationMessage);
-    formElement.addEventListener('keydown', disableEnter);
   }
 };
 
@@ -54,14 +45,31 @@ const toggleButtonState = (inputList, buttonElement) => {
   }
 }
 
+// функция отключения клавиши Enter
+const disableEnter = (evt) => {
+  if (evt.key === 'Enter') {
+    evt.preventDefault();
+  }
+}
+
+const toggleEnterState = (formElement, inputList) => {
+  if (hasInvalidInput(inputList)) {
+    formElement.addEventListener('keydown', disableEnter);
+  } else {
+    formElement.removeEventListener('keydown', disableEnter);
+  }
+}
+
 const setEventListeners = (formElement) => {
   const inputList = Array.from(formElement.querySelectorAll(formSelectors.inputSelector));
   const buttonElement = formElement.querySelector(formSelectors.submitButtonSelector);
   toggleButtonState(inputList, buttonElement);
+  toggleEnterState(formElement, inputList);
   inputList.forEach((inputElement) => {
     inputElement.addEventListener('input', function () {
       checkInputValidity(formElement, inputElement);
       toggleButtonState(inputList, buttonElement);
+      toggleEnterState(formElement, inputList);
     });
   });
 };

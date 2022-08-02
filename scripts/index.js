@@ -155,9 +155,11 @@ function checkInputOpen(formElement) {
   const inputList = Array.from(formElement.querySelectorAll(formSelectors.inputSelector));
   const buttonElement = formElement.querySelector(formSelectors.submitButtonSelector);
   toggleButtonState(inputList, buttonElement);
+  toggleEnterState(formElement, inputList);
   inputList.forEach((inputElement) => {
     checkInputValidity(formElement, inputElement);
     toggleButtonState(inputList, buttonElement);
+    toggleEnterState(formElement, inputList);
   });
 }
 
