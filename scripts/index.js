@@ -140,7 +140,6 @@ function createInitialCard() {
 }
 createInitialCard();
 
-
 // ФУНКЦИИ //
 // Функция закрытия попапа по кнопке Esc
 function addEscPopupClose(evt) {
@@ -169,11 +168,13 @@ function openPopup(p) {
   p.classList.add(selectors.popupOpened);
   root.addEventListener('keydown', addEscPopupClose); // слушатель Escape
 }
+
 // Закрываем попап
 function closePopup(p) {
   p.classList.remove(selectors.popupOpened);
   root.removeEventListener('keydown', addEscPopupClose); // удаляем слушатель Escape
 }
+
 // Функция закрытия попапа для всех кнопок закрытия
 function closePopupAll(evt) {
   const target = evt.target;
@@ -182,6 +183,7 @@ function closePopupAll(evt) {
     closePopup(modal);
   }
 }
+
 // Функция вставки значений из полей в профиль
 function insertValuesFromField() {
   profileName.textContent = nameInput.value;
@@ -196,9 +198,9 @@ function insertValuesToField() {
 
 // Функция «отправки» формы, профиля
 function addFormSubmitHandler(evt) {
-  evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
-  insertValuesFromField(); // Вставляем новые значения из полей в документ с помощью textContent
-  closePopup(popupProfile);
+  evt.preventDefault();     // Эта строчка отменяет стандартную отправку формы.
+  insertValuesFromField();  // Вставляем новые значения из полей в документ с помощью textContent
+  closePopup(popupProfile); // Закрываем попап
 }
 
 // СЛУШАТЕЛИ СОБЫТИЙ //
@@ -209,12 +211,12 @@ root.addEventListener('click', closePopupAll);
 formElement.addEventListener('submit', addFormSubmitHandler); // форма профиля
 // Открываем попап редактирования профиля по клику на кнопку
 buttonEdit.addEventListener('click', () => {
-  openPopup(popupProfile);
-  insertValuesToField(); // Вставляем значения из документа в поля формы с помощью textContent
+  openPopup(popupProfile);      // Открываем попап
+  insertValuesToField();        // Вставляем значения из документа в поля формы с помощью textContent
   checkInputOpen(popupProfile); // Проверка полей введенных из документа
 });
 // Открываем попап добавления карточки
 buttonAdd.addEventListener('click', () => {
-  openPopup(popupCard);
-  checkInputOpen(popupCard); // Проверка полей при открытии карточки
+  openPopup(popupCard);       // Открываем попап
+  checkInputOpen(popupCard);  // Проверка полей при открытии карточки
 });

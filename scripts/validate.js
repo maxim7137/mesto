@@ -33,10 +33,12 @@ const checkInputValidity = (formElement, inputElement) => {
   }
 };
 
+// функция проверки есть ли хоть один невалидный инпут
 const hasInvalidInput = (inputList) => {
   return inputList.some((inputElement) => !inputElement.validity.valid);
 };
 
+// функция переключения кнопки в зависимости от предыдущей функции
 const toggleButtonState = (inputList, buttonElement) => {
   if (hasInvalidInput(inputList)) {
     buttonElement.classList.add(formSelectors.inactiveButtonClass);
@@ -52,6 +54,7 @@ const disableEnter = (evt) => {
   }
 }
 
+// функция добавления-удаления слушателя нажатия клавиш на форму
 const toggleEnterState = (inputList, formElement) => {
   if (!hasInvalidInput(inputList)) {
     formElement.removeEventListener('keydown', disableEnter);
@@ -60,6 +63,7 @@ const toggleEnterState = (inputList, formElement) => {
   }
 }
 
+// функция развешивания всего выше на все инпуты в форме
 const setEventListeners = (formElement) => {
   const inputList = Array.from(formElement.querySelectorAll(formSelectors.inputSelector));
   const buttonElement = formElement.querySelector(formSelectors.submitButtonSelector);
@@ -74,7 +78,7 @@ const setEventListeners = (formElement) => {
   });
 };
 
-
+// функция развешивания всего выше на все формы на странице
 const enableValidation = () => {
   const formList = Array.from(root.querySelectorAll(formSelectors.formSelector));
   formList.forEach((formElement) => {
@@ -85,6 +89,7 @@ const enableValidation = () => {
   });
 };
 
+// вызов функции валидации всех форм
 enableValidation();
 
 /* enableValidation({
