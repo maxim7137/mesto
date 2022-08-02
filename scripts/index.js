@@ -24,7 +24,7 @@ const initialCards = [{
     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
   }
 ];
-
+// Селекторы
 const selectors = {
   cardTemplate: '#card-template',
   page: '.page',
@@ -151,16 +151,14 @@ function addEscPopupClose(evt) {
 }
 
 // Функция проверки полей при открытии попапа
-function checkInputOpening() {
-  const popupOpenedNode = root.querySelector(selectors.popupOpenedClass);
-  const popupOpenedForm = popupOpenedNode.querySelector(formSelectors.formSelector);
-  const buttonElement = popupOpenedNode.querySelector(formSelectors.submitButtonSelector);
-  const inputListOpenedForm = Array.from(popupOpenedForm.querySelectorAll(formSelectors.inputSelector));
-  const popupOpenedInput1 = popupOpenedForm.querySelectorAll(formSelectors.inputSelector)[0];
-  const popupOpenedInput2 = popupOpenedForm.querySelectorAll(formSelectors.inputSelector)[1];
-  checkInputValidity(popupOpenedNode, popupOpenedInput1);
-  checkInputValidity(popupOpenedNode, popupOpenedInput2);
-  toggleButtonState(inputListOpenedForm, buttonElement); // проверяем поля для кнопки
+function checkInputOpen(formElement) {
+  const inputList = Array.from(formElement.querySelectorAll(formSelectors.inputSelector));
+  const buttonElement = formElement.querySelector(formSelectors.submitButtonSelector);
+  toggleButtonState(inputList, buttonElement);
+  inputList.forEach((inputElement) => {
+    checkInputValidity(formElement, inputElement);
+    toggleButtonState(inputList, buttonElement);
+  });
 }
 
 // Открываем попап
@@ -210,8 +208,10 @@ formElement.addEventListener('submit', addFormSubmitHandler); // форма пр
 buttonEdit.addEventListener('click', () => {
   openPopup(popupProfile);
   insertValuesToField(); // Вставляем значения из документа в поля формы с помощью textContent
-  checkInputOpening(); // Проверка полей введенных из документа
-
+  checkInputOpen(popupProfile); // Проверка полей введенных из документа
 });
 // Открываем попап добавления карточки
-buttonAdd.addEventListener('click', () => openPopup(popupCard));
+buttonAdd.addEventListener('click', () => {
+  openPopup(popupCard);
+  checkInputOpen(popupCard); // Проверка полей при открытии карточки
+});

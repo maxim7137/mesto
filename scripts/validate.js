@@ -1,3 +1,4 @@
+// селекторы
 const formSelectors = {
   formSelector: '.popup__form',
   inputSelector: '.popup__input',
@@ -7,6 +8,7 @@ const formSelectors = {
   errorClass: 'popup__error_visible'
 };
 
+// функция для вывода сообщения об ошибке
 const showError = (formElement, inputElement, errorMessage) => {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
   inputElement.classList.add(formSelectors.inputErrorClass);
@@ -14,6 +16,7 @@ const showError = (formElement, inputElement, errorMessage) => {
   errorElement.textContent = errorMessage;
 };
 
+// функция скрытия сообщения об ошибке
 const hideError = (formElement, inputElement, ) => {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
   inputElement.classList.remove(formSelectors.inputErrorClass);
@@ -21,11 +24,21 @@ const hideError = (formElement, inputElement, ) => {
   errorElement.textContent = '';
 };
 
+// функция отключения клавиши Enter
+const disableEnter = (evt) => {
+  if (evt.key === 'Enter') {
+    evt.preventDefault();
+  }
+}
+
+// функция переключения функций видимости ошибки и отключения клавиши Enter
 const checkInputValidity = (formElement, inputElement) => {
   if (inputElement.validity.valid) {
     hideError(formElement, inputElement);
+    formElement.removeEventListener('keydown', disableEnter);
   } else {
     showError(formElement, inputElement, inputElement.validationMessage);
+    formElement.addEventListener('keydown', disableEnter);
   }
 };
 
@@ -55,7 +68,7 @@ const setEventListeners = (formElement) => {
 
 
 const enableValidation = () => {
-  const formList = Array.from(document.querySelectorAll(formSelectors.formSelector));
+  const formList = Array.from(root.querySelectorAll(formSelectors.formSelector));
   formList.forEach((formElement) => {
     formElement.addEventListener('submit', function (evt) {
       evt.preventDefault();
@@ -65,18 +78,6 @@ const enableValidation = () => {
 };
 
 enableValidation();
-
-
-
-
-
-
-
-
-
-
-
-
 
 /* enableValidation({
   formSelector: '.popup__form',
