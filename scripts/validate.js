@@ -52,11 +52,11 @@ const disableEnter = (evt) => {
   }
 }
 
-const toggleEnterState = (formElement, inputList) => {
-  if (hasInvalidInput(inputList)) {
-    formElement.addEventListener('keydown', disableEnter);
-  } else {
+const toggleEnterState = (inputList, formElement) => {
+  if (!hasInvalidInput(inputList)) {
     formElement.removeEventListener('keydown', disableEnter);
+  } else {
+    formElement.addEventListener('keydown', disableEnter);
   }
 }
 
@@ -64,12 +64,12 @@ const setEventListeners = (formElement) => {
   const inputList = Array.from(formElement.querySelectorAll(formSelectors.inputSelector));
   const buttonElement = formElement.querySelector(formSelectors.submitButtonSelector);
   toggleButtonState(inputList, buttonElement);
-  toggleEnterState(formElement, inputList);
+  toggleEnterState(inputList, formElement);
   inputList.forEach((inputElement) => {
     inputElement.addEventListener('input', function () {
       checkInputValidity(formElement, inputElement);
       toggleButtonState(inputList, buttonElement);
-      toggleEnterState(formElement, inputList);
+      toggleEnterState(inputList, formElement);
     });
   });
 };

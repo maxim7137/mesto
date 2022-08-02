@@ -151,15 +151,16 @@ function addEscPopupClose(evt) {
 }
 
 // Функция проверки полей при открытии попапа
-function checkInputOpen(formElement) {
+function checkInputOpen(p) {
+  const formElement = p.querySelector(formSelectors.formSelector);
   const inputList = Array.from(formElement.querySelectorAll(formSelectors.inputSelector));
   const buttonElement = formElement.querySelector(formSelectors.submitButtonSelector);
   toggleButtonState(inputList, buttonElement);
-  toggleEnterState(formElement, inputList);
+  toggleEnterState(inputList, formElement);
   inputList.forEach((inputElement) => {
     checkInputValidity(formElement, inputElement);
     toggleButtonState(inputList, buttonElement);
-    toggleEnterState(formElement, inputList);
+    toggleEnterState(inputList, formElement);
   });
 }
 
