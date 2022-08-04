@@ -202,10 +202,13 @@ function insertValuesFromProfileToFields() {
 
 // Функция очистки полей добавления карточки и ошибок
 function clearCardInputs() {
+  const buttonElement = formElementCard.querySelector(formSelectors.submitButtonSelector);
   hideError(formElementCard, nameCard);
   hideError(formElementCard, linkCard);
   nameCard.value = '';
   linkCard.value = '';
+  buttonElement.classList.add(formSelectors.inactiveButtonClass);
+  buttonElement.setAttribute("disabled", "disabled");
 }
 
 // Функция «отправки» формы, профиля

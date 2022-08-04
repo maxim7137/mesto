@@ -65,7 +65,7 @@ const setEventListeners = (formElement) => {
 
 // функция развешивания всего выше на все формы на странице
 const enableValidation = () => {
-  const formList = Array.from(root.querySelectorAll(formSelectors.formSelector));
+  const formList = document.querySelectorAll(formSelectors.formSelector);
   formList.forEach((formElement) => {
     formElement.addEventListener('submit', function (evt) {
       evt.preventDefault();
