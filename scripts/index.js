@@ -218,5 +218,4 @@ buttonEdit.addEventListener('click', () => {
 // Открываем попап добавления карточки
 buttonAdd.addEventListener('click', () => {
   openPopup(popupCard);       // Открываем попап
-  checkInputOpen(popupCard);  // Проверка полей при открытии карточки
 });

@@ -20,13 +20,13 @@
         <div class="profile__info">
           <div class="profile__name-edit">
             <h1 class="profile__name">Жак-Ив Кусто</h1>
-            <button class="profile__edit-button" type="button">
+            <button class="profile__edit-button" type="button" aria-label="редактировать профиль">
               <img src="./images/edit.svg" alt="карандаш" class="profile__edit-button-img">
             </button>
           </div>
           <p class="profile__character">Исследователь океана</p>
         </div>
-        <button class="profile__add-button" type="button">
+        <button class="profile__add-button" type="button" aria-label="добавить карточку">
           <img src="./images/plus.svg" alt="плюс" class="profile__add-button-img">
         </button>
       </section>
@@ -37,9 +37,9 @@
             <img src="https://picsum.photos/282?random=1" alt="фото загруженное пользователем" class="elements__image">
             <div class="elements__captions">
               <h2 class="elements__name">Карачаевск</h2>
-              <button class="elements__like-button" type="button"></button>
+              <button class="elements__like-button" type="button" aria-label="отметить карточку"></button>
             </div>
-            <img src="./images/trash.svg" alt="корзина" class="elements__trash">
+            <img src="./images/trash.svg" alt="корзина" class="elements__trash" aria-label="удалить карточку">
           </li>
       </template>
     </ul>
@@ -51,7 +51,7 @@
 <!-- Попап профиля-->
     <div class="popup popup_profile">
       <div class="popup__container">
-        <button class="popup__close-button cross" type="button">
+        <button class="popup__close-button cross" type="button" aria-label="закрыть">
           <img src="./images/close.svg" alt="Крест" class="popup__close-button-img cross__img">
         </button>
         <div class="popup__form-container">
@@ -65,7 +65,7 @@
             <input required type="text" name="user-character" id="user-character-input" class="popup__input popup__input_user_character" value="Исследователь океана" minlength="2" maxlength="200">
             <span class="popup__error user-character-input-error" ></span>
             </label>
-            <button type="submit" class="popup__button">Сохранить</button>
+            <button type="submit" class="popup__button" aria-label="сохранить изменения">Сохранить</button>
           </form>
         </div>
       </div>
@@ -74,7 +74,7 @@
     <!-- Попап карточки-->
   <div class="popup popup_card">
     <div class="popup__container">
-      <button class="popup__close-button cross" type="button">
+      <button class="popup__close-button cross" type="button" aria-label="закрыть">
         <img src="./images/close.svg" alt="Крест" class="popup__close-button-img cross__img">
       </button>
       <div class="popup__form-container">
@@ -88,7 +88,7 @@
           <input required type="url" name="card-address" id="card-address-input" class="popup__input popup__input_card_address" placeholder="Ссылка на картинку">
           <span class="popup__error card-address-input-error" ></span>
           </label>
-          <button type="submit" class="popup__button">Создать</button>
+          <button type="submit" class="popup__button" aria-label="создать новую карточку">Создать</button>
         </form>
       </div>
     </div>
@@ -97,7 +97,7 @@
   <!-- Попап картинки-->
       <div class="popup popup_image">
       <figure class="popup__container">
-        <button class="popup__close-button cross" type="button">
+        <button class="popup__close-button cross" type="button" aria-label="закрыть">
           <img src="./images/close.svg" alt="Крест" class="popup__close-button-img cross__img">
         </button>
         <img class="popup__img" src="https://picsum.photos/720/1080" alt="Большое фото загруженное пользователем">
