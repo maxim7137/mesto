@@ -61,6 +61,12 @@ const selectors = {
   crossImg: 'cross__img',
   elementsImageClass: 'elements__image',
   elementsTrashClass: 'elements__trash',
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__button',
+  inactiveButtonClass: 'popup__button_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__error_visible'
 }
 
 const root = document.querySelector(selectors.page);
@@ -74,17 +80,16 @@ const buttonEdit = root.querySelector(selectors.editButton); // кнопка р�
 const buttonAdd = root.querySelector(selectors.addButton); // кнопка добавления карточки
 
 // Находим попапы
-
 const popupProfile = root.querySelector(selectors.popupProfile); // попап редактирования профиля
 const popupCard = root.querySelector(selectors.popupCard); // попап добавления карточки
 
-// попап картинки
+// /-- попап картинки
 const popupImg = root.querySelector(selectors.popupImg); // попап картинки
 const imgOfPopupImg = popupImg.querySelector(selectors.popupImage); // сама картинка
 const captionOfPopupImg = popupImg.querySelector(selectors.popupCaption); // подпись картинки
-// попап картинки
+// попап картинки --/
 
-// Находим форму редактирования профиля
+// /-- Форма редактирования профиля
 const formElementProfile = popupProfile.querySelector(selectors.formProfile);
 
 // Находим поля формы
@@ -94,14 +99,14 @@ const jobInput = formElementProfile.querySelector(selectors.jobInput);
 // Находим элементы, откуда должны быть вставлены значения полей
 const profileName = root.querySelector(selectors.profileName);
 const profileCharacter = root.querySelector(selectors.profileCharacter);
-// Форма редактирования профиля /
+// Форма редактирования профиля --/
 
-// Находим форму добавления карточки
+// /-- Форма добавления карточки
 const formElementCard = popupCard.querySelector(selectors.formCard);
 // Находим поля формы добавления карточки
 const nameCard = formElementCard.querySelector(selectors.nameCard);
 const linkCard = formElementCard.querySelector(selectors.linkCard);
-// Форма добавления карточки /
+// Форма добавления карточки --/
 
 // Функция создания карточки
 function createCard(link, name) {
@@ -154,16 +159,15 @@ function addEscPopupClose(evt) {
   }
 }
 
-
 // (Ненужная?) Функция проверки полей при открытии попапа
-function checkInputOpen(popup) {
-  const formElement = popup.querySelector(formSelectors.formSelector);
-  const inputList = Array.from(formElement.querySelectorAll(formSelectors.inputSelector));
-  const buttonElement = formElement.querySelector(formSelectors.submitButtonSelector);
-  toggleButtonState(inputList, buttonElement);
+function checkInputOpen(popup, selectors) {
+  const formElement = popup.querySelector(selectors.formSelector);
+  const inputList = Array.from(formElement.querySelectorAll(selectors.inputSelector));
+  const buttonElement = formElement.querySelector(selectors.submitButtonSelector);
+  toggleButtonState(inputList, buttonElement, selectors);
   inputList.forEach((inputElement) => {
-    checkInputValidity(formElement, inputElement);
-    toggleButtonState(inputList, buttonElement);
+    checkInputValidity(formElement, inputElement, selectors);
+    toggleButtonState(inputList, buttonElement, selectors);
   });
 }
 
@@ -202,12 +206,16 @@ function insertValuesFromProfileToFields() {
 
 // Функция очистки полей добавления карточки и ошибок
 function clearCardInputs() {
-  const buttonElement = formElementCard.querySelector(formSelectors.submitButtonSelector);
-  hideError(formElementCard, nameCard);
-  hideError(formElementCard, linkCard);
-  nameCard.value = '';
-  linkCard.value = '';
-  buttonElement.classList.add(formSelectors.inactiveButtonClass);
+  const buttonElement = formElementCard.querySelector(selectors.submitButtonSelector);
+  const inputList = Array.from(formElementCard.querySelectorAll(selectors.inputSelector));
+  inputList.forEach((inputElement) => {
+    const errorElement = formElementCard.querySelector(`.${inputElement.id}-error`);
+    inputElement.classList.remove(selectors.inputErrorClass);
+    errorElement.classList.remove(selectors.errorClass);
+    errorElement.textContent = '';
+    inputElement.value = '';
+  });
+  buttonElement.classList.add(selectors.inactiveButtonClass);
   buttonElement.setAttribute("disabled", "disabled");
 }
 
@@ -235,7 +243,7 @@ formElementProfile.addEventListener('submit', addFormSubmitHandler); // форм
 buttonEdit.addEventListener('click', () => {
   openPopup(popupProfile); // Открываем попап
   insertValuesFromProfileToFields(); // Вставляем значения из документа в поля формы с помощью textContent
-  checkInputOpen(popupProfile); // (Ненужная?) Проверка полей введенных из документа
+  checkInputOpen(popupProfile, selectors); // (Ненужная?) Проверка полей введенных из документа
 });
 // Открываем попап добавления карточки
 buttonAdd.addEventListener('click', () => {
