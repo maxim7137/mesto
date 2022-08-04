@@ -38,6 +38,10 @@ const selectors = {
   popupCard: '.popup_card',
   popupImg: '.popup_image',
   formElement: '.popup__container',
+  formProfile: '.popup__form_profile',
+  formCard: '.popup__form_card',
+  formCardNameError: '.card-name-input-error',
+  formCardLinkError: '.card-address-input-error',
   nameInput: '.popup__input_user_name',
   jobInput: '.popup__input_user_character',
   profileName: '.profile__name',
@@ -70,6 +74,7 @@ const buttonEdit = root.querySelector(selectors.editButton); // кнопка р�
 const buttonAdd = root.querySelector(selectors.addButton); // кнопка добавления карточки
 
 // Находим попапы
+
 const popupProfile = root.querySelector(selectors.popupProfile); // попап редактирования профиля
 const popupCard = root.querySelector(selectors.popupCard); // попап добавления карточки
 
@@ -80,11 +85,11 @@ const captionOfPopupImg = popupImg.querySelector(selectors.popupCaption); // п�
 // попап картинки
 
 // Находим форму редактирования профиля
-const formElement = root.querySelectorAll(selectors.formElement)[0];
+const formElementProfile = popupProfile.querySelector(selectors.formProfile);
 
 // Находим поля формы
-const nameInput = formElement.querySelector(selectors.nameInput);
-const jobInput = formElement.querySelector(selectors.jobInput);
+const nameInput = formElementProfile.querySelector(selectors.nameInput);
+const jobInput = formElementProfile.querySelector(selectors.jobInput);
 
 // Находим элементы, откуда должны быть вставлены значения полей
 const profileName = root.querySelector(selectors.profileName);
@@ -92,7 +97,7 @@ const profileCharacter = root.querySelector(selectors.profileCharacter);
 // Форма редактирования профиля /
 
 // Находим форму добавления карточки
-const formElementCard = root.querySelectorAll(selectors.formElementCard)[1];
+const formElementCard = popupCard.querySelector(selectors.formCard);
 // Находим поля формы добавления карточки
 const nameCard = formElementCard.querySelector(selectors.nameCard);
 const linkCard = formElementCard.querySelector(selectors.linkCard);
@@ -125,14 +130,14 @@ function createCard(link, name) {
 }
 
 // Функция-обработчик события отправки формы карточки
-function addEventListener() {
+function addCardEventListener() {
   formElementCard.addEventListener('submit', (evt) => {
     evt.preventDefault();
     cardElements.prepend(createCard(linkCard.value, nameCard.value));
     closePopup(popupCard);
   })
 }
-addEventListener();
+addCardEventListener();
 
 // Функция создания исходных карточек
 function createInitialCard() {
@@ -143,35 +148,34 @@ createInitialCard();
 // ФУНКЦИИ //
 // Функция закрытия попапа по кнопке Esc
 function addEscPopupClose(evt) {
-  const popupOpenedNode = root.querySelector(selectors.popupOpenedClass);
   if (evt.key === 'Escape') {
+    const popupOpenedNode = root.querySelector(selectors.popupOpenedClass);
     closePopup(popupOpenedNode);
   }
 }
 
-// Функция проверки полей при открытии попапа
-function checkInputOpen(p) {
-  const formElement = p.querySelector(formSelectors.formSelector);
+
+// (Ненужная?) Функция проверки полей при открытии попапа
+function checkInputOpen(popup) {
+  const formElement = popup.querySelector(formSelectors.formSelector);
   const inputList = Array.from(formElement.querySelectorAll(formSelectors.inputSelector));
   const buttonElement = formElement.querySelector(formSelectors.submitButtonSelector);
   toggleButtonState(inputList, buttonElement);
-  toggleEnterState(inputList, formElement);
   inputList.forEach((inputElement) => {
     checkInputValidity(formElement, inputElement);
     toggleButtonState(inputList, buttonElement);
-    toggleEnterState(inputList, formElement);
   });
 }
 
 // Открываем попап
-function openPopup(p) {
-  p.classList.add(selectors.popupOpened);
+function openPopup(popup) {
+  popup.classList.add(selectors.popupOpened);
   root.addEventListener('keydown', addEscPopupClose); // слушатель Escape
 }
 
 // Закрываем попап
-function closePopup(p) {
-  p.classList.remove(selectors.popupOpened);
+function closePopup(popup) {
+  popup.classList.remove(selectors.popupOpened);
   root.removeEventListener('keydown', addEscPopupClose); // удаляем слушатель Escape
 }
 
@@ -185,37 +189,53 @@ function closePopupAll(evt) {
 }
 
 // Функция вставки значений из полей в профиль
-function insertValuesFromField() {
+function insertValuesFromFieldsToProfile() {
   profileName.textContent = nameInput.value;
   profileCharacter.textContent = jobInput.value;
 }
 
 // Функция вставки значений из документа в поле редактирования профиля
-function insertValuesToField() {
+function insertValuesFromProfileToFields() {
   nameInput.value = profileName.textContent;
   jobInput.value = profileCharacter.textContent;
 }
 
+// Функция очистки полей добавления карточки и ошибок
+function clearCardInputs() {
+  hideError(formElementCard, nameCard);
+  hideError(formElementCard, linkCard);
+  nameCard.value = '';
+  linkCard.value = '';
+}
+
 // Функция «отправки» формы, профиля
 function addFormSubmitHandler(evt) {
-  evt.preventDefault();     // Эта строчка отменяет стандартную отправку формы.
-  insertValuesFromField();  // Вставляем новые значения из полей в документ с помощью textContent
+  evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
+  insertValuesFromFieldsToProfile(); // Вставляем новые значения из полей в документ с помощью textContent
   closePopup(popupProfile); // Закрываем попап
 }
 
 // СЛУШАТЕЛИ СОБЫТИЙ //
 
-// обработчик кликов для закрытия любых попапов
-root.addEventListener('click', closePopupAll);
+// обработчики кликов для закрытия каждого попапа
+function addCloseListenerToAllPopup() {
+  const popupList = Array.from(root.querySelectorAll(selectors.popup));
+  popupList.forEach((popupElement) => {
+    popupElement.addEventListener('click', closePopupAll);
+  });
+}
+addCloseListenerToAllPopup();
+
 // Прикрепляем обработчик к форме: он будет следить за событием “submit” - «отправка»
-formElement.addEventListener('submit', addFormSubmitHandler); // форма профиля
+formElementProfile.addEventListener('submit', addFormSubmitHandler); // форма профиля
 // Открываем попап редактирования профиля по клику на кнопку
 buttonEdit.addEventListener('click', () => {
-  openPopup(popupProfile);      // Открываем попап
-  insertValuesToField();        // Вставляем значения из документа в поля формы с помощью textContent
-  checkInputOpen(popupProfile); // Проверка полей введенных из документа
+  openPopup(popupProfile); // Открываем попап
+  insertValuesFromProfileToFields(); // Вставляем значения из документа в поля формы с помощью textContent
+  checkInputOpen(popupProfile); // (Ненужная?) Проверка полей введенных из документа
 });
 // Открываем попап добавления карточки
 buttonAdd.addEventListener('click', () => {
-  openPopup(popupCard);       // Открываем попап
+  clearCardInputs();
+  openPopup(popupCard); // Открываем попап
 });

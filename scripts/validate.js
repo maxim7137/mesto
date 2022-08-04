@@ -17,7 +17,7 @@ const showError = (formElement, inputElement, errorMessage) => {
 };
 
 // функция скрытия сообщения об ошибке
-const hideError = (formElement, inputElement, ) => {
+const hideError = (formElement, inputElement) => {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
   inputElement.classList.remove(formSelectors.inputErrorClass);
   errorElement.classList.remove(formSelectors.errorClass);
@@ -42,38 +42,23 @@ const hasInvalidInput = (inputList) => {
 const toggleButtonState = (inputList, buttonElement) => {
   if (hasInvalidInput(inputList)) {
     buttonElement.classList.add(formSelectors.inactiveButtonClass);
+    buttonElement.setAttribute("disabled", "disabled");
   } else {
     buttonElement.classList.remove(formSelectors.inactiveButtonClass);
+    buttonElement.removeAttribute("disabled");
   }
 }
 
-// функция отключения клавиши Enter
-const disableEnter = (evt) => {
-  if (evt.key === 'Enter') {
-    evt.preventDefault();
-  }
-}
-
-// функция добавления-удаления слушателя нажатия клавиш на форму
-const toggleEnterState = (inputList, formElement) => {
-  if (!hasInvalidInput(inputList)) {
-    formElement.removeEventListener('keydown', disableEnter);
-  } else {
-    formElement.addEventListener('keydown', disableEnter);
-  }
-}
 
 // функция развешивания всего выше на все инпуты в форме
 const setEventListeners = (formElement) => {
   const inputList = Array.from(formElement.querySelectorAll(formSelectors.inputSelector));
   const buttonElement = formElement.querySelector(formSelectors.submitButtonSelector);
   toggleButtonState(inputList, buttonElement);
-  toggleEnterState(inputList, formElement);
   inputList.forEach((inputElement) => {
     inputElement.addEventListener('input', function () {
       checkInputValidity(formElement, inputElement);
       toggleButtonState(inputList, buttonElement);
-      toggleEnterState(inputList, formElement);
     });
   });
 };
