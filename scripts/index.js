@@ -135,14 +135,14 @@ function createCard(link, name) {
 }
 
 // Функция-обработчик события отправки формы карточки
-function addCardEventListener() {
+function addCardSubmitEventListener() {
   formElementCard.addEventListener('submit', (evt) => {
     evt.preventDefault();
     cardElements.prepend(createCard(linkCard.value, nameCard.value));
     closePopup(popupCard);
   })
 }
-addCardEventListener();
+addCardSubmitEventListener();
 
 // Функция создания исходных карточек
 function createInitialCard() {
@@ -152,14 +152,14 @@ createInitialCard();
 
 // ФУНКЦИИ //
 // Функция закрытия попапа по кнопке Esc
-function addEscPopupClose(evt) {
+function closePopupByEsc(evt) {
   if (evt.key === 'Escape') {
     const popupOpenedNode = root.querySelector(selectors.popupOpenedClass);
     closePopup(popupOpenedNode);
   }
 }
 
-// (Ненужная?) Функция проверки полей при открытии попапа
+// Функция проверки полей при открытии попапа (Все таки решил оставить)
 function checkInputOpen(popup, selectors) {
   const formElement = popup.querySelector(selectors.formSelector);
   const inputList = Array.from(formElement.querySelectorAll(selectors.inputSelector));
@@ -174,17 +174,17 @@ function checkInputOpen(popup, selectors) {
 // Открываем попап
 function openPopup(popup) {
   popup.classList.add(selectors.popupOpened);
-  root.addEventListener('keydown', addEscPopupClose); // слушатель Escape
+  root.addEventListener('keydown', closePopupByEsc); // слушатель Escape
 }
 
 // Закрываем попап
 function closePopup(popup) {
   popup.classList.remove(selectors.popupOpened);
-  root.removeEventListener('keydown', addEscPopupClose); // удаляем слушатель Escape
+  root.removeEventListener('keydown', closePopupByEsc); // удаляем слушатель Escape
 }
 
-// Функция закрытия попапа для всех кнопок закрытия
-function closePopupAll(evt) {
+// Функция закрытия попапа по клику
+function closePopupByClick(evt) {
   const target = evt.target;
   const modal = target.closest(selectors.popup);
   if (target.classList.contains(selectors.cross) || target.classList.contains(selectors.crossImg) || target === modal) {
@@ -193,19 +193,19 @@ function closePopupAll(evt) {
 }
 
 // Функция вставки значений из полей в профиль
-function insertValuesFromFieldsToProfile() {
+function insertValuesFromPopupFieldsToProfile() {
   profileName.textContent = nameInput.value;
   profileCharacter.textContent = jobInput.value;
 }
 
 // Функция вставки значений из документа в поле редактирования профиля
-function insertValuesFromProfileToFields() {
+function insertValuesFromProfileToPopupFields() {
   nameInput.value = profileName.textContent;
   jobInput.value = profileCharacter.textContent;
 }
 
 // Функция очистки полей добавления карточки и ошибок
-function clearCardInputs() {
+function clearCardFormInputsAndErrors() {
   const buttonElement = formElementCard.querySelector(selectors.submitButtonSelector);
   const inputList = Array.from(formElementCard.querySelectorAll(selectors.inputSelector));
   inputList.forEach((inputElement) => {
@@ -220,33 +220,33 @@ function clearCardInputs() {
 }
 
 // Функция «отправки» формы, профиля
-function addFormSubmitHandler(evt) {
-  evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
-  insertValuesFromFieldsToProfile(); // Вставляем новые значения из полей в документ с помощью textContent
+function submitProfileForm(evt) {
+
+  insertValuesFromPopupFieldsToProfile(); // Вставляем новые значения из полей в документ с помощью textContent
   closePopup(popupProfile); // Закрываем попап
 }
 
 // СЛУШАТЕЛИ СОБЫТИЙ //
 
 // обработчики кликов для закрытия каждого попапа
-function addCloseListenerToAllPopup() {
+function addCloseListenerToAllPopups() {
   const popupList = Array.from(root.querySelectorAll(selectors.popup));
   popupList.forEach((popupElement) => {
-    popupElement.addEventListener('click', closePopupAll);
+    popupElement.addEventListener('click', closePopupByClick);
   });
 }
-addCloseListenerToAllPopup();
+addCloseListenerToAllPopups();
 
 // Прикрепляем обработчик к форме: он будет следить за событием “submit” - «отправка»
-formElementProfile.addEventListener('submit', addFormSubmitHandler); // форма профиля
+formElementProfile.addEventListener('submit', submitProfileForm); // форма профиля
 // Открываем попап редактирования профиля по клику на кнопку
 buttonEdit.addEventListener('click', () => {
   openPopup(popupProfile); // Открываем попап
-  insertValuesFromProfileToFields(); // Вставляем значения из документа в поля формы с помощью textContent
+  insertValuesFromProfileToPopupFields(); // Вставляем значения из документа в поля формы с помощью textContent
   checkInputOpen(popupProfile, selectors); // (Ненужная?) Проверка полей введенных из документа
 });
 // Открываем попап добавления карточки
 buttonAdd.addEventListener('click', () => {
-  clearCardInputs();
+  clearCardFormInputsAndErrors();
   openPopup(popupCard); // Открываем попап
 });
