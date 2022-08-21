@@ -108,47 +108,80 @@ const nameCard = formElementCard.querySelector(selectors.nameCard);
 const linkCard = formElementCard.querySelector(selectors.linkCard);
 // Форма добавления карточки --/
 
-// Функция создания карточки
-function createCard(link, name) {
-  const cardElement = cardTemplate.querySelector(selectors.cardElement).cloneNode(true);
-  const cardImg = cardElement.querySelector(selectors.elementsImage);
-  const cardName = cardElement.querySelector(selectors.elementsName);
-  const btnDel = cardElement.querySelector(selectors.buttonDel);
-  const btnLike = cardElement.querySelector(selectors.buttonLike);
+// Класс карточки
+class Card {
+  constructor(data, templateSelector) {
+    this._link = data.link;
+    this._name = data.name;
+    this._templateSelector = templateSelector;
+  }
 
-  cardImg.src = link;
-  cardImg.alt = name;
-  cardName.textContent = name;
+  _getCardElement() {
+    const cardElement = document
+      .querySelector(this._templateSelector).content
+      .querySelector(selectors.cardElement).cloneNode(true);
 
-  btnDel.addEventListener('click', () => cardElement.remove());
+    return cardElement;
+  }
 
-  btnLike.addEventListener('click', () => btnLike.classList.toggle(selectors.liked));
+  generateCard() {
+    this._cardElement = this._getCardElement();
 
-  cardImg.addEventListener('click', () => {
-    imgOfPopupImg.src = link;
-    imgOfPopupImg.alt = name;
-    captionOfPopupImg.textContent = name;
+    this._cardElement.querySelector(selectors.elementsImage).src = this._link;
+    this._cardElement.querySelector(selectors.elementsImage).alt = this._name;
+    this._cardElement.querySelector(selectors.elementsName).textContent = this._name;
+
+    this._setEventListeners();
+
+    return this._cardElement;
+  }
+
+  _setEventListeners() {
+    this._cardElement.querySelector(selectors.buttonDel).addEventListener('click', _ => this._deleteClick());
+    this._cardElement.querySelector(selectors.buttonLike).addEventListener('click', _ => this._likeClick());
+    this._cardElement.querySelector(selectors.elementsImage).addEventListener('click', _ => this._popupClick());
+  }
+
+  _deleteClick() {
+    this._cardElement.remove();
+  }
+
+  _likeClick() {
+    this._cardElement.querySelector(selectors.buttonLike).classList.toggle(selectors.liked);
+  }
+
+  _popupClick() {
+    imgOfPopupImg.src = this._link;
+    imgOfPopupImg.alt = this._name;
+    captionOfPopupImg.textContent = this._name;
     openPopup(popupImg);
-  })
-
-  return cardElement;
+  }
 }
+
+initialCards.forEach((item) => {
+  const card = new Card(item, selectors.cardTemplate);
+  const cardElement = card.generateCard();
+
+  cardElements.append(cardElement);
+});
 
 // Функция-обработчик события отправки формы карточки
 function addCardSubmitEventListener() {
   formElementCard.addEventListener('submit', (evt) => {
     evt.preventDefault();
-    cardElements.prepend(createCard(linkCard.value, nameCard.value));
+    const item = {
+      name: nameCard.value,
+      link: linkCard.value
+    };
+    const card = new Card(item, selectors.cardTemplate);
+    const cardElement = card.generateCard();
+
+    cardElements.prepend(cardElement);
+
     closePopup(popupCard);
   })
 }
 addCardSubmitEventListener();
-
-// Функция создания исходных карточек
-function createInitialCard() {
-  initialCards.forEach((item) => cardElements.append(createCard(item.link, item.name)))
-}
-createInitialCard();
 
 // ФУНКЦИИ //
 // Функция закрытия попапа по кнопке Esc
