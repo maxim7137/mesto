@@ -1,3 +1,5 @@
+import Card from './Card.js';
+import FormValidator from './FormValidator.js';
 // Данные карточек из коробки
 const initialCards = [{
     name: 'Архыз',
@@ -71,6 +73,18 @@ const selectors = {
 
 const root = document.querySelector(selectors.page);
 
+const initialObject = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__button',
+  inactiveButtonClass: 'popup__button_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__error_visible'
+};
+
+const profileForm = root.querySelector(selectors.formProfile);
+const cardForm = root.querySelector(selectors.formCard);
+
 // Шаблон карточки
 const cardTemplate = root.querySelector(selectors.cardTemplate).content;
 const cardElements = root.querySelector(selectors.cardElements);
@@ -82,12 +96,6 @@ const buttonAdd = root.querySelector(selectors.addButton); // кнопка до�
 // Находим попапы
 const popupProfile = root.querySelector(selectors.popupProfile); // попап редактирования профиля
 const popupCard = root.querySelector(selectors.popupCard); // попап добавления карточки
-
-// /-- попап картинки
-const popupImg = root.querySelector(selectors.popupImg); // попап картинки
-const imgOfPopupImg = popupImg.querySelector(selectors.popupImage); // сама картинка
-const captionOfPopupImg = popupImg.querySelector(selectors.popupCaption); // подпись картинки
-// попап картинки --/
 
 // /-- Форма редактирования профиля
 const formElementProfile = popupProfile.querySelector(selectors.formProfile);
@@ -108,62 +116,19 @@ const nameCard = formElementCard.querySelector(selectors.nameCard);
 const linkCard = formElementCard.querySelector(selectors.linkCard);
 // Форма добавления карточки --/
 
-// Класс карточки
-class Card {
-  constructor(data, templateSelector) {
-    this._link = data.link;
-    this._name = data.name;
-    this._templateSelector = templateSelector;
-  }
-
-  _getCardElement() {
-    const cardElement = document
-      .querySelector(this._templateSelector).content
-      .querySelector(selectors.cardElement).cloneNode(true);
-
-    return cardElement;
-  }
-
-  generateCard() {
-    this._cardElement = this._getCardElement();
-
-    this._cardElement.querySelector(selectors.elementsImage).src = this._link;
-    this._cardElement.querySelector(selectors.elementsImage).alt = this._name;
-    this._cardElement.querySelector(selectors.elementsName).textContent = this._name;
-
-    this._setEventListeners();
-
-    return this._cardElement;
-  }
-
-  _setEventListeners() {
-    this._cardElement.querySelector(selectors.buttonDel).addEventListener('click', _ => this._deleteClick());
-    this._cardElement.querySelector(selectors.buttonLike).addEventListener('click', _ => this._likeClick());
-    this._cardElement.querySelector(selectors.elementsImage).addEventListener('click', _ => this._popupClick());
-  }
-
-  _deleteClick() {
-    this._cardElement.remove();
-  }
-
-  _likeClick() {
-    this._cardElement.querySelector(selectors.buttonLike).classList.toggle(selectors.liked);
-  }
-
-  _popupClick() {
-    imgOfPopupImg.src = this._link;
-    imgOfPopupImg.alt = this._name;
-    captionOfPopupImg.textContent = this._name;
-    openPopup(popupImg);
-  }
-}
-
+// Создаем начальные карточки
 initialCards.forEach((item) => {
   const card = new Card(item, selectors.cardTemplate);
   const cardElement = card.generateCard();
 
   cardElements.append(cardElement);
 });
+
+// Создаем для каждой проверяемой формы экземпляр класса FormValidator.
+const profileFormValidator = new FormValidator(initialObject, profileForm);
+profileFormValidator.enableValidation();
+const cardFormValidator = new FormValidator(initialObject, cardForm);
+cardFormValidator.enableValidation();
 
 // Функция-обработчик события отправки формы карточки
 (function addCardSubmitEventListener() {
@@ -191,10 +156,8 @@ function closePopupByEsc(evt) {
   }
 }
 
-
-
 // Открываем попап
-function openPopup(popup) {
+export function openPopup(popup) {
   popup.classList.add(selectors.popupOpened);
   root.addEventListener('keydown', closePopupByEsc); // слушатель Escape
 }
