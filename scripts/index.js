@@ -166,7 +166,7 @@ initialCards.forEach((item) => {
 });
 
 // Функция-обработчик события отправки формы карточки
-function addCardSubmitEventListener() {
+(function addCardSubmitEventListener() {
   formElementCard.addEventListener('submit', (evt) => {
     evt.preventDefault();
     const item = {
@@ -180,8 +180,7 @@ function addCardSubmitEventListener() {
 
     closePopup(popupCard);
   })
-}
-addCardSubmitEventListener();
+})();
 
 // ФУНКЦИИ //
 // Функция закрытия попапа по кнопке Esc
@@ -192,17 +191,7 @@ function closePopupByEsc(evt) {
   }
 }
 
-// Функция проверки полей при открытии попапа (Все таки решил оставить)
-function checkInputOpen(popup, selectors) {
-  const formElement = popup.querySelector(selectors.formSelector);
-  const inputList = Array.from(formElement.querySelectorAll(selectors.inputSelector));
-  const buttonElement = formElement.querySelector(selectors.submitButtonSelector);
-  toggleButtonState(inputList, buttonElement, selectors);
-  inputList.forEach((inputElement) => {
-    checkInputValidity(formElement, inputElement, selectors);
-    toggleButtonState(inputList, buttonElement, selectors);
-  });
-}
+
 
 // Открываем попап
 function openPopup(popup) {
@@ -252,6 +241,20 @@ function clearCardFormInputsAndErrors() {
   buttonElement.setAttribute("disabled", "disabled");
 }
 
+// Функция очистки ошибок при открытии попапа профиля
+function clearProfileFormErrors() {
+  const buttonElement = formElementProfile.querySelector(selectors.submitButtonSelector);
+  const inputList = Array.from(formElementProfile.querySelectorAll(selectors.inputSelector));
+  inputList.forEach((inputElement) => {
+    const errorElement = formElementProfile.querySelector(`.${inputElement.id}-error`);
+    inputElement.classList.remove(selectors.inputErrorClass);
+    errorElement.classList.remove(selectors.errorClass);
+    errorElement.textContent = '';
+  });
+  buttonElement.classList.remove(selectors.inactiveButtonClass);
+  buttonElement.removeAttribute("disabled");
+}
+
 // Функция «отправки» формы, профиля
 function submitProfileForm(evt) {
 
@@ -262,13 +265,12 @@ function submitProfileForm(evt) {
 // СЛУШАТЕЛИ СОБЫТИЙ //
 
 // обработчики кликов для закрытия каждого попапа
-function addCloseListenerToAllPopups() {
+(function addCloseListenerToAllPopups() {
   const popupList = Array.from(root.querySelectorAll(selectors.popup));
   popupList.forEach((popupElement) => {
     popupElement.addEventListener('click', closePopupByClick);
   });
-}
-addCloseListenerToAllPopups();
+})();
 
 // Прикрепляем обработчик к форме: он будет следить за событием “submit” - «отправка»
 formElementProfile.addEventListener('submit', submitProfileForm); // форма профиля
@@ -276,7 +278,7 @@ formElementProfile.addEventListener('submit', submitProfileForm); // форма 
 buttonEdit.addEventListener('click', () => {
   openPopup(popupProfile); // Открываем попап
   insertValuesFromProfileToPopupFields(); // Вставляем значения из документа в поля формы с помощью textContent
-  checkInputOpen(popupProfile, selectors); // (Ненужная?) Проверка полей введенных из документа
+  clearProfileFormErrors();
 });
 // Открываем попап добавления карточки
 buttonAdd.addEventListener('click', () => {

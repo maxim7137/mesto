@@ -1,71 +1,3 @@
-// функция для вывода сообщения об ошибке
-const showError = (formElement, inputElement, errorMessage, obj) => {
-  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-  inputElement.classList.add(obj.inputErrorClass);
-  errorElement.classList.add(obj.errorClass);
-  errorElement.textContent = errorMessage;
-};
-
-// функция скрытия сообщения об ошибке
-const hideError = (formElement, inputElement, obj) => {
-
-  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-  inputElement.classList.remove(obj.inputErrorClass);
-  errorElement.classList.remove(obj.errorClass);
-  errorElement.textContent = '';
-};
-
-// функция переключения функций видимости ошибки
-const checkInputValidity = (formElement, inputElement, obj) => {
-
-  if (inputElement.validity.valid) {
-    hideError(formElement, inputElement, obj);
-  } else {
-    showError(formElement, inputElement, inputElement.validationMessage, obj);
-  }
-};
-
-// функция проверки есть ли хоть один невалидный инпут
-const hasInvalidInput = (inputList) => {
-  return inputList.some((inputElement) => !inputElement.validity.valid);
-};
-
-// функция переключения кнопки в зависимости от предыдущей функции
-const toggleButtonState = (inputList, buttonElement, obj) => {
-  if (hasInvalidInput(inputList)) {
-    buttonElement.classList.add(obj.inactiveButtonClass);
-    buttonElement.setAttribute("disabled", "disabled");
-  } else {
-    buttonElement.classList.remove(obj.inactiveButtonClass);
-    buttonElement.removeAttribute("disabled");
-  }
-}
-
-// функция развешивания всего выше на все инпуты в форме
-const setEventListeners = (formElement, obj) => {
-  const inputList = Array.from(formElement.querySelectorAll(obj.inputSelector));
-  const buttonElement = formElement.querySelector(obj.submitButtonSelector);
-  toggleButtonState(inputList, buttonElement, obj);
-  inputList.forEach((inputElement) => {
-    inputElement.addEventListener('input', function () {
-      checkInputValidity(formElement, inputElement, obj);
-      toggleButtonState(inputList, buttonElement, obj);
-    });
-  });
-};
-
-// функция развешивания всего выше на все формы на странице
-const enableValidation = (obj) => {
-  const formList = document.querySelectorAll(obj.formSelector);
-  formList.forEach((formElement) => {
-    formElement.addEventListener('submit', function (evt) {
-      evt.preventDefault();
-    });
-    setEventListeners(formElement, obj);
-  });
-};
-
-/*
 const initialOject = {
   formSelector: '.popup__form',
   inputSelector: '.popup__input',
@@ -74,14 +6,77 @@ const initialOject = {
   inputErrorClass: 'popup__input_type_error',
   errorClass: 'popup__error_visible'
 };
- */
 
-// вызов функции валидации всех форм
-enableValidation({
-  formSelector: '.popup__form',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__button',
-  inactiveButtonClass: 'popup__button_disabled',
-  inputErrorClass: 'popup__input_type_error',
-  errorClass: 'popup__error_visible'
-});
+const profileForm = document.querySelector('.popup__form_profile');
+const cardForm = document.querySelector('.popup__form_card');
+class FormValidator {
+  constructor(configObject, formEl) {
+    this._formSelector = configObject.formSelector;
+    this._inputSelector = configObject.inputSelector;
+    this._submitButtonSelector = configObject.submitButtonSelector;
+    this._inactiveButtonClass = configObject.inactiveButtonClass;
+    this._inputErrorClass = configObject.inputErrorClass;
+    this._errorClass = configObject.errorClass;
+    this._formEl = formEl;
+  }
+  // Метод вывода сообщения об ошибке
+  _showError(formElement, inputElement, errorMessage) {
+    const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+    inputElement.classList.add(this._inputErrorClass);
+    errorElement.classList.add(this._errorClass);
+    errorElement.textContent = errorMessage;
+  };
+  // Метод скрытия сообщения об ошибке
+  _hideError(formElement, inputElement) {
+    const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+    inputElement.classList.remove(this._inputErrorClass);
+    errorElement.classList.remove(this._errorClass);
+    errorElement.textContent = '';
+  };
+  // Метод переключения видимости ошибки в зависимости от валидности инпута
+  _checkInputValidity(formElement, inputElement) {
+    if (inputElement.validity.valid) {
+      this._hideError(formElement, inputElement);
+    } else {
+      this._showError(formElement, inputElement, inputElement.validationMessage);
+    }
+  };
+  // Метод проверки есть ли хоть один невалидный инпут
+  _hasInvalidInput = (inputList) => {
+    return inputList.some((inputElement) => !inputElement.validity.valid);
+  };
+  // Метод переключения кнопки в зависимости от предыдущей проверки
+  _toggleButtonState(inputList, buttonElement) {
+    if (this._hasInvalidInput(inputList)) {
+      buttonElement.classList.add(this._inactiveButtonClass);
+      buttonElement.setAttribute("disabled", "disabled");
+    } else {
+      buttonElement.classList.remove(this._inactiveButtonClass);
+      buttonElement.removeAttribute("disabled");
+    }
+  }
+  // Метод развешивания всего выше на все инпуты в форме
+  _setEventListeners(formElement) {
+    const inputList = Array.from(formElement.querySelectorAll(this._inputSelector));
+    const buttonElement = formElement.querySelector(this._submitButtonSelector);
+    this._toggleButtonState(inputList, buttonElement);
+    inputList.forEach((inputElement) => {
+      inputElement.addEventListener('input', _ => {
+        this._checkInputValidity(formElement, inputElement);
+        this._toggleButtonState(inputList, buttonElement);
+      });
+    });
+  };
+  // Метод проверки формы
+  enableValidation() {
+    this._formEl.addEventListener('submit', function (evt) {
+      evt.preventDefault();
+    });
+    this._setEventListeners(this._formEl);
+  };
+}
+
+const profileFormValidator = new FormValidator(initialOject, profileForm);
+profileFormValidator.enableValidation();
+const cardFormValidator = new FormValidator(initialOject, cardForm);
+cardFormValidator.enableValidation();
