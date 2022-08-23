@@ -73,7 +73,7 @@ const selectors = {
 
 const root = document.querySelector(selectors.page);
 
-const initialObject = {
+const validationObject = {
   formSelector: '.popup__form',
   inputSelector: '.popup__input',
   submitButtonSelector: '.popup__button',
@@ -86,7 +86,6 @@ const profileForm = root.querySelector(selectors.formProfile);
 const cardForm = root.querySelector(selectors.formCard);
 
 // Шаблон карточки
-const cardTemplate = root.querySelector(selectors.cardTemplate).content;
 const cardElements = root.querySelector(selectors.cardElements);
 
 // Находим кнопки
@@ -125,13 +124,13 @@ initialCards.forEach((item) => {
 });
 
 // Создаем для каждой проверяемой формы экземпляр класса FormValidator.
-const profileFormValidator = new FormValidator(initialObject, profileForm);
+const profileFormValidator = new FormValidator(validationObject, profileForm);
 profileFormValidator.enableValidation();
-const cardFormValidator = new FormValidator(initialObject, cardForm);
+const cardFormValidator = new FormValidator(validationObject, cardForm);
 cardFormValidator.enableValidation();
 
 // Функция-обработчик события отправки формы карточки
-(function addCardSubmitEventListener() {
+function addCardSubmitEventListener() {
   formElementCard.addEventListener('submit', (evt) => {
     evt.preventDefault();
     const item = {
@@ -145,7 +144,8 @@ cardFormValidator.enableValidation();
 
     closePopup(popupCard);
   })
-})();
+};
+addCardSubmitEventListener();
 
 // ФУНКЦИИ //
 // Функция закрытия попапа по кнопке Esc
@@ -157,7 +157,7 @@ function closePopupByEsc(evt) {
 }
 
 // Открываем попап
-export function openPopup(popup) {
+function openPopup(popup) {
   popup.classList.add(selectors.popupOpened);
   root.addEventListener('keydown', closePopupByEsc); // слушатель Escape
 }
@@ -200,8 +200,7 @@ function clearCardFormInputsAndErrors() {
     errorElement.textContent = '';
     inputElement.value = '';
   });
-  buttonElement.classList.add(selectors.inactiveButtonClass);
-  buttonElement.setAttribute("disabled", "disabled");
+  cardFormValidator.disableButtonState(buttonElement);
 }
 
 // Функция очистки ошибок при открытии попапа профиля
@@ -214,13 +213,11 @@ function clearProfileFormErrors() {
     errorElement.classList.remove(selectors.errorClass);
     errorElement.textContent = '';
   });
-  buttonElement.classList.remove(selectors.inactiveButtonClass);
-  buttonElement.removeAttribute("disabled");
+  profileFormValidator.enableButtonState(buttonElement);
 }
 
 // Функция «отправки» формы, профиля
-function submitProfileForm(evt) {
-
+function submitProfileForm() {
   insertValuesFromPopupFieldsToProfile(); // Вставляем новые значения из полей в документ с помощью textContent
   closePopup(popupProfile); // Закрываем попап
 }
@@ -228,12 +225,13 @@ function submitProfileForm(evt) {
 // СЛУШАТЕЛИ СОБЫТИЙ //
 
 // обработчики кликов для закрытия каждого попапа
-(function addCloseListenerToAllPopups() {
+function addCloseListenerToAllPopups() {
   const popupList = Array.from(root.querySelectorAll(selectors.popup));
   popupList.forEach((popupElement) => {
     popupElement.addEventListener('click', closePopupByClick);
   });
-})();
+};
+addCloseListenerToAllPopups();
 
 // Прикрепляем обработчик к форме: он будет следить за событием “submit” - «отправка»
 formElementProfile.addEventListener('submit', submitProfileForm); // форма профиля

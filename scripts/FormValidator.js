@@ -37,11 +37,9 @@ export default class FormValidator {
   // Метод переключения кнопки в зависимости от предыдущей проверки
   _toggleButtonState(inputList, buttonElement) {
     if (this._hasInvalidInput(inputList)) {
-      buttonElement.classList.add(this._inactiveButtonClass);
-      buttonElement.setAttribute("disabled", "disabled");
+      this.disableButtonState(buttonElement);
     } else {
-      buttonElement.classList.remove(this._inactiveButtonClass);
-      buttonElement.removeAttribute("disabled");
+      this.enableButtonState(buttonElement);
     }
   }
   // Метод развешивания всего выше на все инпуты в форме
@@ -56,6 +54,18 @@ export default class FormValidator {
       });
     });
   };
+  // Методы сброса кнопки сохранения
+  // Метод отключения кнопки
+  disableButtonState(buttonElement) {
+    buttonElement.classList.add(this._inactiveButtonClass);
+    buttonElement.setAttribute("disabled", "disabled");
+  }
+  // Метод включения кнопки
+  enableButtonState(buttonElement) {
+    buttonElement.classList.remove(this._inactiveButtonClass);
+    buttonElement.removeAttribute("disabled");
+  }
+
   // Метод проверки формы
   enableValidation() {
     this._formEl.addEventListener('submit', function (evt) {
