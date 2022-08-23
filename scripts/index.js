@@ -26,19 +26,16 @@ const initialCards = [{
     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
   }
 ];
+
 // Селекторы
 const selectors = {
   cardTemplate: '#card-template',
   page: '.page',
   cardElements: '.elements',
-  cardElement: '.elements__element',
-  elementsImage: '.elements__image',
-  elementsName: '.elements__name',
   editButton: '.profile__edit-button',
   addButton: '.profile__add-button',
   popupProfile: '.popup_profile',
   popupCard: '.popup_card',
-  popupImg: '.popup_image',
   formElement: '.popup__container',
   formProfile: '.popup__form_profile',
   formCard: '.popup__form_card',
@@ -52,11 +49,6 @@ const selectors = {
   nameCard: '.popup__input_card_name',
   linkCard: '.popup__input_card_address',
   popup: '.popup',
-  popupImage: '.popup__img',
-  popupCaption: '.popup__caption',
-  liked: 'elements__like-button_liked',
-  buttonLike: '.elements__like-button',
-  buttonDel: '.elements__trash',
   popupOpened: 'popup_opened',
   popupOpenedClass: '.popup_opened',
   cross: 'cross',
@@ -117,7 +109,7 @@ const linkCard = formElementCard.querySelector(selectors.linkCard);
 
 // Создаем начальные карточки
 initialCards.forEach((item) => {
-  const card = new Card(item, selectors.cardTemplate);
+  const card = new Card(item, selectors.cardTemplate, openPopup);
   const cardElement = card.generateCard();
 
   cardElements.append(cardElement);
@@ -137,7 +129,7 @@ function addCardSubmitEventListener() {
       name: nameCard.value,
       link: linkCard.value
     };
-    const card = new Card(item, selectors.cardTemplate);
+    const card = new Card(item, selectors.cardTemplate, openPopup);
     const cardElement = card.generateCard();
 
     cardElements.prepend(cardElement);

@@ -15,10 +15,11 @@ const popupImgPicture = popupImg.querySelector(selectors.popupImage); // сам�
 const captionOfPopupImg = popupImg.querySelector(selectors.popupCaption); // подпись картинки
 
 export default class Card {
-  constructor(data, templateSelector) {
-    this._link = data.link;
+  constructor(data, templateSelector, openPopup) {
     this._name = data.name;
+    this._link = data.link;
     this._templateSelector = templateSelector;
+    this.openPopup = openPopup;
   }
 
   _getCardElement() {
@@ -61,6 +62,6 @@ export default class Card {
     popupImgPicture.src = this._link;
     popupImgPicture.alt = this._name;
     captionOfPopupImg.textContent = this._name;
-    //openPopup(popupImg);
+    this.openPopup(popupImg);
   }
 }
