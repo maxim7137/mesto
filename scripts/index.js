@@ -60,7 +60,10 @@ const selectors = {
   submitButtonSelector: '.popup__button',
   inactiveButtonClass: 'popup__button_disabled',
   inputErrorClass: 'popup__input_type_error',
-  errorClass: 'popup__error_visible'
+  errorClass: 'popup__error_visible',
+  popupImg: '.popup_image',
+  popupImage: '.popup__img',
+  popupCaption: '.popup__caption'
 }
 
 const root = document.querySelector(selectors.page);
@@ -88,6 +91,10 @@ const buttonAdd = root.querySelector(selectors.addButton); // кнопка до�
 const popupProfile = root.querySelector(selectors.popupProfile); // попап редактирования профиля
 const popupCard = root.querySelector(selectors.popupCard); // попап добавления карточки
 
+const popupImg = document.querySelector(selectors.popupImg); // попап картинки
+const popupImgPicture = popupImg.querySelector(selectors.popupImage); // сама картинка
+const captionOfPopupImg = popupImg.querySelector(selectors.popupCaption); // подпись картинки
+
 // /-- Форма редактирования профиля
 const formElementProfile = popupProfile.querySelector(selectors.formProfile);
 
@@ -109,7 +116,7 @@ const linkCard = formElementCard.querySelector(selectors.linkCard);
 
 // Создаем начальные карточки
 initialCards.forEach((item) => {
-  const card = new Card(item, selectors.cardTemplate, openPopup);
+  const card = new Card(item, selectors.cardTemplate, handleOpenBigImage);
   const cardElement = card.generateCard();
 
   cardElements.append(cardElement);
@@ -129,7 +136,7 @@ function addCardSubmitEventListener() {
       name: nameCard.value,
       link: linkCard.value
     };
-    const card = new Card(item, selectors.cardTemplate, openPopup);
+    const card = new Card(item, selectors.cardTemplate, handleOpenBigImage);
     const cardElement = card.generateCard();
 
     cardElements.prepend(cardElement);
@@ -233,8 +240,17 @@ buttonEdit.addEventListener('click', () => {
   insertValuesFromProfileToPopupFields(); // Вставляем значения из документа в поля формы с помощью textContent
   clearProfileFormErrors();
 });
+
 // Открываем попап добавления карточки
 buttonAdd.addEventListener('click', () => {
   clearCardFormInputsAndErrors();
   openPopup(popupCard); // Открываем попап
 });
+
+// Открываем попап картинки
+function handleOpenBigImage(link, name) {
+  popupImgPicture.src = link;
+  popupImgPicture.alt = name;
+  captionOfPopupImg.textContent = name;
+  openPopup(popupImg);
+}

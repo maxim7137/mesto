@@ -5,21 +5,14 @@ const selectors = {
   buttonLike: '.elements__like-button',
   buttonDel: '.elements__trash',
   liked: 'elements__like-button_liked',
-  popupImg: '.popup_image',
-  popupImage: '.popup__img',
-  popupCaption: '.popup__caption'
 }
 
-const popupImg = document.querySelector(selectors.popupImg); // попап картинки
-const popupImgPicture = popupImg.querySelector(selectors.popupImage); // сама картинка
-const captionOfPopupImg = popupImg.querySelector(selectors.popupCaption); // подпись картинки
-
 export default class Card {
-  constructor(data, templateSelector, openPopup) {
+  constructor(data, templateSelector, handleOpenBigImage) {
     this._name = data.name;
     this._link = data.link;
     this._templateSelector = templateSelector;
-    this.openPopup = openPopup;
+    this.handleOpenBigImage = handleOpenBigImage;
   }
 
   _getCardElement() {
@@ -59,9 +52,6 @@ export default class Card {
   }
 
   _popupClick() {
-    popupImgPicture.src = this._link;
-    popupImgPicture.alt = this._name;
-    captionOfPopupImg.textContent = this._name;
-    this.openPopup(popupImg);
+    this.handleOpenBigImage(this._link, this._name);
   }
 }
