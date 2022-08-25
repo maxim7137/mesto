@@ -114,12 +114,17 @@ const nameCard = formElementCard.querySelector(selectors.nameCard);
 const linkCard = formElementCard.querySelector(selectors.linkCard);
 // Форма добавления карточки --/
 
-// Создаем начальные карточки
-initialCards.forEach((item) => {
+// Функция создания карточек
+function createCard(item) {
   const card = new Card(item, selectors.cardTemplate, handleOpenBigImage);
   const cardElement = card.generateCard();
 
-  cardElements.append(cardElement);
+  return cardElement;
+}
+
+// Создаем начальные карточки
+initialCards.forEach((item) => {
+  cardElements.append(createCard(item, selectors.cardTemplate, handleOpenBigImage));
 });
 
 // Создаем для каждой проверяемой формы экземпляр класса FormValidator.
@@ -136,10 +141,8 @@ function addCardSubmitEventListener() {
       name: nameCard.value,
       link: linkCard.value
     };
-    const card = new Card(item, selectors.cardTemplate, handleOpenBigImage);
-    const cardElement = card.generateCard();
 
-    cardElements.prepend(cardElement);
+    cardElements.prepend(createCard(item));
 
     closePopup(popupCard);
   })
