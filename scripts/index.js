@@ -30,32 +30,41 @@ import Section from './Section.js';
 
 // создание начальных карточек
 const cardsList = new Section({
-  items: initialCards,
-  renderer: (item) => {
-    const card = new Card(item, selectors.cardTemplate, handleOpenBigImage);
+    items: initialCards,
+    renderer: (item) => {
+      const card = new Card(item, selectors.cardTemplate, handleOpenBigImage);
 
-    const cardElement = card.generateCard();
+      const cardElement = card.generateCard();
 
-    cardsList.addItem(cardElement);
-    },
+      cardsList.addItem(cardElement);
+    }
   },
   selectors.cardElements
 );
-// отрисовка карточек
+// отрисовка начальных карточек
 cardsList.renderItems();
 
-/* // Функция создания карточек
-function createCard(item) {
-  const card = new Card(item, selectors.cardTemplate, handleOpenBigImage);
-  const cardElement = card.generateCard();
-
-  return cardElement;
-}
-
-// Создаем начальные карточки
-initialCards.forEach((item) => {
-  cardElements.append(createCard(item, selectors.cardTemplate, handleOpenBigImage));
-}); */
+// карточки после отправки формы
+function addCardSubmitEventListener() {
+  formElementCard.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    const submitCard = [{
+      name: nameCard.value,
+      link: linkCard.value
+    }];
+    const oneCard = new Section({
+      items: submitCard,
+      renderer: (item) => {
+        const card = new Card(item, selectors.cardTemplate, handleOpenBigImage);
+        const cardElement = card.generateCard();
+        oneCard.addItem(cardElement);
+      }
+    }, selectors.cardElements);
+    oneCard.renderItems();
+    closePopup(popupCard);
+  })
+};
+addCardSubmitEventListener();
 
 // Создаем для каждой проверяемой формы экземпляр класса FormValidator.
 const profileFormValidator = new FormValidator(validationObject, profileForm);
@@ -63,21 +72,7 @@ profileFormValidator.enableValidation();
 const cardFormValidator = new FormValidator(validationObject, cardForm);
 cardFormValidator.enableValidation();
 
-// Функция-обработчик события отправки формы карточки
-function addCardSubmitEventListener() {
-  formElementCard.addEventListener('submit', (evt) => {
-    evt.preventDefault();
-    const item = {
-      name: nameCard.value,
-      link: linkCard.value
-    };
 
-    cardElements.prepend(createCard(item));
-
-    closePopup(popupCard);
-  })
-};
-addCardSubmitEventListener();
 
 // ФУНКЦИИ //
 // Функция закрытия попапа по кнопке Esc
