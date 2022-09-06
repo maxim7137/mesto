@@ -1,11 +1,18 @@
 export default class FormValidator {
-  constructor(configObject, formEl) {
-    this._formSelector = configObject.formSelector;
-    this._inputSelector = configObject.inputSelector;
-    this._submitButtonSelector = configObject.submitButtonSelector;
-    this._inactiveButtonClass = configObject.inactiveButtonClass;
-    this._inputErrorClass = configObject.inputErrorClass;
-    this._errorClass = configObject.errorClass;
+  constructor({
+    formSelector,
+    inputSelector,
+    submitButtonSelector,
+    inactiveButtonClass,
+    inputErrorClass,
+    errorClass
+  }, formEl) {
+    this._formSelector = formSelector;
+    this._inputSelector = inputSelector;
+    this._submitButtonSelector = submitButtonSelector;
+    this._inactiveButtonClass = inactiveButtonClass;
+    this._inputErrorClass = inputErrorClass;
+    this._errorClass = errorClass;
     this._formEl = formEl;
   }
   // Метод вывода сообщения об ошибке

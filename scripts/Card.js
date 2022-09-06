@@ -8,9 +8,9 @@ const selectors = {
 }
 
 export default class Card {
-  constructor(data, templateSelector, handleOpenBigImage) {
-    this._name = data.name;
-    this._link = data.link;
+  constructor({name, link}, templateSelector, handleOpenBigImage) {
+    this._name = name;
+    this._link = link;
     this._templateSelector = templateSelector;
     this.handleOpenBigImage = handleOpenBigImage;
   }
