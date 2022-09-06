@@ -20,16 +20,31 @@ import {
   profileCharacter,
   formElementCard,
   nameCard,
-  linkCard
+  linkCard,
 } from './constants.js';
 
 import Card from './Card.js';
 import FormValidator from './FormValidator.js';
 
-// import Section from './Section.js';
+import Section from './Section.js';
 
+// создание начальных карточек
+const cardsList = new Section({
+  items: initialCards,
+  renderer: (item) => {
+    const card = new Card(item, selectors.cardTemplate, handleOpenBigImage);
 
-// Функция создания карточек
+    const cardElement = card.generateCard();
+
+    cardsList.addItem(cardElement);
+    },
+  },
+  selectors.cardElements
+);
+// отрисовка карточек
+cardsList.renderItems();
+
+/* // Функция создания карточек
 function createCard(item) {
   const card = new Card(item, selectors.cardTemplate, handleOpenBigImage);
   const cardElement = card.generateCard();
@@ -40,7 +55,7 @@ function createCard(item) {
 // Создаем начальные карточки
 initialCards.forEach((item) => {
   cardElements.append(createCard(item, selectors.cardTemplate, handleOpenBigImage));
-});
+}); */
 
 // Создаем для каждой проверяемой формы экземпляр класса FormValidator.
 const profileFormValidator = new FormValidator(validationObject, profileForm);
