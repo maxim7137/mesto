@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,14 +9,13 @@
   <script type="module" src="./scripts/index.js"></script>
   <title>Mesto</title>
 </head>
+
 <body class="page">
   <div class="container">
     <header class="header">
       <img src="./images/logo.svg" alt="Логотип Mesto Russia" class="header__logo">
     </header>
-
     <main class="main">
-
       <section class="profile">
         <img src="https://www.placecage.com/c/120/120" alt="аватар" class="profile__avatar">
         <div class="profile__info">
@@ -31,7 +31,6 @@
           <img src="./images/plus.svg" alt="плюс" class="profile__add-button-img">
         </button>
       </section>
-
       <ul class="elements">
         <template id="card-template">
           <li class="elements__element">
@@ -42,14 +41,13 @@
             </div>
             <img src="./images/trash.svg" alt="корзина" class="elements__trash" aria-label="удалить карточку">
           </li>
-      </template>
-    </ul>
-
+        </template>
+      </ul>
     </main>
-
-    <footer class="footer"><p class="footer__text">&copy; 2020 Mesto Russia</p></footer>
-
-<!-- Попап профиля-->
+    <footer class="footer">
+      <p class="footer__text">&copy; 2020 Mesto Russia</p>
+    </footer>
+    <!-- Попап профиля-->
     <div class="popup popup_profile">
       <div class="popup__container">
         <button class="popup__close-button cross" type="button" aria-label="закрыть">
@@ -59,44 +57,42 @@
           <h2 class="popup__heading">Редактировать профиль</h2>
           <form name="user-edit" class="popup__form popup__form_profile" novalidate>
             <label class="popup__field">
-            <input required type="text" name="user-name" id="user-name-input" class="popup__input popup__input_user_name" value="Жак-Ив Кусто" minlength="2" maxlength="40">
-            <span class="popup__error user-name-input-error" ></span>
+              <input required type="text" name="user-name" id="user-name-input" class="popup__input popup__input_user_name" value="Жак-Ив Кусто" minlength="2" maxlength="40">
+              <span class="popup__error user-name-input-error"></span>
             </label>
             <label class="popup__field">
-            <input required type="text" name="user-character" id="user-character-input" class="popup__input popup__input_user_character" value="Исследователь океана" minlength="2" maxlength="200">
-            <span class="popup__error user-character-input-error" ></span>
+              <input required type="text" name="user-character" id="user-character-input" class="popup__input popup__input_user_character" value="Исследователь океана" minlength="2" maxlength="200">
+              <span class="popup__error user-character-input-error"></span>
             </label>
             <button type="submit" class="popup__button" aria-label="сохранить изменения">Сохранить</button>
           </form>
         </div>
       </div>
     </div>
-
     <!-- Попап карточки-->
-  <div class="popup popup_card">
-    <div class="popup__container">
-      <button class="popup__close-button cross" type="button" aria-label="закрыть">
-        <img src="./images/close.svg" alt="Крест" class="popup__close-button-img cross__img">
-      </button>
-      <div class="popup__form-container">
-        <h2 class="popup__heading">Новое место</h2>
-        <form name="card-edit" class="popup__form popup__form_card" novalidate>
-          <label class="popup__field">
-          <input required type="text" name="card-name" id="card-name-input" class="popup__input popup__input_card_name" placeholder="Название" minlength="2" maxlength="30">
-          <span class="popup__error card-name-input-error" ></span>
-          </label>
-          <label class="popup__field">
-          <input required type="url" name="card-address" id="card-address-input" class="popup__input popup__input_card_address" placeholder="Ссылка на картинку">
-          <span class="popup__error card-address-input-error" ></span>
-          </label>
-          <button type="submit" class="popup__button" aria-label="создать новую карточку">Создать</button>
-        </form>
+    <div class="popup popup_card">
+      <div class="popup__container">
+        <button class="popup__close-button cross" type="button" aria-label="закрыть">
+          <img src="./images/close.svg" alt="Крест" class="popup__close-button-img cross__img">
+        </button>
+        <div class="popup__form-container">
+          <h2 class="popup__heading">Новое место</h2>
+          <form name="card-edit" class="popup__form popup__form_card" novalidate>
+            <label class="popup__field">
+              <input required type="text" name="card-name" id="card-name-input" class="popup__input popup__input_card_name" placeholder="Название" minlength="2" maxlength="30">
+              <span class="popup__error card-name-input-error"></span>
+            </label>
+            <label class="popup__field">
+              <input required type="url" name="card-address" id="card-address-input" class="popup__input popup__input_card_address" placeholder="Ссылка на картинку">
+              <span class="popup__error card-address-input-error"></span>
+            </label>
+            <button type="submit" class="popup__button" aria-label="создать новую карточку">Создать</button>
+          </form>
+        </div>
       </div>
     </div>
-  </div>
-
-  <!-- Попап картинки-->
-      <div class="popup popup_image">
+    <!-- Попап картинки-->
+    <div class="popup popup_image">
       <figure class="popup__container">
         <button class="popup__close-button cross" type="button" aria-label="закрыть">
           <img src="./images/close.svg" alt="Крест" class="popup__close-button-img cross__img">
@@ -105,7 +101,7 @@
         <figcaption class="popup__caption">Подпись</figcaption>
       </figure>
     </div>
-
   </div>
 </body>
+
 </html>
