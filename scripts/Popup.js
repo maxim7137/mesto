@@ -1,5 +1,5 @@
 import {
-  root
+  root, selectors
 } from "./constants";
 
 class Popup {
@@ -32,29 +32,13 @@ class Popup {
 }
 
 class PopupWithImage extends Popup {
-  open() {
-    super.open();
-
+  handleCardClick(link, name) {
+    popupImgPicture.src = link;
+    popupImgPicture.alt = name;
+    captionOfPopupImg.textContent = name;
+    this.open();
   }
 }
-
-// Открываем попап картинки
-function handleCardClick(link, name) {
-  popupImgPicture.src = link;
-  popupImgPicture.alt = name;
-  captionOfPopupImg.textContent = name;
-  openPopup(popupImg);
-}
-
-
-
-
-
-
-
-
-
-
 
 
 class PopupWithForm extends Popup {
@@ -63,12 +47,55 @@ class PopupWithForm extends Popup {
     this._handleSubmitForm = handleSubmitForm;
   }
 
-  _getInputValues() {
+  open() {
+    super.open();
+    this._getInputValues;
+  }
 
+  _getInputValues() {
+    if (this._popup.matches(selectors.popupProfile)) {
+      nameInput.value = profileName.textContent;
+      jobInput.value = profileCharacter.textContent;
+
+      const buttonElement = formElementProfile.querySelector(selectors.submitButtonSelector);
+      const inputList = Array.from(formElementProfile.querySelectorAll(selectors.inputSelector));
+      inputList.forEach((inputElement) => {
+        const errorElement = formElementProfile.querySelector(`.${inputElement.id}-error`);
+        inputElement.classList.remove(selectors.inputErrorClass);
+        errorElement.classList.remove(selectors.errorClass);
+        errorElement.textContent = '';
+      });
+      profileFormValidator.enableButtonState(buttonElement);
+    } else {
+      const buttonElement = formElementCard.querySelector(selectors.submitButtonSelector);
+      const inputList = Array.from(formElementCard.querySelectorAll(selectors.inputSelector));
+      inputList.forEach((inputElement) => {
+        const errorElement = formElementCard.querySelector(`.${inputElement.id}-error`);
+        inputElement.classList.remove(selectors.inputErrorClass);
+        errorElement.classList.remove(selectors.errorClass);
+        errorElement.textContent = '';
+        inputElement.value = '';
+      });
+      cardFormValidator.disableButtonState(buttonElement);
+    }
   }
 
   setEventListeners(evt) {
     super.setEventListeners(evt);
-    hide(); // и затем hide
+    if (this._popup.matches(selectors.popupProfile)) {
+      this._popup.addEventListener('submit', this._submitProfileForm);
+    }
+  }
+  _submitProfileForm() {
+    profileName.textContent = nameInput.value;
+    profileCharacter.textContent = jobInput.value;
+    this.close();
+  }
+
+  close() {
+    super.close();
+    if (this._popup.matches(selectors.popupCard)) {
+      this._popup.querySelector(selectors.formCard).reset();
+    }
   }
 }
