@@ -5,7 +5,6 @@ import {
   root,
   profileForm,
   cardForm,
-  cardElements,
   buttonEdit,
   buttonAdd,
   popupProfile,
@@ -162,6 +161,7 @@ addCloseListenerToAllPopups();
 
 // Прикрепляем обработчик к форме: он будет следить за событием “submit” - «отправка»
 formElementProfile.addEventListener('submit', submitProfileForm); // форма профиля
+
 // Открываем попап редактирования профиля по клику на кнопку
 buttonEdit.addEventListener('click', () => {
   openPopup(popupProfile); // Открываем попап

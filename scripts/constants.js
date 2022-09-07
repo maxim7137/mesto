@@ -83,7 +83,6 @@ export const initialCards = [{
 export const root = document.querySelector(selectors.page);
 export const profileForm = root.querySelector(selectors.formProfile);
 export const cardForm = root.querySelector(selectors.formCard);
-export const cardElements = root.querySelector(selectors.cardElements); // Шаблон карточки
 export const buttonEdit = root.querySelector(selectors.editButton); // кнопка редактирования профиля
 export const buttonAdd = root.querySelector(selectors.addButton); // кнопка добавления карточки
 export const popupProfile = root.querySelector(selectors.popupProfile); // попап редактирования профиля
