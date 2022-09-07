@@ -22,16 +22,39 @@ import {
   linkCard,
 } from './constants.js';
 
-import UserInfo from './UserInfo.js';
+import {
+  PopupWithImage,
+  PopupWithForm
+} from './Popup.js'
+
 import Card from './Card.js';
 import FormValidator from './FormValidator.js';
 import Section from './Section.js';
+import UserInfo from './UserInfo.js';
+
+// Попапы
+
+const popupWithImage = new PopupWithImage(selectors.popupImg); // попап с картинкой
+
+const popupWithFormProfile = new PopupWithForm(selectors.popupProfile, _ => {
+  const user = new UserInfo({
+    userNameSelector: selectors.profileName,
+    userJobSelector: selectors.profileCharacter
+  });
+  user.setUserInfo();
+  popupWithFormProfile.close();
+
+}); // попап редактирования профиля
+
+
+const popupWithFormCard = new PopupWithForm(selectors.popupCard, ''); // попап создания карточки
+
 
 // создание начальных карточек
 const cardsList = new Section({
     items: initialCards,
     renderer: (item) => {
-      const card = new Card(item, selectors.cardTemplate, handleOpenBigImage);
+      const card = new Card(item, selectors.cardTemplate, popupWithImage.handleCardClick);
 
       const cardElement = card.generateCard();
 
@@ -54,13 +77,13 @@ function addCardSubmitEventListener() {
     const oneCard = new Section({
       items: submitCard,
       renderer: (item) => {
-        const card = new Card(item, selectors.cardTemplate, handleOpenBigImage);
+        const card = new Card(item, selectors.cardTemplate, popupWithImage.handleCardClick);
         const cardElement = card.generateCard();
         oneCard.addItem(cardElement);
       }
     }, selectors.cardElements);
     oneCard.renderItems();
-    closePopup(popupCard);
+    popupWithFormCard.close();
   })
 };
 addCardSubmitEventListener();
@@ -71,114 +94,19 @@ profileFormValidator.enableValidation();
 const cardFormValidator = new FormValidator(validationObject, cardForm);
 cardFormValidator.enableValidation();
 
-
-
-// ФУНКЦИИ //
-// Функция закрытия попапа по кнопке Esc
-function closePopupByEsc(evt) {
-  if (evt.key === 'Escape') {
-    const popupOpenedNode = root.querySelector(selectors.popupOpenedClass);
-    closePopup(popupOpenedNode);
-  }
-}
-
-// Открываем попап
-function openPopup(popup) {
-  popup.classList.add(selectors.popupOpened);
-  root.addEventListener('keydown', closePopupByEsc); // слушатель Escape
-}
-
-// Закрываем попап
-function closePopup(popup) {
-  popup.classList.remove(selectors.popupOpened);
-  root.removeEventListener('keydown', closePopupByEsc); // удаляем слушатель Escape
-}
-
-// Функция закрытия попапа по клику
-function closePopupByClick(evt) {
-  const target = evt.target;
-  const modal = target.closest(selectors.popup);
-  if (target.classList.contains(selectors.cross) || target.classList.contains(selectors.crossImg) || target === modal) {
-    closePopup(modal);
-  }
-}
-
-// Функция вставки значений из полей в профиль
-function insertValuesFromPopupFieldsToProfile() {
-  profileName.textContent = nameInput.value;
-  profileCharacter.textContent = jobInput.value;
-}
-
-// Функция вставки значений из документа в поле редактирования профиля
-function insertValuesFromProfileToPopupFields() {
-  nameInput.value = profileName.textContent;
-  jobInput.value = profileCharacter.textContent;
-}
-
-// Функция очистки полей добавления карточки и ошибок
-function clearCardFormInputsAndErrors() {
-  const buttonElement = formElementCard.querySelector(selectors.submitButtonSelector);
-  const inputList = Array.from(formElementCard.querySelectorAll(selectors.inputSelector));
-  inputList.forEach((inputElement) => {
-    const errorElement = formElementCard.querySelector(`.${inputElement.id}-error`);
-    inputElement.classList.remove(selectors.inputErrorClass);
-    errorElement.classList.remove(selectors.errorClass);
-    errorElement.textContent = '';
-    inputElement.value = '';
-  });
-  cardFormValidator.disableButtonState(buttonElement);
-}
-
-// Функция очистки ошибок при открытии попапа профиля
-function clearProfileFormErrors() {
-  const buttonElement = formElementProfile.querySelector(selectors.submitButtonSelector);
-  const inputList = Array.from(formElementProfile.querySelectorAll(selectors.inputSelector));
-  inputList.forEach((inputElement) => {
-    const errorElement = formElementProfile.querySelector(`.${inputElement.id}-error`);
-    inputElement.classList.remove(selectors.inputErrorClass);
-    errorElement.classList.remove(selectors.errorClass);
-    errorElement.textContent = '';
-  });
-  profileFormValidator.enableButtonState(buttonElement);
-}
-
-// Функция «отправки» формы, профиля
-function submitProfileForm() {
-  insertValuesFromPopupFieldsToProfile(); // Вставляем новые значения из полей в документ с помощью textContent
-  closePopup(popupProfile); // Закрываем попап
-}
-
-// СЛУШАТЕЛИ СОБЫТИЙ //
-
-// обработчики кликов для закрытия каждого попапа
-function addCloseListenerToAllPopups() {
-  const popupList = Array.from(root.querySelectorAll(selectors.popup));
-  popupList.forEach((popupElement) => {
-    popupElement.addEventListener('click', closePopupByClick);
-  });
-};
-addCloseListenerToAllPopups();
-
-// Прикрепляем обработчик к форме: он будет следить за событием “submit” - «отправка»
-formElementProfile.addEventListener('submit', submitProfileForm); // форма профиля
-
 // Открываем попап редактирования профиля по клику на кнопку
 buttonEdit.addEventListener('click', () => {
-  openPopup(popupProfile); // Открываем попап
-  insertValuesFromProfileToPopupFields(); // Вставляем значения из документа в поля формы с помощью textContent
-  clearProfileFormErrors();
+  popupWithFormProfile.open(); // Открываем попап
+  const user = new UserInfo({
+    userNameSelector: selectors.profileName,
+    userJobSelector: selectors.profileCharacter
+  });
+  nameInput.value = user.getUserInfo().name;
+  jobInput.value = user.getUserInfo().info;
+  
 });
 
 // Открываем попап добавления карточки
 buttonAdd.addEventListener('click', () => {
-  clearCardFormInputsAndErrors();
-  openPopup(popupCard); // Открываем попап
+  popupWithFormCard.open(); // Открываем попап
 });
-
-// Открываем попап картинки
-function handleOpenBigImage(link, name) {
-  popupImgPicture.src = link;
-  popupImgPicture.alt = name;
-  captionOfPopupImg.textContent = name;
-  openPopup(popupImg);
-}
