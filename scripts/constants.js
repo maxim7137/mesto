@@ -86,6 +86,7 @@ export const cardForm = root.querySelector(selectors.formCard);
 export const buttonEdit = root.querySelector(selectors.editButton); // кнопка редактирования профиля
 export const buttonAdd = root.querySelector(selectors.addButton); // кнопка добавления карточки
 export const popupProfile = root.querySelector(selectors.popupProfile); // попап редактирования профиля
+export const profileButtonElement = popupProfile.querySelector(selectors.submitButtonSelector); // кнопка отправки профиля
 export const popupCard = root.querySelector(selectors.popupCard); // попап добавления карточки
 export const popupImg = document.querySelector(selectors.popupImg); // попап картинки
 export const popupImgPicture = popupImg.querySelector(selectors.popupImage); // сама картинка

@@ -51,7 +51,6 @@ export class PopupWithImage extends Popup {
   }
 }
 
-
 export class PopupWithForm extends Popup {
   constructor(popupSelector, handleSubmitForm) {
     super(popupSelector);
@@ -60,36 +59,43 @@ export class PopupWithForm extends Popup {
 
   open() {
     super.open();
-    this._getInputValues;
+    this._resetForm();
   }
 
-  _getInputValues = () => {
-    if (this._popup.matches(selectors.popupProfile)) {
-      nameInput.value = profileName.textContent;
-      jobInput.value = profileCharacter.textContent;
+  _resetForm = () => {
 
-      const buttonElement = formElementProfile.querySelector(selectors.submitButtonSelector);
-      const inputList = Array.from(formElementProfile.querySelectorAll(selectors.inputSelector));
+    if (this._popup.matches(selectors.popupProfile)) {
+      const inputList = Array.from(this._popup.querySelectorAll(selectors.inputSelector));
       inputList.forEach((inputElement) => {
-        const errorElement = formElementProfile.querySelector(`.${inputElement.id}-error`);
+        const errorElement = this._popup.querySelector(`.${inputElement.id}-error`);
         inputElement.classList.remove(selectors.inputErrorClass);
         errorElement.classList.remove(selectors.errorClass);
         errorElement.textContent = '';
       });
-      profileFormValidator.enableButtonState(buttonElement);
     } else {
-      const buttonElement = formElementCard.querySelector(selectors.submitButtonSelector);
-      const inputList = Array.from(formElementCard.querySelectorAll(selectors.inputSelector));
+      const inputList = Array.from(this._popup.querySelectorAll(selectors.inputSelector));
       inputList.forEach((inputElement) => {
-        const errorElement = formElementCard.querySelector(`.${inputElement.id}-error`);
+        const errorElement = this._popup.querySelector(`.${inputElement.id}-error`);
         inputElement.classList.remove(selectors.inputErrorClass);
         errorElement.classList.remove(selectors.errorClass);
         errorElement.textContent = '';
         inputElement.value = '';
       });
-      cardFormValidator.disableButtonState(buttonElement);
     }
   }
+
+  _getInputValues = () => {
+    const inputList = (this._popup.querySelectorAll(selectors.inputSelector));
+    if (this._popup.matches(selectors.popupProfile)) {
+      const { 0: name, 1: job } = inputList;
+      const userData = { userName: name.value, userJob: job.value };
+      return userData;
+    } else {
+      const { 0: name, 1: link } = inputList;
+      const cardData = { cardName: name.value, cardLink: link.value };
+      return cardData;
+    }
+  };
 
   setEventListeners(evt) {
     super.setEventListeners(evt);
@@ -97,7 +103,7 @@ export class PopupWithForm extends Popup {
       this._popup.addEventListener('submit', this._handleSubmitForm);
     }
   }
-  
+
   close() {
     super.close();
     if (this._popup.matches(selectors.popupCard)) {

@@ -2,24 +2,16 @@ import {
   selectors,
   validationObject,
   initialCards,
-  root,
   profileForm,
   cardForm,
   buttonEdit,
   buttonAdd,
-  popupProfile,
-  popupCard,
-  popupImg,
-  popupImgPicture,
-  captionOfPopupImg,
-  formElementProfile,
   nameInput,
   jobInput,
-  profileName,
-  profileCharacter,
   formElementCard,
   nameCard,
   linkCard,
+  profileButtonElement
 } from './constants.js';
 
 import {
@@ -43,21 +35,16 @@ const popupWithFormProfile = new PopupWithForm(selectors.popupProfile, _ => {
   });
   user.setUserInfo();
   popupWithFormProfile.close();
-
 }); // попап редактирования профиля
 
-
-const popupWithFormCard = new PopupWithForm(selectors.popupCard, ''); // попап создания карточки
-
+const popupWithFormCard = new PopupWithForm(selectors.popupCard); // попап создания карточки
 
 // создание начальных карточек
 const cardsList = new Section({
     items: initialCards,
     renderer: (item) => {
       const card = new Card(item, selectors.cardTemplate, popupWithImage.handleCardClick);
-
       const cardElement = card.generateCard();
-
       cardsList.addItem(cardElement);
     }
   },
@@ -103,7 +90,7 @@ buttonEdit.addEventListener('click', () => {
   });
   nameInput.value = user.getUserInfo().name;
   jobInput.value = user.getUserInfo().info;
-  
+  profileFormValidator.enableButtonState(profileButtonElement);
 });
 
 // Открываем попап добавления карточки
