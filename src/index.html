@@ -5,15 +5,17 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!--
   <link rel="stylesheet" href="./pages/index.css">
   <script type="module" src="./scripts/index.js"></script>
+   -->
   <title>Mesto</title>
 </head>
 
 <body class="page">
   <div class="container">
     <header class="header">
-      <img src="./images/logo.svg" alt="Логотип Mesto Russia" class="header__logo">
+      <img src="<%=require('./images/logo.svg')%>" alt="Логотип Mesto Russia" class="header__logo">
     </header>
     <main class="main">
       <section class="profile">
@@ -22,13 +24,13 @@
           <div class="profile__name-edit">
             <h1 class="profile__name">Жак-Ив Кусто</h1>
             <button class="profile__edit-button" type="button" aria-label="редактировать профиль">
-              <img src="./images/edit.svg" alt="карандаш" class="profile__edit-button-img">
+              <img src="<%=require('./images/edit.svg')%>" alt="карандаш" class="profile__edit-button-img">
             </button>
           </div>
           <p class="profile__character">Исследователь океана</p>
         </div>
         <button class="profile__add-button" type="button" aria-label="добавить карточку">
-          <img src="./images/plus.svg" alt="плюс" class="profile__add-button-img">
+          <img src="<%=require('./images/plus.svg')%>" alt="плюс" class="profile__add-button-img">
         </button>
       </section>
       <ul class="elements">
@@ -39,7 +41,7 @@
               <h2 class="elements__name">Карачаевск</h2>
               <button class="elements__like-button" type="button" aria-label="отметить карточку"></button>
             </div>
-            <img src="./images/trash.svg" alt="корзина" class="elements__trash" aria-label="удалить карточку">
+            <img src="<%=require('./images/trash.svg')%>" alt="корзина" class="elements__trash" aria-label="удалить карточку">
           </li>
         </template>
       </ul>
@@ -51,7 +53,7 @@
     <div class="popup popup_profile">
       <div class="popup__container">
         <button class="popup__close-button cross" type="button" aria-label="закрыть">
-          <img src="./images/close.svg" alt="Крест" class="popup__close-button-img cross__img">
+          <img src="<%=require('./images/close.svg')%>" alt="Крест" class="popup__close-button-img cross__img">
         </button>
         <div class="popup__form-container">
           <h2 class="popup__heading">Редактировать профиль</h2>
@@ -73,7 +75,7 @@
     <div class="popup popup_card">
       <div class="popup__container">
         <button class="popup__close-button cross" type="button" aria-label="закрыть">
-          <img src="./images/close.svg" alt="Крест" class="popup__close-button-img cross__img">
+          <img src="<%=require('./images/close.svg')%>" alt="Крест" class="popup__close-button-img cross__img">
         </button>
         <div class="popup__form-container">
           <h2 class="popup__heading">Новое место</h2>
@@ -95,7 +97,7 @@
     <div class="popup popup_image">
       <figure class="popup__container">
         <button class="popup__close-button cross" type="button" aria-label="закрыть">
-          <img src="./images/close.svg" alt="Крест" class="popup__close-button-img cross__img">
+          <img src="<%=require('./images/close.svg')%>" alt="Крест" class="popup__close-button-img cross__img">
         </button>
         <img class="popup__img" src="" alt="Большое фото загруженное пользователем">
         <figcaption class="popup__caption">Подпись</figcaption>
