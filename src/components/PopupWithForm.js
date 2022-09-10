@@ -1,57 +1,7 @@
-import {
-  root,
-  selectors
-} from './constants.js';
+import { selectors } from '../utils/constants.js';
+import Popup from './Popup.js';
 
-class Popup {
-  constructor(popupSelector) {
-    this._popup = document.querySelector(popupSelector);
-  }
-
-  open() {
-    this._popup.classList.add(selectors.popupOpened);
-    root.addEventListener('keydown', this._handleEscClose);
-    this.setEventListeners();
-  };
-
-  close() {
-    this._popup.classList.remove(selectors.popupOpened);
-    root.removeEventListener('keydown', this._handleEscClose);
-    this._popup.removeEventListener('click', this._closePopupByClick);
-  };
-
-  _handleEscClose = (evt) => {
-    if (evt.key === 'Escape') {
-      this.close();
-    }
-  };
-
-  setEventListeners() {
-    this._popup.addEventListener('click', this._closePopupByClick);
-  };
-
-  _closePopupByClick = (evt) => {
-    const target = evt.target;
-    const modal = target.closest(selectors.popup);
-    if (target.classList.contains(selectors.cross) || target.classList.contains(selectors.crossImg) || target === modal) {
-      this.close();
-    }
-  }
-}
-
-export class PopupWithImage extends Popup {
-  handleCardClick = (link, name) => {
-    this._popupImgPicture = document.querySelector(selectors.popupImage);
-    this._captionOfPopupImg = document.querySelector(selectors.popupCaption);
-
-    this._popupImgPicture.src = link;
-    this._popupImgPicture.alt = name;
-    this._captionOfPopupImg.textContent = name;
-    this.open();
-  }
-}
-
-export class PopupWithForm extends Popup {
+export default class PopupWithForm extends Popup {
   constructor(popupSelector, handleSubmitForm) {
     super(popupSelector);
     this._handleSubmitForm = handleSubmitForm;

@@ -1,6 +1,6 @@
 import {
   selectorsOfCard
-} from './constants.js'
+} from '../utils/constants.js'
 
 export default class Card {
   constructor({

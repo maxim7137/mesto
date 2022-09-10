@@ -1,6 +1,6 @@
 import {
   root, selectors
-} from "./constants.js";
+} from "../utils/constants.js";
 
 export default class UserInfo {
   constructor({ userNameSelector, userJobSelector }) {

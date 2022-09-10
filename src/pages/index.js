@@ -1,4 +1,4 @@
-import '../pages/index.css';
+import './index.css';
 
 import {
   selectors,
@@ -14,21 +14,21 @@ import {
   nameCard,
   linkCard,
   profileButtonElement
-} from './constants.js';
+} from '../utils/constants.js';
 
-import {
-  PopupWithImage,
-  PopupWithForm
-} from './Popup.js'
+import Popup from '../components/Popup.js';
+import PopupWithForm from '../components/PopupWithForm.js';
+import PicturePopup from '../components/PicturePopup.js';
 
-import Card from './Card.js';
-import FormValidator from './FormValidator.js';
-import Section from './Section.js';
-import UserInfo from './UserInfo.js';
+
+import Card from '../components/Card.js';
+import FormValidator from '../components/FormValidator.js';
+import Section from '../components/Section.js';
+import UserInfo from '../components/UserInfo.js';
 
 // Попапы
 
-const popupWithImage = new PopupWithImage(selectors.popupImg); // попап с картинкой
+const picturePopup = new PicturePopup(selectors.popupImg); // попап с картинкой
 
 const popupWithFormProfile = new PopupWithForm(selectors.popupProfile, _ => {
   const user = new UserInfo({
@@ -45,7 +45,7 @@ const popupWithFormCard = new PopupWithForm(selectors.popupCard); // попап 
 const cardsList = new Section({
     items: initialCards,
     renderer: (item) => {
-      const card = new Card(item, selectors.cardTemplate, popupWithImage.handleCardClick);
+      const card = new Card(item, selectors.cardTemplate, picturePopup.handleCardClick);
       const cardElement = card.generateCard();
       cardsList.addItem(cardElement);
     }
@@ -66,7 +66,7 @@ function addCardSubmitEventListener() {
     const oneCard = new Section({
       items: submitCard,
       renderer: (item) => {
-        const card = new Card(item, selectors.cardTemplate, popupWithImage.handleCardClick);
+        const card = new Card(item, selectors.cardTemplate, picturePopup.handleCardClick);
         const cardElement = card.generateCard();
         oneCard.addItem(cardElement);
       }
