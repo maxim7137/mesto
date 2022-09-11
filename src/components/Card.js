@@ -23,6 +23,8 @@ export default class Card {
 
   generateCard() {
     this._cardElement = this._getCardElement();
+    this._buttonLike = this._cardElement.querySelector(selectorsOfCard.buttonLike);
+    this._buttonDel = this._cardElement.querySelector(selectorsOfCard.buttonDel);
 
     this.elImg = this._cardElement.querySelector(selectorsOfCard.elementsImage);
 
@@ -36,20 +38,20 @@ export default class Card {
   }
 
   _setEventListeners() {
-    this._cardElement.querySelector(selectorsOfCard.buttonDel).addEventListener('click', _ => this._deleteClick());
-    this._cardElement.querySelector(selectorsOfCard.buttonLike).addEventListener('click', _ => this._likeClick());
-    this.elImg.addEventListener('click', _ => this._popupClick());
+    this._buttonDel.addEventListener('click', _ => this._deleteCard());
+    this._buttonLike.addEventListener('click', _ => this._toggleLike());
+    this.elImg.addEventListener('click', _ => this._handleImageClick());
   }
 
-  _deleteClick() {
+  _deleteCard() {
     this._cardElement.remove();
   }
 
-  _likeClick() {
-    this._cardElement.querySelector(selectorsOfCard.buttonLike).classList.toggle(selectorsOfCard.liked);
+  _toggleLike() {
+    this._buttonLike.classList.toggle(selectorsOfCard.liked);
   }
 
-  _popupClick() {
+  _handleImageClick() {
     this.handleOpenBigImage(this._link, this._name);
   }
 }
