@@ -13,7 +13,8 @@ import {
   formElementCard,
   nameCard,
   linkCard,
-  profileButtonElement
+  profileButtonElement,
+  cardButtonElement
 } from '../utils/constants.js';
 
 import Popup from '../components/Popup.js';
@@ -29,6 +30,7 @@ import UserInfo from '../components/UserInfo.js';
 // Попапы
 
 const picturePopup = new PicturePopup(selectors.popupImg); // попап с картинкой
+picturePopup.setEventListeners();
 
 const popupWithFormProfile = new PopupWithForm(selectors.popupProfile, _ => {
   const user = new UserInfo({
@@ -38,8 +40,10 @@ const popupWithFormProfile = new PopupWithForm(selectors.popupProfile, _ => {
   user.setUserInfo();
   popupWithFormProfile.close();
 }); // попап редактирования профиля
+popupWithFormProfile.setEventListeners();
 
 const popupWithFormCard = new PopupWithForm(selectors.popupCard); // попап создания карточки
+popupWithFormCard.setEventListeners();
 
 // создание начальных карточек
 const cardsList = new Section({
@@ -68,7 +72,7 @@ function addCardSubmitEventListener() {
       renderer: (item) => {
         const card = new Card(item, selectors.cardTemplate, picturePopup.handleCardClick);
         const cardElement = card.generateCard();
-        oneCard.addItem(cardElement);
+        oneCard.prependItem(cardElement);
       }
     }, selectors.cardElements);
     oneCard.renderItems();
@@ -98,4 +102,5 @@ buttonEdit.addEventListener('click', () => {
 // Открываем попап добавления карточки
 buttonAdd.addEventListener('click', () => {
   popupWithFormCard.open(); // Открываем попап
+  cardFormValidator.disableButtonState(cardButtonElement);
 });

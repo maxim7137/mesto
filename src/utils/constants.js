@@ -99,3 +99,4 @@ export const profileCharacter = root.querySelector(selectors.profileCharacter); 
 export const formElementCard = popupCard.querySelector(selectors.formCard); // Форма добавления карточки
 export const nameCard = formElementCard.querySelector(selectors.nameCard); // Находим поля формы добавления карточки
 export const linkCard = formElementCard.querySelector(selectors.linkCard); // Находим поля формы добавления карточки
+export const cardButtonElement = formElementCard.querySelector(selectors.submitButtonSelector); // Находим кнопку добавления карточки

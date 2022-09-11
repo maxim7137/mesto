@@ -5,6 +5,8 @@ const {
 } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
+const ghpages = require('gh-pages');
+
 module.exports = {
   entry: {
     main: './src/pages/index.js'
@@ -60,7 +62,6 @@ module.exports = {
       template: './src/index.html'
     }),
     new CleanWebpackPlugin(),
-    new MiniCssExtractPlugin(),
-
+    new MiniCssExtractPlugin()
   ]
 }
