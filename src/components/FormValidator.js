@@ -14,8 +14,6 @@ export default class FormValidator {
     this._inputErrorClass = inputErrorClass;
     this._errorClass = errorClass;
     this._formEl = formEl;
-
-
   }
   // Метод вывода сообщения об ошибке
   _showError(inputElement, errorMessage) {
@@ -46,9 +44,9 @@ export default class FormValidator {
   // Метод переключения кнопки в зависимости от предыдущей проверки
   _toggleButtonState() {
     if (this._hasInvalidInput()) {
-      this.disableButtonState(this._buttonElement);
+      this.disableButtonState();
     } else {
-      this.enableButtonState(this._buttonElement);
+      this.enableButtonState();
     }
   }
   // Метод развешивания всего выше на все инпуты в форме
@@ -67,14 +65,20 @@ export default class FormValidator {
   };
   // Методы сброса кнопки сохранения
   // Метод отключения кнопки
-  disableButtonState(buttonElement) {
-    buttonElement.classList.add(this._inactiveButtonClass);
-    buttonElement.setAttribute("disabled", "disabled");
+  disableButtonState() {
+    this._buttonElement.classList.add(this._inactiveButtonClass);
+    this._buttonElement.setAttribute("disabled", "disabled");
   }
   // Метод включения кнопки
-  enableButtonState(buttonElement) {
-    buttonElement.classList.remove(this._inactiveButtonClass);
-    buttonElement.removeAttribute("disabled");
+  enableButtonState() {
+    this._buttonElement.classList.remove(this._inactiveButtonClass);
+    this._buttonElement.removeAttribute("disabled");
+  }
+
+  publicCheckError() {
+    this._inputList.forEach((inputElement) => {
+      this._checkInputValidity(inputElement);
+    });
   }
 
   // Метод проверки формы

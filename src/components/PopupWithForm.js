@@ -1,63 +1,42 @@
-import { selectors } from '../utils/constants.js';
 import Popup from './Popup.js';
+const popupWithFormSelectors = {
+  popupProfile: '.popup_profile',
+  inputSelector: '.popup__input',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__error_visible'
+}
 
 export default class PopupWithForm extends Popup {
   constructor(popupSelector, handleSubmitForm) {
     super(popupSelector);
     this._handleSubmitForm = handleSubmitForm;
-  }
-
-  open() {
-    super.open();
-    this._resetForm();
-  }
-
-  _resetForm = () => {
-
-    if (this._popup.matches(selectors.popupProfile)) {
-      const inputList = Array.from(this._popup.querySelectorAll(selectors.inputSelector));
-      inputList.forEach((inputElement) => {
-        const errorElement = this._popup.querySelector(`.${inputElement.id}-error`);
-        inputElement.classList.remove(selectors.inputErrorClass);
-        errorElement.classList.remove(selectors.errorClass);
-        errorElement.textContent = '';
-      });
-    } else {
-      const inputList = Array.from(this._popup.querySelectorAll(selectors.inputSelector));
-      inputList.forEach((inputElement) => {
-        const errorElement = this._popup.querySelector(`.${inputElement.id}-error`);
-        inputElement.classList.remove(selectors.inputErrorClass);
-        errorElement.classList.remove(selectors.errorClass);
-        errorElement.textContent = '';
-        inputElement.value = '';
-      });
-    }
+    this._inputList = this._popup.querySelectorAll(popupWithFormSelectors.inputSelector);
   }
 
   _getInputValues = () => {
-    const inputList = (this._popup.querySelectorAll(selectors.inputSelector));
-    if (this._popup.matches(selectors.popupProfile)) {
-      const { 0: name, 1: job } = inputList;
-      const userData = { userName: name.value, userJob: job.value };
-      return userData;
-    } else {
-      const { 0: name, 1: link } = inputList;
-      const cardData = { cardName: name.value, cardLink: link.value };
-      return cardData;
-    }
+
+    this._formValues = {};
+    this._inputList.forEach(input => {
+      this._formValues[input.name] = input.value;
+    });
+    return this._formValues;
   };
+
+  setInputValues = (data) => {
+    this._inputList.forEach( input => {
+      input.value = data[input.name];
+    });
+  }
 
   setEventListeners(evt) {
     super.setEventListeners(evt);
-    if (this._popup.matches(selectors.popupProfile)) {
-      this._popup.addEventListener('submit', this._handleSubmitForm);
-    }
+    this._popup.addEventListener('submit', this._handleSubmitForm);
   }
+
+
 
   close() {
     super.close();
-    if (this._popup.matches(selectors.popupCard)) {
-      this._popup.querySelector(selectors.formCard).reset();
-    }
+    this._popup.querySelector('form').reset();
   }
 }

@@ -1,7 +1,9 @@
-import {
-  root,
-  selectors
-} from '../utils/constants.js';
+const popupSelectors = {
+  popup: '.popup',
+  popupOpened: 'popup_opened',
+  cross: 'cross',
+  crossImg: 'cross__img'
+}
 
 export default class Popup {
   constructor(popupSelector) {
@@ -9,13 +11,13 @@ export default class Popup {
   }
 
   open() {
-    this._popup.classList.add(selectors.popupOpened);
-    root.addEventListener('keydown', this._handleEscClose);
+    this._popup.classList.add(popupSelectors.popupOpened);
+    document.addEventListener('keydown', this._handleEscClose);
   };
 
   close() {
-    this._popup.classList.remove(selectors.popupOpened);
-    root.removeEventListener('keydown', this._handleEscClose);
+    this._popup.classList.remove(popupSelectors.popupOpened);
+    document.removeEventListener('keydown', this._handleEscClose);
   };
 
   _handleEscClose = (evt) => {
@@ -26,12 +28,15 @@ export default class Popup {
 
   setEventListeners() {
     this._popup.addEventListener('click', this._closePopupByClick);
+    
   };
 
   _closePopupByClick = (evt) => {
     const target = evt.target;
-    const modal = target.closest(selectors.popup);
-    if (target.classList.contains(selectors.cross) || target.classList.contains(selectors.crossImg) || target === modal) {
+
+    if (target.classList.contains(popupSelectors.cross) ||
+      target.classList.contains(popupSelectors.crossImg) ||
+      target === this._popup) {
       this.close();
     }
   }

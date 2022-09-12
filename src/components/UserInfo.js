@@ -1,27 +1,34 @@
-import {
-  root, selectors
-} from "../utils/constants.js";
+const userSelectors = {
+  nameInput: '.popup__input_user_name',
+  jobInput: '.popup__input_user_character'
+}
 
 export default class UserInfo {
-  constructor({ userNameSelector, userJobSelector }) {
-    this._userNameSelector = userNameSelector;
-    this._userJobSelector = userJobSelector;
+  constructor({
+    userNameSelector,
+    userJobSelector
+  }) {
+    this._userNameNode = document.querySelector(userNameSelector);
+    this._userJobNode = document.querySelector(userJobSelector);
+
+    this._nameInput = document.querySelector(userSelectors.nameInput);
+    this._jobInput = document.querySelector(userSelectors.jobInput);
   }
 
   getUserInfo() {
-    this._userName = root.querySelector(this._userNameSelector).textContent;
-    this._userJob = root.querySelector(this._userJobSelector).textContent;
-    this.userData = { name: this._userName, info: this._userJob };
+    this._userName = this._userNameNode.textContent;
+    this._userJob = this._userJobNode.textContent;
+    this._userData = {
+      name: this._userName,
+      info: this._userJob
+    };
 
-    return this.userData;
+    return this._userData;
   }
 
-  setUserInfo() {
-    this._profileName = root.querySelector(this._userNameSelector);
-    this._profileCharacter = root.querySelector(this._userJobSelector);
-    this._nameInput = root.querySelector(selectors.nameInput);
-    this._jobInput = root.querySelector(selectors.jobInput);
-    this._profileName.textContent = this._nameInput.value;
-    this._profileCharacter.textContent = this._jobInput.value;
+  setUserInfo(name, job) {
+
+    this._userNameNode.textContent = name;
+    this._userJobNode.textContent = job;
   }
 }

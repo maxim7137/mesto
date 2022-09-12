@@ -1,4 +1,4 @@
-// import './index.css';
+import './index.css';
 
 import {
   selectors,
@@ -9,98 +9,84 @@ import {
   buttonEdit,
   buttonAdd,
   nameInput,
-  jobInput,
-  formElementCard,
-  nameCard,
-  linkCard,
-  profileButtonElement,
-  cardButtonElement
+  jobInput
 } from '../utils/constants.js';
 
-import Popup from '../components/Popup.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import PicturePopup from '../components/PicturePopup.js';
-
-
 import Card from '../components/Card.js';
 import FormValidator from '../components/FormValidator.js';
 import Section from '../components/Section.js';
 import UserInfo from '../components/UserInfo.js';
 
-// Попапы
+// Функция создания карточки
+function createCard(item) {
+  const card = new Card(item, selectors.cardTemplate, picturePopup.open);
+  const cardElement = card.generateCard();
+  return cardElement;
+}
 
-const picturePopup = new PicturePopup(selectors.popupImg); // попап с картинкой
+// Юзер
+const user = new UserInfo({
+  userNameSelector: selectors.profileName,
+  userJobSelector: selectors.profileCharacter
+});
+
+// Попапы //
+// попап с картинкой
+const picturePopup = new PicturePopup(selectors.popupImg);
 picturePopup.setEventListeners();
-
+// попап редактирования профиля
 const popupWithFormProfile = new PopupWithForm(selectors.popupProfile, _ => {
-  const user = new UserInfo({
-    userNameSelector: selectors.profileName,
-    userJobSelector: selectors.profileCharacter
-  });
-  user.setUserInfo();
+  user.setUserInfo(nameInput.value, jobInput.value);
   popupWithFormProfile.close();
-}); // попап редактирования профиля
+});
 popupWithFormProfile.setEventListeners();
 
-const popupWithFormCard = new PopupWithForm(selectors.popupCard); // попап создания карточки
+const popupWithFormCard = new PopupWithForm(selectors.popupCard,
+  (evt) => {
+    evt.preventDefault();
+    const submitCard = popupWithFormCard._getInputValues();
+
+    const cardElement = createCard(submitCard);
+    cardsList.prependItem(cardElement);
+
+    cardsList.renderItems();
+    popupWithFormCard.close();
+  }); // попап создания карточки
+
 popupWithFormCard.setEventListeners();
 
 // создание начальных карточек
 const cardsList = new Section({
     items: initialCards,
     renderer: (item) => {
-      const card = new Card(item, selectors.cardTemplate, picturePopup.handleCardClick);
-      const cardElement = card.generateCard();
+      const cardElement = createCard(item);
       cardsList.addItem(cardElement);
     }
   },
   selectors.cardElements
 );
-// отрисовка начальных карточек
+// отрисовка карточек
 cardsList.renderItems();
-
-// карточки после отправки формы
-function addCardSubmitEventListener() {
-  formElementCard.addEventListener('submit', (evt) => {
-    evt.preventDefault();
-    const submitCard = [{
-      name: nameCard.value,
-      link: linkCard.value
-    }];
-    const oneCard = new Section({
-      items: submitCard,
-      renderer: (item) => {
-        const card = new Card(item, selectors.cardTemplate, picturePopup.handleCardClick);
-        const cardElement = card.generateCard();
-        oneCard.prependItem(cardElement);
-      }
-    }, selectors.cardElements);
-    oneCard.renderItems();
-    popupWithFormCard.close();
-  })
-};
-addCardSubmitEventListener();
 
 // Создаем для каждой проверяемой формы экземпляр класса FormValidator.
 const profileFormValidator = new FormValidator(validationObject, profileForm);
-profileFormValidator.enableValidation();
 const cardFormValidator = new FormValidator(validationObject, cardForm);
-cardFormValidator.enableValidation();
+
 
 // Открываем попап редактирования профиля по клику на кнопку
 buttonEdit.addEventListener('click', () => {
   popupWithFormProfile.open(); // Открываем попап
-  const user = new UserInfo({
-    userNameSelector: selectors.profileName,
-    userJobSelector: selectors.profileCharacter
-  });
-  nameInput.value = user.getUserInfo().name;
-  jobInput.value = user.getUserInfo().info;
-  profileFormValidator.enableButtonState(profileButtonElement);
+  popupWithFormProfile.setInputValues(user.getUserInfo()); // Заполняем инпуты
+  profileFormValidator.enableValidation();
+  profileFormValidator.publicCheckError();
+  profileFormValidator.enableButtonState(); // Включаем кнопку
 });
 
 // Открываем попап добавления карточки
 buttonAdd.addEventListener('click', () => {
+  cardFormValidator.enableValidation();
   popupWithFormCard.open(); // Открываем попап
-  cardFormValidator.disableButtonState(cardButtonElement);
+  cardFormValidator.disableButtonState();
 });
