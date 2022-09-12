@@ -1,12 +1,3 @@
-export const selectorsOfCard = {
-  cardElement: '.elements__element',
-  elementsImage: '.elements__image',
-  elementsName: '.elements__name',
-  buttonLike: '.elements__like-button',
-  buttonDel: '.elements__trash',
-  liked: 'elements__like-button_liked',
-}
-
 export const selectors = {
   cardTemplate: '#card-template',
   page: '.page',
@@ -80,9 +71,9 @@ export const initialCards = [{
 }
 ];
 
-export const root = document.querySelector(selectors.page);
-export const profileForm = root.querySelector(selectors.formProfile);
-export const cardForm = root.querySelector(selectors.formCard);
+export const root = document.querySelector(selectors.page); // Контейнер страницы
+export const profileForm = root.querySelector(selectors.formProfile); // Форма редактирования профиля
+export const cardForm = root.querySelector(selectors.formCard); // Форма добавления карточки
 export const buttonEdit = root.querySelector(selectors.editButton); // кнопка редактирования профиля
 export const buttonAdd = root.querySelector(selectors.addButton); // кнопка добавления карточки
 export const popupProfile = root.querySelector(selectors.popupProfile); // попап редактирования профиля

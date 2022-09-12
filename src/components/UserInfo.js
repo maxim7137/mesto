@@ -27,7 +27,6 @@ export default class UserInfo {
   }
 
   setUserInfo(name, job) {
-
     this._userNameNode.textContent = name;
     this._userJobNode.textContent = job;
   }

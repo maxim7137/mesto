@@ -1,4 +1,5 @@
 import Popup from './Popup.js';
+
 const popupWithFormSelectors = {
   popupProfile: '.popup_profile',
   inputSelector: '.popup__input',
@@ -32,8 +33,6 @@ export default class PopupWithForm extends Popup {
     super.setEventListeners(evt);
     this._popup.addEventListener('submit', this._handleSubmitForm);
   }
-
-
 
   close() {
     super.close();

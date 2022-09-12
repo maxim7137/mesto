@@ -42,7 +42,7 @@ const popupWithFormProfile = new PopupWithForm(selectors.popupProfile, _ => {
   popupWithFormProfile.close();
 });
 popupWithFormProfile.setEventListeners();
-
+// попап создания карточки
 const popupWithFormCard = new PopupWithForm(selectors.popupCard,
   (evt) => {
     evt.preventDefault();
@@ -51,9 +51,8 @@ const popupWithFormCard = new PopupWithForm(selectors.popupCard,
     const cardElement = createCard(submitCard);
     cardsList.prependItem(cardElement);
 
-    cardsList.renderItems();
     popupWithFormCard.close();
-  }); // попап создания карточки
+  });
 
 popupWithFormCard.setEventListeners();
 
@@ -67,6 +66,7 @@ const cardsList = new Section({
   },
   selectors.cardElements
 );
+
 // отрисовка карточек
 cardsList.renderItems();
 
@@ -74,19 +74,19 @@ cardsList.renderItems();
 const profileFormValidator = new FormValidator(validationObject, profileForm);
 const cardFormValidator = new FormValidator(validationObject, cardForm);
 
-
 // Открываем попап редактирования профиля по клику на кнопку
 buttonEdit.addEventListener('click', () => {
   popupWithFormProfile.open(); // Открываем попап
   popupWithFormProfile.setInputValues(user.getUserInfo()); // Заполняем инпуты
-  profileFormValidator.enableValidation();
-  profileFormValidator.publicCheckError();
+  profileFormValidator.enableValidation(); // Запускаем валидацию
+  profileFormValidator.publicCheckError(); // Проверяем инпуты при открытии
   profileFormValidator.enableButtonState(); // Включаем кнопку
 });
 
 // Открываем попап добавления карточки
 buttonAdd.addEventListener('click', () => {
-  cardFormValidator.enableValidation();
   popupWithFormCard.open(); // Открываем попап
-  cardFormValidator.disableButtonState();
+  cardFormValidator.publicHideError(); // Скрываем ошибки при открытии пустой формы
+  cardFormValidator.enableValidation(); // Запускаем валидацию
+  cardFormValidator.disableButtonState(); // Выключаем кнопку
 });
