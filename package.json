@@ -5,14 +5,15 @@
   "scripts": {
     "build": "webpack --mode production",
     "dev": "webpack serve --mode development",
-    "deploy": "gh-pages -d dist"
+    "deploy": "gh-pages -d dist",
+    "deploy_build": "gh-pages -d build"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/maxim7137/mesto.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "maxim7137",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/maxim7137/mesto/issues"
@@ -21,7 +22,7 @@
   "devDependencies": {
     "@babel/core": "^7.19.0",
     "@babel/preset-env": "^7.19.0",
-    "autoprefixer": "^10.4.8",
+    "autoprefixer": "^10.4.9",
     "babel-loader": "^8.2.5",
     "clean-webpack-plugin": "^4.0.0",
     "css-loader": "^6.7.1",
