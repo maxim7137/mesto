@@ -22,6 +22,4 @@ JavaScript в данном проекте позволяет:
 
 **gh-pages**
 
-8 проектная работа временно будет отсутствовать на gh-pages.
-
-<!-- - [Ссылка на проект](https://maxim7137.github.io/mesto/) -->
+[Mesto](https://maxim7137.github.io/mesto/)
