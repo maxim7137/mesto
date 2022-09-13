@@ -10,9 +10,6 @@ export default class UserInfo {
   }) {
     this._userNameNode = document.querySelector(userNameSelector);
     this._userJobNode = document.querySelector(userJobSelector);
-
-    this._nameInput = document.querySelector(userSelectors.nameInput);
-    this._jobInput = document.querySelector(userSelectors.jobInput);
   }
 
   getUserInfo() {

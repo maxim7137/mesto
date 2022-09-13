@@ -73,16 +73,10 @@ export default class FormValidator {
     this._buttonElement.classList.remove(this._inactiveButtonClass);
     this._buttonElement.removeAttribute("disabled");
   }
-  // Публичный метод проверки инпутов
-  publicCheckError() {
-    this._inputList.forEach((inputElement) => {
-      this._checkInputValidity(inputElement);
-    });
-  }
+
   // Публичный скрытия ошибок
-  publicHideError() {
-    this._errorInputList = Array.from(this._formEl.querySelectorAll(this._inputSelector));
-    this._errorInputList.forEach((inputElement) => {
+  hideErrors() {
+    this._inputList.forEach((inputElement) => {
       this._hideError(inputElement);
     });
   }

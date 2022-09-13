@@ -7,9 +7,7 @@ import {
   profileForm,
   cardForm,
   buttonEdit,
-  buttonAdd,
-  nameInput,
-  jobInput
+  buttonAdd
 } from '../utils/constants.js';
 
 import PopupWithForm from '../components/PopupWithForm.js';
@@ -38,15 +36,16 @@ const picturePopup = new PicturePopup(selectors.popupImg);
 picturePopup.setEventListeners();
 // попап редактирования профиля
 const popupWithFormProfile = new PopupWithForm(selectors.popupProfile, _ => {
-  user.setUserInfo(nameInput.value, jobInput.value);
+  user.setUserInfo(popupWithFormProfile.getInputValues().name, popupWithFormProfile.getInputValues().info);
   popupWithFormProfile.close();
 });
 popupWithFormProfile.setEventListeners();
+
 // попап создания карточки
 const popupWithFormCard = new PopupWithForm(selectors.popupCard,
   (evt) => {
     evt.preventDefault();
-    const submitCard = popupWithFormCard._getInputValues();
+    const submitCard = popupWithFormCard.getInputValues();
 
     const cardElement = createCard(submitCard);
     cardsList.prependItem(cardElement);
@@ -72,21 +71,20 @@ cardsList.renderItems();
 
 // Создаем для каждой проверяемой формы экземпляр класса FormValidator.
 const profileFormValidator = new FormValidator(validationObject, profileForm);
+profileFormValidator.enableValidation(); // Запускаем валидацию
 const cardFormValidator = new FormValidator(validationObject, cardForm);
+cardFormValidator.enableValidation(); // Запускаем валидацию
 
 // Открываем попап редактирования профиля по клику на кнопку
 buttonEdit.addEventListener('click', () => {
   popupWithFormProfile.open(); // Открываем попап
   popupWithFormProfile.setInputValues(user.getUserInfo()); // Заполняем инпуты
-  profileFormValidator.enableValidation(); // Запускаем валидацию
-  profileFormValidator.publicCheckError(); // Проверяем инпуты при открытии
-  profileFormValidator.enableButtonState(); // Включаем кнопку
+  profileFormValidator.hideErrors(); // Проверяем инпуты при открытии
 });
 
 // Открываем попап добавления карточки
 buttonAdd.addEventListener('click', () => {
   popupWithFormCard.open(); // Открываем попап
-  cardFormValidator.publicHideError(); // Скрываем ошибки при открытии пустой формы
-  cardFormValidator.enableValidation(); // Запускаем валидацию
+  cardFormValidator.hideErrors(); // Скрываем ошибки при открытии пустой формы
   cardFormValidator.disableButtonState(); // Выключаем кнопку
 });
