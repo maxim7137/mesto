@@ -36,7 +36,7 @@ const picturePopup = new PicturePopup(selectors.popupImg);
 picturePopup.setEventListeners();
 // попап редактирования профиля
 const popupWithFormProfile = new PopupWithForm(selectors.popupProfile, _ => {
-  user.setUserInfo(popupWithFormProfile.getInputValues().name, popupWithFormProfile.getInputValues().info);
+  user.setUserInfo(popupWithFormProfile.getInputValues());
   popupWithFormProfile.close();
 });
 popupWithFormProfile.setEventListeners();
