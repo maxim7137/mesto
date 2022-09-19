@@ -18,7 +18,7 @@
     <main class="main">
       <section class="profile">
         <div class="profile__cover">
-          <img src="./images/pen.svg" alt="карандаш" class="profile__pen">
+          <img src="<%=require('./images/pen.svg')%>" alt="карандаш" class="profile__pen">
           <img src="https://www.placecage.com/c/120/120" alt="аватар" class="profile__avatar">
         </div>
         <div class="profile__info">
@@ -40,7 +40,11 @@
             <img src="https://picsum.photos/282?random=1" alt="фото загруженное пользователем" class="elements__image">
             <div class="elements__captions">
               <h2 class="elements__name">Карачаевск</h2>
-              <button class="elements__like-button" type="button" aria-label="отметить карточку"></button>
+              <div class="elements__like-container">
+                <button class="elements__like-button" type="button" aria-label="отметить карточку"></button>
+                <span class="elements__like-counter">0</span>
+              </div>
+
             </div>
             <img src="<%=require('./images/trash.svg')%>" alt="корзина" class="elements__trash" aria-label="удалить карточку">
           </li>

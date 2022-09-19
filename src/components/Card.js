@@ -5,6 +5,7 @@ const selectorsOfCard = {
   buttonLike: '.elements__like-button',
   buttonDel: '.elements__trash',
   liked: 'elements__like-button_liked',
+  likeCounter: '.elements__like-counter'
 }
 
 export default class Card {
@@ -30,6 +31,7 @@ export default class Card {
     this._cardElement = this._getCardElement();
     this._buttonLike = this._cardElement.querySelector(selectorsOfCard.buttonLike);
     this._buttonDel = this._cardElement.querySelector(selectorsOfCard.buttonDel);
+    this._likeCounter = this._cardElement.querySelector(selectorsOfCard.likeCounter);
 
     this.elImg = this._cardElement.querySelector(selectorsOfCard.elementsImage);
 
@@ -53,6 +55,11 @@ export default class Card {
   }
 
   _toggleLike() {
+    if (this._buttonLike.classList.contains(selectorsOfCard.liked)) {
+      this._likeCounter.textContent--;
+    } else {
+      this._likeCounter.textContent++;
+    }
     this._buttonLike.classList.toggle(selectorsOfCard.liked);
   }
 
