@@ -1,9 +1,8 @@
-import './index.css';
+// import './index.css';
 
 import {
   selectors,
   validationObject,
-  initialCards,
   profileForm,
   cardForm,
   avatarForm,
@@ -12,6 +11,7 @@ import {
   buttonAvatarEdit
 } from '../utils/constants.js';
 
+import Api from '../components/Api.js';
 import PopupDelete from '../components/PopupDelete.js';
 import PopupAvatar from '../components/PopupAvatar.js';
 import PopupWithForm from '../components/PopupWithForm.js';
@@ -20,6 +20,27 @@ import Card from '../components/Card.js';
 import FormValidator from '../components/FormValidator.js';
 import Section from '../components/Section.js';
 import UserInfo from '../components/UserInfo.js';
+
+// API
+const api = new Api();
+
+api.getInitialCards().then((result) => {
+  console.log('Начальные карточки');
+  console.dir(result);
+
+  cardsList.renderItems(result);
+})
+.catch((err) => {
+  console.log(err); // выведем ошибку в консоль
+});
+
+/* api.getInitialUser().then((result) => {
+  console.log('Начальный пользователь');
+  console.dir(result);
+})
+.catch((err) => {
+  console.log(err); // выведем ошибку в консоль
+}); */
 
 
 // Функция создания карточки
@@ -76,7 +97,6 @@ popupWithFormCard.setEventListeners();
 
 // создание начальных карточек
 const cardsList = new Section({
-    items: initialCards,
     renderer: (item) => {
       const cardElement = createCard(item);
       cardsList.addItem(cardElement);
@@ -84,9 +104,6 @@ const cardsList = new Section({
   },
   selectors.cardElements
 );
-
-// отрисовка карточек
-cardsList.renderItems();
 
 // Создаем для каждой проверяемой формы экземпляр класса FormValidator.
 const profileFormValidator = new FormValidator(validationObject, profileForm);
