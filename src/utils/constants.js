@@ -34,7 +34,10 @@ export const selectors = {
   popupDelete: '.popup_delete',
   popupImg: '.popup_image',
   popupImage: '.popup__img',
-  popupCaption: '.popup__caption'
+  popupCaption: '.popup__caption',
+  popupAvatar: '.popup_avatar',
+  avatarForm: '.popup__form_avatar',
+  avatarEditButton: '.profile__cover'
 }
 
 export const validationObject = {
@@ -75,6 +78,11 @@ export const initialCards = [{
 export const root = document.querySelector(selectors.page); // Контейнер страницы
 export const profileForm = root.querySelector(selectors.formProfile); // Форма редактирования профиля
 export const cardForm = root.querySelector(selectors.formCard); // Форма добавления карточки
+
+export const avatarPopup = root.querySelector(selectors.popupAvatar); // Попап редактирования аватара
+export const avatarForm = avatarPopup.querySelector(selectors.avatarForm); // Форма редактирования аватара
+
+export const buttonAvatarEdit = root.querySelector(selectors.avatarEditButton); // кнопка редактирования аватара
 export const buttonEdit = root.querySelector(selectors.editButton); // кнопка редактирования профиля
 export const buttonAdd = root.querySelector(selectors.addButton); // кнопка добавления карточки
 export const popupProfile = root.querySelector(selectors.popupProfile); // попап редактирования профиля

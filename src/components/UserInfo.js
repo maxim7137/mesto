@@ -1,8 +1,3 @@
-const userSelectors = {
-  nameInput: '.popup__input_user_name',
-  jobInput: '.popup__input_user_character'
-}
-
 export default class UserInfo {
   constructor({
     userNameSelector,

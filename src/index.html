@@ -124,6 +124,25 @@
       </div>
     </div>
 
+    <!-- Попап аватара -->
+    <div class="popup popup_avatar">
+      <div class="popup__container">
+        <button class="popup__close-button cross" type="button" aria-label="закрыть">
+          <img src="<%=require('./images/close.svg')%>" alt="Крест" class="popup__close-button-img cross__img">
+        </button>
+        <div class="popup__form-container">
+          <h2 class="popup__heading">Обновить аватар</h2>
+          <form name="avatar-edit" class="popup__form popup__form_avatar" novalidate>
+            <label class="popup__field">
+              <input required type="url" name="link" id="avatar-address-input" class="popup__input popup__input_avatar_address" placeholder="Ссылка на аватар">
+              <span class="popup__error avatar-address-input-error"></span>
+            </label>
+            <button type="submit" class="popup__button" aria-label="создать новую карточку">Сохранить</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
   </div>
 </body>
 

@@ -1,9 +1,5 @@
 import Popup from './Popup.js';
 
-const popupDeleteSelectors = {
-
-}
-
 export default class PopupDelete extends Popup {
   constructor(popupSelector) {
     super(popupSelector);
@@ -14,7 +10,6 @@ export default class PopupDelete extends Popup {
     this._submitHandlerDelete = action;
   }
 
-
   setEventListeners () {
     super.setEventListeners();
     this._popup.addEventListener('submit', (event) => {
@@ -23,7 +18,5 @@ export default class PopupDelete extends Popup {
       this.close();
     });
   }
-
-
 }
 

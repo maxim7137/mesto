@@ -6,11 +6,14 @@ import {
   initialCards,
   profileForm,
   cardForm,
+  avatarForm,
   buttonEdit,
-  buttonAdd
+  buttonAdd,
+  buttonAvatarEdit
 } from '../utils/constants.js';
 
 import PopupDelete from '../components/PopupDelete.js';
+import PopupAvatar from '../components/PopupAvatar.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import PicturePopup from '../components/PicturePopup.js';
 import Card from '../components/Card.js';
@@ -46,13 +49,16 @@ function handleOpenPopupDelete(card) {
   popupDelete.setSubmitAction(() => card.deleteCard());
   popupDelete.open();
 }
-
 // попап редактирования профиля
 const popupWithFormProfile = new PopupWithForm(selectors.popupProfile, _ => {
   user.setUserInfo(popupWithFormProfile.getInputValues());
   popupWithFormProfile.close();
 });
 popupWithFormProfile.setEventListeners();
+
+// попап редактирования аватара
+const popupAvatar = new PopupAvatar(selectors.popupAvatar);
+popupAvatar.setEventListeners();
 
 // попап создания карточки
 const popupWithFormCard = new PopupWithForm(selectors.popupCard,
@@ -87,12 +93,21 @@ const profileFormValidator = new FormValidator(validationObject, profileForm);
 profileFormValidator.enableValidation(); // Запускаем валидацию
 const cardFormValidator = new FormValidator(validationObject, cardForm);
 cardFormValidator.enableValidation(); // Запускаем валидацию
+const avatarFormValidator = new FormValidator(validationObject, avatarForm);
+avatarFormValidator.enableValidation(); // Запускаем валидацию
 
 // Открываем попап редактирования профиля по клику на кнопку
 buttonEdit.addEventListener('click', () => {
   popupWithFormProfile.open(); // Открываем попап
   popupWithFormProfile.setInputValues(user.getUserInfo()); // Заполняем инпуты
   profileFormValidator.hideErrors(); // Проверяем инпуты при открытии
+});
+
+// Открываем попап редактирования аватара профиля по клику на аватар
+  buttonAvatarEdit.addEventListener('click', () => {
+    popupAvatar.open(); // Открываем попап
+    avatarFormValidator.hideErrors(); // Скрываем ошибки при открытии пустой формы
+    avatarFormValidator.disableButtonState(); // Выключаем кнопку
 });
 
 // Открываем попап добавления карточки
