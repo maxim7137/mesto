@@ -31,6 +31,7 @@ export const selectors = {
   inactiveButtonClass: 'popup__button_disabled',
   inputErrorClass: 'popup__input_type_error',
   errorClass: 'popup__error_visible',
+  popupDelete: '.popup_delete',
   popupImg: '.popup_image',
   popupImage: '.popup__img',
   popupCaption: '.popup__caption'

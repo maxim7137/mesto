@@ -12,11 +12,12 @@ export default class Card {
   constructor({
     name,
     link
-  }, templateSelector, handleOpenBigImage) {
+  }, templateSelector, handleOpenBigImage, handleOpenPopupDelete) {
     this._name = name;
     this._link = link;
     this._templateSelector = templateSelector;
     this.handleOpenBigImage = handleOpenBigImage;
+    this.handleOpenPopupDelete = handleOpenPopupDelete;
   }
 
   _getCardElement() {
@@ -45,12 +46,13 @@ export default class Card {
   }
 
   _setEventListeners() {
-    this._buttonDel.addEventListener('click', _ => this._deleteCard());
+    this._buttonDel.addEventListener('click', _ => this._handleDeleteClick());
     this._buttonLike.addEventListener('click', _ => this._toggleLike());
     this.elImg.addEventListener('click', _ => this._handleImageClick());
+
   }
 
-  _deleteCard() {
+  deleteCard() {
     this._cardElement.remove();
   }
 
@@ -65,5 +67,9 @@ export default class Card {
 
   _handleImageClick() {
     this.handleOpenBigImage(this._link, this._name);
+  }
+
+  _handleDeleteClick() {
+    this.handleOpenPopupDelete();
   }
 }

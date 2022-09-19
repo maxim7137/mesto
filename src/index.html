@@ -108,6 +108,22 @@
         <figcaption class="popup__caption">Подпись</figcaption>
       </figure>
     </div>
+
+    <!-- Попап удаления карточки-->
+    <div class="popup popup_delete">
+      <div class="popup__container">
+        <button class="popup__close-button cross" type="button" aria-label="закрыть">
+          <img src="<%=require('./images/close.svg')%>" alt="Крест" class="popup__close-button-img cross__img">
+        </button>
+        <div class="popup__form-container">
+          <h2 class="popup__heading">Вы уверены?</h2>
+          <form name="card-delete" class="popup__form popup__form_delete" novalidate>
+            <button type="submit" class="popup__button" aria-label="создать новую карточку">Да</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
   </div>
 </body>
 

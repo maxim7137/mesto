@@ -10,6 +10,7 @@ import {
   buttonAdd
 } from '../utils/constants.js';
 
+import PopupDelete from '../components/PopupDelete.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import PicturePopup from '../components/PicturePopup.js';
 import Card from '../components/Card.js';
@@ -17,9 +18,10 @@ import FormValidator from '../components/FormValidator.js';
 import Section from '../components/Section.js';
 import UserInfo from '../components/UserInfo.js';
 
+
 // Функция создания карточки
 function createCard(item) {
-  const card = new Card(item, selectors.cardTemplate, picturePopup.open);
+  const card = new Card(item, selectors.cardTemplate, picturePopup.open, popupDelete.open);
   const cardElement = card.generateCard();
   return cardElement;
 }
@@ -34,6 +36,10 @@ const user = new UserInfo({
 // попап с картинкой
 const picturePopup = new PicturePopup(selectors.popupImg);
 picturePopup.setEventListeners();
+// попап удаления каточки
+const popupDelete = new PopupDelete(selectors.popupDelete);
+popupDelete.setEventListeners();
+
 // попап редактирования профиля
 const popupWithFormProfile = new PopupWithForm(selectors.popupProfile, _ => {
   user.setUserInfo(popupWithFormProfile.getInputValues());
