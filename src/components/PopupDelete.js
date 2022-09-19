@@ -5,16 +5,25 @@ const popupDeleteSelectors = {
 }
 
 export default class PopupDelete extends Popup {
-  constructor(popupSelector, handleSubmitDelete) {
+  constructor(popupSelector) {
     super(popupSelector);
-    this._handleSubmitDelete = handleSubmitDelete;
     this._form = this._popup.querySelector('form');
   }
 
-  setEventListeners(evt) {
-    super.setEventListeners(evt);
-    this._popup.addEventListener('submit', this._handleSubmitDelete);
+  setSubmitAction(action) {
+    this._submitHandlerDelete = action;
   }
 
-  open = _ => super.open();
+
+  setEventListeners () {
+    super.setEventListeners();
+    this._popup.addEventListener('submit', (event) => {
+      event.preventDefault();
+      this._submitHandlerDelete(event);
+      this.close();
+    });
+  }
+
+
 }
+

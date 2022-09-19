@@ -21,7 +21,7 @@ import UserInfo from '../components/UserInfo.js';
 
 // Функция создания карточки
 function createCard(item) {
-  const card = new Card(item, selectors.cardTemplate, picturePopup.open, popupDelete.open);
+  const card = new Card(item, selectors.cardTemplate, handleOpenBigImage, handleOpenPopupDelete);
   const cardElement = card.generateCard();
   return cardElement;
 }
@@ -36,9 +36,16 @@ const user = new UserInfo({
 // попап с картинкой
 const picturePopup = new PicturePopup(selectors.popupImg);
 picturePopup.setEventListeners();
+function handleOpenBigImage(link, name) {
+  picturePopup.open(link, name);
+}
 // попап удаления каточки
 const popupDelete = new PopupDelete(selectors.popupDelete);
 popupDelete.setEventListeners();
+function handleOpenPopupDelete(card) {
+  popupDelete.setSubmitAction(() => card.deleteCard());
+  popupDelete.open();
+}
 
 // попап редактирования профиля
 const popupWithFormProfile = new PopupWithForm(selectors.popupProfile, _ => {

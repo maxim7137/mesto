@@ -70,6 +70,6 @@ export default class Card {
   }
 
   _handleDeleteClick() {
-    this.handleOpenPopupDelete();
+    this.handleOpenPopupDelete(this);
   }
 }
