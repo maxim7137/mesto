@@ -19,6 +19,8 @@ export default class Api {
       });
   }
 
+
+
   getInitialCards() {
     return fetch(`${this._baseUrl}/cards`, {
       headers: {
@@ -33,4 +35,49 @@ export default class Api {
         return Promise.reject(`Ошибка: ${res.status}`);
       });
   }
+
+  setUser({ name, about }) {
+    return fetch(`${this._baseUrl}/users/me`, {
+      method: 'PATCH',
+      headers: {
+        authorization: this._token,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        name,
+        about
+      })
+    })
+      .then(res => {
+        if (res.ok) {
+          return res.json();
+        }
+        // если ошибка, отклоняем промис
+        return Promise.reject(`Ошибка: ${res.status}`);
+      });
+  }
+
+
+  setAvatar(avatar) {
+    return fetch(`${this._baseUrl}/users/me/avatar`, {
+      method: 'PATCH',
+      headers: {
+        authorization: this._token,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        avatar: avatar
+      })
+    })
+      .then(res => {
+        if (res.ok) {
+          return res.json();
+        }
+        // если ошибка, отклоняем промис
+        return Promise.reject(`Ошибка: ${res.status}`);
+      });
+  }
+
+
+
 }

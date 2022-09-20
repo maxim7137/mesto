@@ -6,24 +6,21 @@ const popupAvatarSelectors = {
 }
 
 export default class PopupAvatar extends Popup {
-  constructor(popupSelector) {
+  constructor(popupSelector, handleSubmitForm) {
     super(popupSelector);
+    this._handleSubmitForm = handleSubmitForm;
     this._input = this._popup.querySelector(popupAvatarSelectors.inputSelector);
     this._form = this._popup.querySelector('form');
     this._userAvatar = document.querySelector(popupAvatarSelectors.userAvatar);
   }
 
-  _editAvatar() {
-    this._userAvatar.src = this._input.value;
+  editAvatarFromApi(link) {
+    this._userAvatar.src = link;
   }
 
   setEventListeners(evt) {
     super.setEventListeners(evt);
-    this._popup.addEventListener('submit', (event) => {
-      event.preventDefault();
-      this._editAvatar();
-      this.close();
-    });
+    this._popup.addEventListener('submit', this._handleSubmitForm);
   }
 
   close() {
@@ -31,3 +28,11 @@ export default class PopupAvatar extends Popup {
     this._form.reset();
   }
 }
+
+/*
+(event) => {
+      event.preventDefault();
+      this._userAvatar.src = this._input.value;
+      this.close();
+    }
+*/

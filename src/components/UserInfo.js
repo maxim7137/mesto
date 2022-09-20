@@ -12,14 +12,14 @@ export default class UserInfo {
     this._userJob = this._userJobNode.textContent;
     this._userData = {
       name: this._userName,
-      info: this._userJob
+      about: this._userJob
     };
 
     return this._userData;
   }
 
-  setUserInfo({name, info}) {
+  setUserInfo({name, about}) {
     this._userNameNode.textContent = name;
-    this._userJobNode.textContent = info;
+    this._userJobNode.textContent = about;
   }
 }
