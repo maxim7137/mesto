@@ -1,4 +1,4 @@
-import './index.css';
+// import './index.css';
 
 import {
   selectors,
@@ -8,7 +8,8 @@ import {
   avatarForm,
   buttonEdit,
   buttonAdd,
-  buttonAvatarEdit
+  buttonAvatarEdit,
+  cardsContainer
 } from '../utils/constants.js';
 
 import Api from '../components/Api.js';
@@ -26,7 +27,10 @@ const api = new Api();
 
 api.getInitialCards().then((result) => {
   cardsList.renderItems(result);
-
+  const cardsNodeList = cardsContainer.querySelectorAll('li');
+  for (let i = 0; i < result.length; i++) {
+    cardsNodeList[i].querySelector('span').textContent = result[i].likes.length;
+  }
 })
 .catch((err) => {
   console.log(err); // выведем ошибку в консоль
