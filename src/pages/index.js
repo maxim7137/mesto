@@ -1,4 +1,4 @@
-// import './index.css';
+import './index.css';
 
 import {
   selectors,
@@ -98,10 +98,19 @@ popupAvatar.setEventListeners();
 const popupWithFormCard = new PopupWithForm(selectors.popupCard,
   (evt) => {
     evt.preventDefault();
-    const submitCard = popupWithFormCard.getInputValues();
 
+    api.setCard(popupWithFormCard.getInputValues()).then((result) => {
+      cardsList.prependItem(createCard(result));
+  })
+  .catch((err) => {
+    console.log(err); // выведем ошибку в консоль
+  });
+
+  /*
+    const submitCard = popupWithFormCard.getInputValues();
     const cardElement = createCard(submitCard);
     cardsList.prependItem(cardElement);
+ */
 
     popupWithFormCard.close();
   });
