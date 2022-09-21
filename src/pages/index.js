@@ -1,4 +1,4 @@
-// import './index.css';
+import './index.css';
 
 import {
   selectors,
@@ -26,11 +26,22 @@ import UserInfo from '../components/UserInfo.js';
 const api = new Api();
 
 api.getInitialCards().then((result) => {
-  cardsList.renderItems(result);
-  const cardsNodeList = cardsContainer.querySelectorAll('li');
+  cardsList.renderItems(result); // вставка карточек
+  const cardsNodeList = cardsContainer.querySelectorAll('li'); // вставка лайков
   for (let i = 0; i < result.length; i++) {
     cardsNodeList[i].querySelector('span').textContent = result[i].likes.length;
   }
+// проверка своих карточек
+  api.getInitialUser().then((userResult) => {
+    for (let i = 0; i < result.length; i++) {
+      if (result[i].owner._id !== userResult._id) {
+        cardsNodeList[i].querySelector('.elements__trash').remove();
+      }
+    }
+  })
+  .catch((err) => {
+    console.log(err); // выведем ошибку в консоль
+  });
 })
 .catch((err) => {
   console.log(err); // выведем ошибку в консоль
