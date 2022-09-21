@@ -1,4 +1,4 @@
-// import './index.css';
+import './index.css';
 
 import {
   selectors,
@@ -24,18 +24,30 @@ import UserInfo from '../components/UserInfo.js';
 
 // API
 const api = new Api();
-
+// Загрузка начальных карточек
 api.getInitialCards().then((result) => {
-  cardsList.renderItems(result);
-  const cardsNodeList = cardsContainer.querySelectorAll('li');
+  cardsList.renderItems(result); // вставка карточек
+  const cardsNodeList = cardsContainer.querySelectorAll('li'); // вставка лайков
   for (let i = 0; i < result.length; i++) {
     cardsNodeList[i].querySelector('span').textContent = result[i].likes.length;
   }
+// проверка своих карточек
+  api.getInitialUser().then((userResult) => {
+    for (let i = 0; i < result.length; i++) {
+      if (result[i].owner._id !== userResult._id) {
+        cardsNodeList[i].querySelector('.elements__trash').remove();
+      }
+    }
+  })
+  .catch((err) => {
+    console.log(err); // выведем ошибку в консоль
+  });
 })
 .catch((err) => {
   console.log(err); // выведем ошибку в консоль
 });
-
+// Загрузка начальных карточек //
+// Загрузка данных профиля
 api.getInitialUser().then((result) => {
   user.setUserInfo(result);
   popupAvatar.editAvatarFromApi(result.avatar);
@@ -68,7 +80,13 @@ function handleOpenBigImage(link, name) {
 const popupDelete = new PopupDelete(selectors.popupDelete);
 popupDelete.setEventListeners();
 function handleOpenPopupDelete(card) {
-  popupDelete.setSubmitAction(() => card.deleteCard());
+  popupDelete.setSubmitAction(() => {
+  api.delCard(card.getCardId())
+  .catch((err) => {
+    console.log(err); // выведем ошибку в консоль
+  });
+    card.deleteCard();
+  });
   popupDelete.open();
 }
 // попап редактирования профиля
@@ -102,20 +120,12 @@ popupAvatar.setEventListeners();
 const popupWithFormCard = new PopupWithForm(selectors.popupCard,
   (evt) => {
     evt.preventDefault();
-
     api.setCard(popupWithFormCard.getInputValues()).then((result) => {
       cardsList.prependItem(createCard(result));
   })
   .catch((err) => {
     console.log(err); // выведем ошибку в консоль
   });
-
-  /*
-    const submitCard = popupWithFormCard.getInputValues();
-    const cardElement = createCard(submitCard);
-    cardsList.prependItem(cardElement);
- */
-
     popupWithFormCard.close();
   });
 

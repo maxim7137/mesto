@@ -11,10 +11,12 @@ const selectorsOfCard = {
 export default class Card {
   constructor({
     name,
-    link
+    link,
+    _id
   }, templateSelector, handleOpenBigImage, handleOpenPopupDelete) {
     this._name = name;
     this._link = link;
+    this._id = _id;
     this._templateSelector = templateSelector;
     this.handleOpenBigImage = handleOpenBigImage;
     this.handleOpenPopupDelete = handleOpenPopupDelete;
@@ -54,6 +56,11 @@ export default class Card {
 
   deleteCard() {
     this._cardElement.remove();
+
+  }
+
+  getCardId() {
+    return this._id;
   }
 
   _toggleLike() {
