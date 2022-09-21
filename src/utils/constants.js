@@ -60,16 +60,22 @@ export const selectorsOfCard = {
 }
 
 export const root = document.querySelector(selectors.page); // Контейнер страницы
-export const profileForm = root.querySelector(selectors.formProfile); // Форма редактирования профиля
-export const cardForm = root.querySelector(selectors.formCard); // Форма добавления карточки
+
+export const popupProfile = root.querySelector(selectors.popupProfile); // попап редактирования профиля
+export const profileForm = popupProfile.querySelector(selectors.formProfile); // Форма редактирования профиля
+export const profileButtonElement = profileForm.querySelector(selectors.submitButtonSelector); // кнопка отправки профиля
+
 export const avatarPopup = root.querySelector(selectors.popupAvatar); // Попап редактирования аватара
 export const avatarForm = avatarPopup.querySelector(selectors.avatarForm); // Форма редактирования аватара
+export const avatarFormButton = avatarForm.querySelector(selectors.submitButtonSelector); // Кнопка отправки аватара
+
+export const popupCard = root.querySelector(selectors.popupCard); // попап добавления карточки
+export const cardForm = popupCard.querySelector(selectors.formCard); // Форма добавления карточки
+export const cardFormButton = cardForm.querySelector(selectors.submitButtonSelector); // Кнопка отправки карточки
+
 export const buttonAvatarEdit = root.querySelector(selectors.avatarEditButton); // кнопка редактирования аватара
 export const buttonEdit = root.querySelector(selectors.editButton); // кнопка редактирования профиля
 export const buttonAdd = root.querySelector(selectors.addButton); // кнопка добавления карточки
-export const popupProfile = root.querySelector(selectors.popupProfile); // попап редактирования профиля
-export const profileButtonElement = popupProfile.querySelector(selectors.submitButtonSelector); // кнопка отправки профиля
-export const popupCard = root.querySelector(selectors.popupCard); // попап добавления карточки
 export const popupImg = document.querySelector(selectors.popupImg); // попап картинки
 export const popupImgPicture = popupImg.querySelector(selectors.popupImage); // сама картинка
 export const captionOfPopupImg = popupImg.querySelector(selectors.popupCaption); // подпись картинки
