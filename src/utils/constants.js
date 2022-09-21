@@ -49,13 +49,21 @@ export const validationObject = {
   errorClass: 'popup__error_visible'
 };
 
+export const selectorsOfCard = {
+  cardElement: '.elements__element',
+  elementsImage: '.elements__image',
+  elementsName: '.elements__name',
+  buttonLike: '.elements__like-button',
+  buttonDel: '.elements__trash',
+  liked: 'elements__like-button_liked',
+  likeCounter: '.elements__like-counter'
+}
+
 export const root = document.querySelector(selectors.page); // Контейнер страницы
 export const profileForm = root.querySelector(selectors.formProfile); // Форма редактирования профиля
 export const cardForm = root.querySelector(selectors.formCard); // Форма добавления карточки
-
 export const avatarPopup = root.querySelector(selectors.popupAvatar); // Попап редактирования аватара
 export const avatarForm = avatarPopup.querySelector(selectors.avatarForm); // Форма редактирования аватара
-
 export const buttonAvatarEdit = root.querySelector(selectors.avatarEditButton); // кнопка редактирования аватара
 export const buttonEdit = root.querySelector(selectors.editButton); // кнопка редактирования профиля
 export const buttonAdd = root.querySelector(selectors.addButton); // кнопка добавления карточки

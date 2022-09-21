@@ -3,6 +3,7 @@ import './index.css';
 import {
   selectors,
   validationObject,
+  selectorsOfCard,
   profileForm,
   cardForm,
   avatarForm,
@@ -33,9 +34,24 @@ api.getInitialCards().then((result) => {
   }
 // проверка своих карточек
   api.getInitialUser().then((userResult) => {
+    // лайкнута ли мной
+    function isLiked(array) {
+      let arrayOfLikedId = [];
+      array.forEach(element => {
+        arrayOfLikedId.push(element._id);
+      });
+      const containsUserId = arrayOfLikedId.some(element => element === userResult._id);
+      return containsUserId;
+    } // лайкнута ли мной //
+
     for (let i = 0; i < result.length; i++) {
+      // для удаления
       if (result[i].owner._id !== userResult._id) {
         cardsNodeList[i].querySelector('.elements__trash').remove();
+      }
+      // для лайков
+      if (isLiked(result[i].likes)) {
+        cardsNodeList[i].querySelector(selectorsOfCard.buttonLike).classList.add(selectorsOfCard.liked);
       }
     }
   })
@@ -58,9 +74,28 @@ api.getInitialUser().then((result) => {
 
 // Функция создания карточки
 function createCard(item) {
-  const card = new Card(item, selectors.cardTemplate, handleOpenBigImage, handleOpenPopupDelete);
+  const card = new Card(item, selectors.cardTemplate, handleOpenBigImage, handleOpenPopupDelete, handleLike);
   const cardElement = card.generateCard();
   return cardElement;
+}
+
+// лайки
+function handleLike(card) {
+  if (card.buttonLike.classList.contains(selectorsOfCard.liked)) {
+    api.dislikeCard(card.getCardId()).then((result) => {
+      card.likeCounter.textContent = result.likes.length;
+    })
+    .catch((err) => {
+      console.log(err); // выведем ошибку в консоль
+    });
+  } else {
+    api.likeCard(card.getCardId()).then((result) => {
+      card.likeCounter.textContent = result.likes.length;
+    })
+    .catch((err) => {
+      console.log(err); // выведем ошибку в консоль
+    });
+  }
 }
 
 // Юзер

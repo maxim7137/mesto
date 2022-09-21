@@ -19,8 +19,6 @@ export default class Api {
       });
   }
 
-
-
   getInitialCards() {
     return fetch(`${this._baseUrl}/cards`, {
       headers: {
@@ -56,7 +54,6 @@ export default class Api {
         return Promise.reject(`Ошибка: ${res.status}`);
       });
   }
-
 
   setAvatar(avatar) {
     return fetch(`${this._baseUrl}/users/me/avatar`, {
@@ -115,6 +112,35 @@ export default class Api {
       });
   }
 
+  likeCard(_id) {
+    return fetch(`${this._baseUrl}/cards/${_id}/likes`, {
+      method: 'PUT',
+      headers: {
+        authorization: this._token,
+      },
+    })
+      .then(res => {
+        if (res.ok) {
+          return res.json();
+        }
+        // если ошибка, отклоняем промис
+        return Promise.reject(`Ошибка: ${res.status}`);
+      });
+  }
 
-
+  dislikeCard(_id) {
+    return fetch(`${this._baseUrl}/cards/${_id}/likes`, {
+      method: 'DELETE',
+      headers: {
+        authorization: this._token,
+      },
+    })
+      .then(res => {
+        if (res.ok) {
+          return res.json();
+        }
+        // если ошибка, отклоняем промис
+        return Promise.reject(`Ошибка: ${res.status}`);
+      });
+  }
 }

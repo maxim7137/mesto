@@ -12,14 +12,17 @@ export default class Card {
   constructor({
     name,
     link,
-    _id
-  }, templateSelector, handleOpenBigImage, handleOpenPopupDelete) {
+    _id,
+    likes
+  }, templateSelector, handleOpenBigImage, handleOpenPopupDelete, handleLike) {
     this._name = name;
     this._link = link;
     this._id = _id;
+    this.likes = likes;
     this._templateSelector = templateSelector;
     this.handleOpenBigImage = handleOpenBigImage;
     this.handleOpenPopupDelete = handleOpenPopupDelete;
+    this.handleLike = handleLike;
   }
 
   _getCardElement() {
@@ -32,31 +35,25 @@ export default class Card {
 
   generateCard() {
     this._cardElement = this._getCardElement();
-    this._buttonLike = this._cardElement.querySelector(selectorsOfCard.buttonLike);
+    this.buttonLike = this._cardElement.querySelector(selectorsOfCard.buttonLike);
     this._buttonDel = this._cardElement.querySelector(selectorsOfCard.buttonDel);
-    this._likeCounter = this._cardElement.querySelector(selectorsOfCard.likeCounter);
-
+    this.likeCounter = this._cardElement.querySelector(selectorsOfCard.likeCounter);
     this.elImg = this._cardElement.querySelector(selectorsOfCard.elementsImage);
-
     this.elImg.src = this._link;
     this.elImg.alt = this._name;
     this._cardElement.querySelector(selectorsOfCard.elementsName).textContent = this._name;
-
     this._setEventListeners();
-
     return this._cardElement;
   }
 
   _setEventListeners() {
     this._buttonDel.addEventListener('click', _ => this._handleDeleteClick());
-    this._buttonLike.addEventListener('click', _ => this._toggleLike());
+    this.buttonLike.addEventListener('click', _ => this._toggleLike());
     this.elImg.addEventListener('click', _ => this._handleImageClick());
-
   }
 
   deleteCard() {
     this._cardElement.remove();
-
   }
 
   getCardId() {
@@ -64,12 +61,8 @@ export default class Card {
   }
 
   _toggleLike() {
-    if (this._buttonLike.classList.contains(selectorsOfCard.liked)) {
-      this._likeCounter.textContent--;
-    } else {
-      this._likeCounter.textContent++;
-    }
-    this._buttonLike.classList.toggle(selectorsOfCard.liked);
+    this.handleLike(this);
+    this.buttonLike.classList.toggle(selectorsOfCard.liked);
   }
 
   _handleImageClick() {
