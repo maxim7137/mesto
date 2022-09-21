@@ -1,12 +1,15 @@
 export default class FormValidator {
-  constructor({
-    formSelector,
-    inputSelector,
-    submitButtonSelector,
-    inactiveButtonClass,
-    inputErrorClass,
-    errorClass
-  }, formEl) {
+  constructor(
+    {
+      formSelector,
+      inputSelector,
+      submitButtonSelector,
+      inactiveButtonClass,
+      inputErrorClass,
+      errorClass,
+    },
+    formEl
+  ) {
     this._formSelector = formSelector;
     this._inputSelector = inputSelector;
     this._submitButtonSelector = submitButtonSelector;
@@ -17,18 +20,22 @@ export default class FormValidator {
   }
   // Метод вывода сообщения об ошибке
   _showError(inputElement, errorMessage) {
-    const errorElement = this._formEl.querySelector(`.${inputElement.id}-error`);
+    const errorElement = this._formEl.querySelector(
+      `.${inputElement.id}-error`
+    );
     inputElement.classList.add(this._inputErrorClass);
     errorElement.classList.add(this._errorClass);
     errorElement.textContent = errorMessage;
-  };
+  }
   // Метод скрытия сообщения об ошибке
   _hideError(inputElement) {
-    const errorElement = this._formEl.querySelector(`.${inputElement.id}-error`);
+    const errorElement = this._formEl.querySelector(
+      `.${inputElement.id}-error`
+    );
     inputElement.classList.remove(this._inputErrorClass);
     errorElement.classList.remove(this._errorClass);
-    errorElement.textContent = '';
-  };
+    errorElement.textContent = "";
+  }
   // Метод переключения видимости ошибки в зависимости от валидности инпута
   _checkInputValidity(inputElement) {
     if (inputElement.validity.valid) {
@@ -36,7 +43,7 @@ export default class FormValidator {
     } else {
       this._showError(inputElement, inputElement.validationMessage);
     }
-  };
+  }
   // Метод проверки есть ли хоть один невалидный инпут
   _hasInvalidInput = () => {
     return this._inputList.some((inputElement) => !inputElement.validity.valid);
@@ -51,18 +58,22 @@ export default class FormValidator {
   }
   // Метод развешивания всего выше на все инпуты в форме
   _setEventListeners() {
-    this._inputList = Array.from(this._formEl.querySelectorAll(this._inputSelector));
-    this._buttonElement = this._formEl.querySelector(this._submitButtonSelector);
+    this._inputList = Array.from(
+      this._formEl.querySelectorAll(this._inputSelector)
+    );
+    this._buttonElement = this._formEl.querySelector(
+      this._submitButtonSelector
+    );
 
     this._toggleButtonState();
 
     this._inputList.forEach((inputElement) => {
-      inputElement.addEventListener('input', _ => {
+      inputElement.addEventListener("input", (_) => {
         this._checkInputValidity(inputElement);
         this._toggleButtonState();
       });
     });
-  };
+  }
   // Метод отключения кнопки
   disableButtonState() {
     this._buttonElement.classList.add(this._inactiveButtonClass);
@@ -82,9 +93,9 @@ export default class FormValidator {
   }
   // Метод проверки формы
   enableValidation() {
-    this._formEl.addEventListener('submit', function (evt) {
+    this._formEl.addEventListener("submit", function (evt) {
       evt.preventDefault();
     });
     this._setEventListeners();
-  };
+  }
 }
