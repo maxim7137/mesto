@@ -1,9 +1,4 @@
-const popupSelectors = {
-  popup: ".popup",
-  popupOpened: "popup_opened",
-  cross: "cross",
-  crossImg: "cross__img",
-};
+import { popupSelectors } from "../utils/constants.js";
 
 export default class Popup {
   constructor(popupSelector) {

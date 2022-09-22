@@ -1,12 +1,4 @@
-const selectorsOfCard = {
-  cardElement: ".elements__element",
-  elementsImage: ".elements__image",
-  elementsName: ".elements__name",
-  buttonLike: ".elements__like-button",
-  buttonDel: ".elements__trash",
-  liked: "elements__like-button_liked",
-  likeCounter: ".elements__like-counter",
-};
+import { selectorsOfCard } from "../utils/constants.js";
 
 export default class Card {
   constructor(

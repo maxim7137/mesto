@@ -28,6 +28,18 @@ import UserInfo from "../components/UserInfo.js";
 
 // API
 const api = new Api();
+
+// Загрузка данных профиля
+api
+  .getInitialUser()
+  .then((result) => {
+    user.setUserInfo(result);
+    popupAvatar.editAvatarFromApi(result.avatar);
+  })
+  .catch((err) => {
+    console.log(err); // выведем ошибку в консоль
+  });
+
 // Загрузка начальных карточек
 api
   .getInitialCards()
@@ -75,16 +87,6 @@ api
     console.log(err); // выведем ошибку в консоль
   });
 // Загрузка начальных карточек //
-// Загрузка данных профиля
-api
-  .getInitialUser()
-  .then((result) => {
-    user.setUserInfo(result);
-    popupAvatar.editAvatarFromApi(result.avatar);
-  })
-  .catch((err) => {
-    console.log(err); // выведем ошибку в консоль
-  });
 
 // Функция создания карточки
 function createCard(item) {

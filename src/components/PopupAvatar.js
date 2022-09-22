@@ -1,9 +1,5 @@
 import Popup from "./Popup.js";
-
-const popupAvatarSelectors = {
-  userAvatar: ".profile__avatar",
-  inputSelector: ".popup__input",
-};
+import { popupAvatarSelectors } from "../utils/constants.js";
 
 export default class PopupAvatar extends Popup {
   constructor(popupSelector, handleSubmitForm) {

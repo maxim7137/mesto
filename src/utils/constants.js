@@ -59,6 +59,23 @@ export const selectorsOfCard = {
   likeCounter: ".elements__like-counter",
 };
 
+export const picturePopupSelectors = {
+  popupImage: ".popup__img",
+  popupCaption: ".popup__caption",
+};
+
+export const popupSelectors = {
+  popup: ".popup",
+  popupOpened: "popup_opened",
+  cross: "cross",
+  crossImg: "cross__img",
+};
+
+export const popupAvatarSelectors = {
+  userAvatar: ".profile__avatar",
+  inputSelector: ".popup__input",
+};
+
 export const root = document.querySelector(selectors.page); // Контейнер страницы
 
 export const popupProfile = root.querySelector(selectors.popupProfile); // попап редактирования профиля
