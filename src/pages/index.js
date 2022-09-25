@@ -18,6 +18,10 @@ import {
 
 import Api from "../components/Api.js";
 import PopupDelete from "../components/PopupDelete.js";
+<<<<<<< HEAD
+=======
+import PopupAvatar from "../components/PopupAvatar.js";
+>>>>>>> ed6aa5c7fe0ae53b2741bc93c1980c871f1abb5c
 import PopupWithForm from "../components/PopupWithForm.js";
 import PicturePopup from "../components/PicturePopup.js";
 import Card from "../components/Card.js";
@@ -141,9 +145,13 @@ const popupDelete = new PopupDelete(selectors.popupDelete);
 popupDelete.setEventListeners();
 function handleOpenPopupDelete(card) {
   popupDelete.setSubmitAction(() => {
+<<<<<<< HEAD
     api.delCard(card.getCardId())
       .then(popupDelete.close())
       .catch((err) => {
+=======
+    api.delCard(card.getCardId()).catch((err) => {
+>>>>>>> ed6aa5c7fe0ae53b2741bc93c1980c871f1abb5c
       console.log(err); // выведем ошибку в консоль
     });
     card.deleteCard();
@@ -179,7 +187,11 @@ const popupWithFormProfile = new PopupWithForm(selectors.popupProfile, (_) => {
 popupWithFormProfile.setEventListeners();
 
 // попап редактирования аватара
+<<<<<<< HEAD
 const popupAvatar = new PopupWithForm(selectors.popupAvatar, (event) => {
+=======
+const popupAvatar = new PopupAvatar(selectors.popupAvatar, (event) => {
+>>>>>>> ed6aa5c7fe0ae53b2741bc93c1980c871f1abb5c
   event.preventDefault();
   renderLoading(true, avatarFormButton, "Сохранение...", "Сохранить");
   api
@@ -222,7 +234,11 @@ const cardsList = new Section(
   {
     renderer: (item) => {
       const cardElement = createCard(item);
+<<<<<<< HEAD
       cardsList.appendItem(cardElement);
+=======
+      cardsList.addItem(cardElement);
+>>>>>>> ed6aa5c7fe0ae53b2741bc93c1980c871f1abb5c
     },
   },
   selectors.cardElements

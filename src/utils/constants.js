@@ -74,6 +74,7 @@ export const popupSelectors = {
 export const popupAvatarSelectors = {
   userAvatar: ".profile__avatar",
   inputSelector: ".popup__input",
+<<<<<<< HEAD
 };
 
 export const popupWithFormSelectors = {
@@ -81,6 +82,8 @@ export const popupWithFormSelectors = {
   inputSelector: ".popup__input",
   inputErrorClass: "popup__input_type_error",
   errorClass: "popup__error_visible",
+=======
+>>>>>>> ed6aa5c7fe0ae53b2741bc93c1980c871f1abb5c
 };
 
 export const root = document.querySelector(selectors.page); // Контейнер страницы
