@@ -15,7 +15,7 @@ export default class PopupWithForm extends Popup {
     this._userAvatar = document.querySelector(popupAvatarSelectors.userAvatar);
   }
 
-  getInputValues = () => {
+  _getInputValues = () => {
     this._formValues = {};
     this._inputList.forEach((input) => {
       this._formValues[input.name] = input.value;
@@ -33,9 +33,12 @@ export default class PopupWithForm extends Popup {
     this._userAvatar.src = link;
   }
 
-  setEventListeners(evt) {
-    super.setEventListeners(evt);
-    this._popup.addEventListener("submit", this._handleSubmitForm);
+  setEventListeners() {
+    super.setEventListeners();
+    this._popup.addEventListener("submit", (event) => {
+      event.preventDefault();
+      this._handleSubmitForm(this._getInputValues());
+    });
   }
 
   close() {

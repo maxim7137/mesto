@@ -161,10 +161,10 @@ function renderLoading(isLoading, button, texting, text) {
 }
 
 // попап редактирования профиля
-const popupWithFormProfile = new PopupWithForm(selectors.popupProfile, (_) => {
+const popupWithFormProfile = new PopupWithForm(selectors.popupProfile, (data) => {
   renderLoading(true, profileButtonElement, "Сохранение...", "Сохранить");
   api
-    .setUser(popupWithFormProfile.getInputValues())
+    .setUser(data)
     .then((result) => {
       user.setUserInfo(result);
     })
@@ -179,8 +179,8 @@ const popupWithFormProfile = new PopupWithForm(selectors.popupProfile, (_) => {
 popupWithFormProfile.setEventListeners();
 
 // попап редактирования аватара
-const popupAvatar = new PopupWithForm(selectors.popupAvatar, (event) => {
-  event.preventDefault();
+const popupAvatar = new PopupWithForm(selectors.popupAvatar, () => {
+
   renderLoading(true, avatarFormButton, "Сохранение...", "Сохранить");
   api
     .setAvatar(popupAvatar._input.value)
@@ -198,11 +198,11 @@ const popupAvatar = new PopupWithForm(selectors.popupAvatar, (event) => {
 popupAvatar.setEventListeners();
 
 // попап создания карточки cardFormButton
-const popupWithFormCard = new PopupWithForm(selectors.popupCard, (evt) => {
-  evt.preventDefault();
+const popupWithFormCard = new PopupWithForm(selectors.popupCard, (data) => {
+
   renderLoading(true, cardFormButton, "Создание...", "Создать");
   api
-    .setCard(popupWithFormCard.getInputValues())
+    .setCard(data)
     .then((result) => {
       cardsList.prependItem(createCard(result));
     })
@@ -214,7 +214,6 @@ const popupWithFormCard = new PopupWithForm(selectors.popupCard, (evt) => {
       popupWithFormCard.close();
     });
 });
-
 popupWithFormCard.setEventListeners();
 
 // создание начальных карточек
