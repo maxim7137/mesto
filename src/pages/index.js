@@ -126,7 +126,7 @@ function handleLike(card) {
 // Юзер
 const user = new UserInfo({
   userNameSelector: selectors.profileName,
-  userJobSelector: selectors.profileCharacter,
+  userJobSelector: selectors.profileCharacter
 });
 
 // Попапы //

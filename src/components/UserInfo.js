@@ -16,7 +16,11 @@ export default class UserInfo {
   }
 
   setUserInfo({ name, about }) {
-    this._userNameNode.textContent = name;
-    this._userJobNode.textContent = about;
+    if (name) {
+      this._userNameNode.textContent = name;
+    }
+    if (about) {
+      this._userJobNode.textContent = about;
+    }
   }
 }
