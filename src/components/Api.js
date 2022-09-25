@@ -25,17 +25,7 @@ export default class Api {
       headers: {
         authorization: this._token,
       },
-<<<<<<< HEAD
     }).then(this.#isServerOk);
-=======
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      // если ошибка, отклоняем промис
-      return Promise.reject(`Ошибка: ${res.status}`);
-    });
->>>>>>> ed6aa5c7fe0ae53b2741bc93c1980c871f1abb5c
   }
 
   getInitialCards() {
@@ -43,17 +33,7 @@ export default class Api {
       headers: {
         authorization: this._token,
       },
-<<<<<<< HEAD
     }).then(this.#isServerOk);
-=======
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      // если ошибка, отклоняем промис
-      return Promise.reject(`Ошибка: ${res.status}`);
-    });
->>>>>>> ed6aa5c7fe0ae53b2741bc93c1980c871f1abb5c
   }
 
   setUser({ name, about }) {
@@ -67,17 +47,7 @@ export default class Api {
         name,
         about,
       }),
-<<<<<<< HEAD
     }).then(this.#isServerOk);
-=======
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      // если ошибка, отклоняем промис
-      return Promise.reject(`Ошибка: ${res.status}`);
-    });
->>>>>>> ed6aa5c7fe0ae53b2741bc93c1980c871f1abb5c
   }
 
   setAvatar(avatar) {
@@ -90,17 +60,7 @@ export default class Api {
       body: JSON.stringify({
         avatar: avatar,
       }),
-<<<<<<< HEAD
     }).then(this.#isServerOk);
-=======
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      // если ошибка, отклоняем промис
-      return Promise.reject(`Ошибка: ${res.status}`);
-    });
->>>>>>> ed6aa5c7fe0ae53b2741bc93c1980c871f1abb5c
   }
 
   setCard({ name, link }) {
@@ -114,17 +74,7 @@ export default class Api {
         name,
         link,
       }),
-<<<<<<< HEAD
     }).then(this.#isServerOk);
-=======
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      // если ошибка, отклоняем промис
-      return Promise.reject(`Ошибка: ${res.status}`);
-    });
->>>>>>> ed6aa5c7fe0ae53b2741bc93c1980c871f1abb5c
   }
 
   delCard(_id) {
@@ -133,17 +83,7 @@ export default class Api {
       headers: {
         authorization: this._token,
       },
-<<<<<<< HEAD
     }).then(this.#isServerOk);
-=======
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      // если ошибка, отклоняем промис
-      return Promise.reject(`Ошибка: ${res.status}`);
-    });
->>>>>>> ed6aa5c7fe0ae53b2741bc93c1980c871f1abb5c
   }
 
   likeCard(_id) {
@@ -152,17 +92,7 @@ export default class Api {
       headers: {
         authorization: this._token,
       },
-<<<<<<< HEAD
     }).then(this.#isServerOk);
-=======
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      // если ошибка, отклоняем промис
-      return Promise.reject(`Ошибка: ${res.status}`);
-    });
->>>>>>> ed6aa5c7fe0ae53b2741bc93c1980c871f1abb5c
   }
 
   dislikeCard(_id) {
@@ -171,16 +101,6 @@ export default class Api {
       headers: {
         authorization: this._token,
       },
-<<<<<<< HEAD
     }).then(this.#isServerOk);
-=======
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      // если ошибка, отклоняем промис
-      return Promise.reject(`Ошибка: ${res.status}`);
-    });
->>>>>>> ed6aa5c7fe0ae53b2741bc93c1980c871f1abb5c
   }
 }
