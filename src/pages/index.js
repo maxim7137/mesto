@@ -16,6 +16,8 @@ import {
   cardFormButton,
 } from "../utils/constants.js";
 
+import { renderLoading } from "../utils/utils.js";
+
 import Api from "../components/Api.js";
 import PopupDelete from "../components/PopupDelete.js";
 import PopupWithForm from "../components/PopupWithForm.js";
@@ -146,15 +148,6 @@ function handleOpenPopupDelete(card) {
   popupDelete.open();
 }
 
-// Улучшение UX
-function renderLoading(isLoading, button, texting, text) {
-  if (isLoading) {
-    button.textContent = texting;
-  } else {
-    button.textContent = text;
-  }
-}
-
 // попап редактирования профиля
 const popupWithFormProfile = new PopupWithForm(
   selectors.popupProfile,
@@ -164,6 +157,7 @@ const popupWithFormProfile = new PopupWithForm(
       .setUser(data)
       .then((result) => {
         user.setUserInfo(result);
+        popupWithFormProfile.close();
       })
       .catch((err) => {
         console.log(err); // выведем ошибку в консоль
@@ -175,7 +169,6 @@ const popupWithFormProfile = new PopupWithForm(
           "Сохранение...",
           "Сохранить"
         );
-        popupWithFormProfile.close();
       });
   }
 );
@@ -188,13 +181,13 @@ const popupAvatar = new PopupWithForm(selectors.popupAvatar, () => {
     .setAvatar(popupAvatar._input.value)
     .then((result) => {
       popupAvatar.editAvatarFromApi(result.avatar);
+      popupAvatar.close();
     })
     .catch((err) => {
       console.log(err); // выведем ошибку в консоль
     })
     .finally(() => {
       renderLoading(false, avatarFormButton, "Сохранение...", "Сохранить");
-      popupAvatar.close();
     });
 });
 popupAvatar.setEventListeners();
@@ -206,13 +199,13 @@ const popupWithFormCard = new PopupWithForm(selectors.popupCard, (data) => {
     .setCard(data)
     .then((result) => {
       cardsList.prependItem(createCard(result));
+      popupWithFormCard.close();
     })
     .catch((err) => {
       console.log(err); // выведем ошибку в консоль
     })
     .finally(() => {
       renderLoading(false, cardFormButton, "Создание...", "Создать");
-      popupWithFormCard.close();
     });
 });
 popupWithFormCard.setEventListeners();
