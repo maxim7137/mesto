@@ -35,7 +35,7 @@ api
   .getInitialUser()
   .then((result) => {
     user.setUserInfo(result);
-    popupAvatar.editAvatarFromApi(result.avatar);
+    user.setUserAvatar(result.avatar);
     const userId = result._id;
 
     // Загрузка начальных карточек
@@ -175,12 +175,12 @@ const popupWithFormProfile = new PopupWithForm(
 popupWithFormProfile.setEventListeners();
 
 // попап редактирования аватара
-const popupAvatar = new PopupWithForm(selectors.popupAvatar, () => {
+const popupAvatar = new PopupWithForm(selectors.popupAvatar, (data) => {
   renderLoading(true, avatarFormButton, "Сохранение...", "Сохранить");
   api
-    .setAvatar(popupAvatar._input.value)
+    .setAvatar(data.link)
     .then((result) => {
-      popupAvatar.editAvatarFromApi(result.avatar);
+      user.setUserAvatar(result.avatar);
       popupAvatar.close();
     })
     .catch((err) => {

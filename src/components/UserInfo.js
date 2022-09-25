@@ -1,7 +1,10 @@
+import { popupAvatarSelectors } from "../utils/constants.js";
+
 export default class UserInfo {
   constructor({ userNameSelector, userJobSelector }) {
     this._userNameNode = document.querySelector(userNameSelector);
     this._userJobNode = document.querySelector(userJobSelector);
+    this._userAvatar = document.querySelector(popupAvatarSelectors.userAvatar);
   }
 
   getUserInfo() {
@@ -22,5 +25,9 @@ export default class UserInfo {
     if (about) {
       this._userJobNode.textContent = about;
     }
+  }
+
+  setUserAvatar(link) {
+    this._userAvatar.src = link;
   }
 }

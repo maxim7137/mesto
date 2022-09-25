@@ -12,7 +12,6 @@ export default class PopupWithForm extends Popup {
     this._form = this._popup.querySelector("form");
 
     this._input = this._popup.querySelector(popupAvatarSelectors.inputSelector);
-    this._userAvatar = document.querySelector(popupAvatarSelectors.userAvatar);
   }
 
   _getInputValues = () => {
@@ -28,10 +27,6 @@ export default class PopupWithForm extends Popup {
       input.value = data[input.name];
     });
   };
-
-  editAvatarFromApi(link) {
-    this._userAvatar.src = link;
-  }
 
   setEventListeners() {
     super.setEventListeners();
