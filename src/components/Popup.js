@@ -1,42 +1,39 @@
-const popupSelectors = {
-  popup: '.popup',
-  popupOpened: 'popup_opened',
-  cross: 'cross',
-  crossImg: 'cross__img'
-}
+import { popupSelectors } from "../utils/constants.js";
 
 export default class Popup {
   constructor(popupSelector) {
     this._popup = document.querySelector(popupSelector);
   }
 
-  open () {
+  open() {
     this._popup.classList.add(popupSelectors.popupOpened);
-    document.addEventListener('keydown', this._handleEscClose);
-  };
+    document.addEventListener("keydown", this._handleEscClose);
+  }
 
   close() {
     this._popup.classList.remove(popupSelectors.popupOpened);
-    document.removeEventListener('keydown', this._handleEscClose);
-  };
+    document.removeEventListener("keydown", this._handleEscClose);
+  }
 
   _handleEscClose = (evt) => {
-    if (evt.key === 'Escape') {
+    if (evt.key === "Escape") {
       this.close();
     }
   };
 
   setEventListeners() {
-    this._popup.addEventListener('click', this._closePopupByClick);
-  };
+    this._popup.addEventListener("click", this._closePopupByClick);
+  }
 
   _closePopupByClick = (evt) => {
     const target = evt.target;
 
-    if (target.classList.contains(popupSelectors.cross) ||
+    if (
+      target.classList.contains(popupSelectors.cross) ||
       target.classList.contains(popupSelectors.crossImg) ||
-      target === this._popup) {
+      target === this._popup
+    ) {
       this.close();
     }
-  }
+  };
 }
